@@ -1,0 +1,40 @@
+.main-color{
+    background-color: #32b38c;
+}
+
+.main-color-text{
+    color: #237d61;
+}
+
+.left-border-green{
+    border-left: 1px solid #6cbfa3;
+}
+
+.right-border-green{
+    border-right: 1px solid #6cbfa3;
+}
+
+.both-border-green{
+    border-left: 1px solid #6cbfa3;
+    border-right: 1px solid #6cbfa3;
+}
+
+.nav-user-img{
+    height:100%;
+    width:50px;
+}
+
+.nav-section{
+    height:100%;
+}
+
+.menu-list{
+    display: flex !important;
+    flex-wrap: wrap !important;
+    flex-direction: row;
+    justify-content:center !important;
+}
+
+.menu-list ul{
+    height:100%;
+}
