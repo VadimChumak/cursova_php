@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="../Content/css/style.css">
-    <link rel="stylesheet" href="../Content/css/materialize.css">
+    <link rel="stylesheet" href="Content/css/style.css">
+    <link rel="stylesheet" href="Content/css/materialize.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Khula" rel="stylesheet">
     <meta charset="utf-8">
@@ -53,7 +53,7 @@
     <div class="row" id="content">
         <div class="col l2 m3 hide-on-small-and-down" id="left-menu">
             <div class="user-page-img">
-                <img src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" class="responsive-img left-menu-user-img" alt="">
+                <img  src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" class="responsive-img left-menu-user-img" alt="">
             </div>
             <div class="left-menu-user-info">
                 <p class="user-name">PutinPutinPutinPutin</p>
@@ -73,26 +73,53 @@
         </div>
         <div class="col l8 m9 s12" id="main-content">
             <div class="row quick-acces">
-                <div class="col l6 m6 s12 right-border-gray valign-wrapper center-align quick-acces-item">
-                    <span>Friends</span>
-                    <a class="btn-floating btn-large waves-effect grey center-align center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
-                </div>
-                <div class="col l6 m6 s12 valign-wrapper quick-acces-item">
-                    <span>Groups</span>
-                    <a class="btn-floating btn-large waves-effect grey center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
-                </div>
+                <header>
+                    <nav class="user-nav nav-extended">
+                        <div class="nav-wrapper">
+                          <ul class="user-nav-box">
+                            <li><a href="sass.html"><i class="material-icons left">contacts</i>Friends</a></li>
+                            <li><a href="badges.html"><i class="material-icons left">supervisor_account</i>Groups</a></li>
+                            <li><a href="badges.html"><i class="material-icons left">perm_media</i>Photos</a></li>
+                            <li><a href="badges.html"><i class="material-icons left">library_music</i>Musics</a></li>
+                          </ul>
+                        </div>
+                        <div class="nav-content user-dop-panel">
+                          <ul class="tabs tabs-transparent user-nav-box">
+                            <li class="tab"><a href="#test1">All</a></li>
+                            <li class="tab"><a class="active" href="#test2">Online</a></li>
+                            <li class="tab"><a href="#test4">Request</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
             </div>
-            <div class="row quick-acces top-border-gray bottom-border-gray">
-                <div class="col l6 m6 s12 right-border-gray valign-wrapper center-align quick-acces-item">
-                    <span>Friends</span>
-                    <a class="btn-floating btn-large waves-effect grey center-align center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
-                </div>
-                <div class="col l6 m6 s12 valign-wrapper quick-acces-item">
-                    <span>Groups</span>
-                    <a class="btn-floating btn-large waves-effect grey center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
-                </div>
-            </div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="row write-post-section">
+                <form class="col s12">
+                   <div class="row">
+                        <div class="input-field col s12">
+                            <button id="getFile" class="waves-effect btn"><i class="material-icons right">note_add</i></button>
+                        </div>
+                      </div>
+                    <div class="row">
+                        <div class="input-field col s12">
+                          <textarea id="icon_prefix2" class="materialize-textarea" placeholder="Write a post..."></textarea>
+                          <input type="file" id="file" class="hidden">
+                        </div>
+                      </div>
+                      <div class="row hidden" id="img-post-block">
+                        <div class="input-field col s12">
+                          <img id="img-post" class="z-depth-3" src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" alt="">
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <button id="submit-post" class="btn waves-effect waves-light" type="submit" name="action">Post
+                            <i class="material-icons right">send</i>
+                          </button>
+                        </div>
+                      </div>
+                </form>
+              </div>
         </div>
         <div class="col l2 hide-on-med-and-down left-border-gray" id="right-menu">
             <ul class="collection">
