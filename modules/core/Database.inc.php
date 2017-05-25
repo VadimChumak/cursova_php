@@ -46,5 +46,7 @@ class Database
         $valuesList = "'".implode("', '", $valuesArray)."'";
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
         $this->Pdo->exec($sql);
+        $id = $this->Pdo->lastInsertId('user_auth');
+        return $id;
     }
 }
