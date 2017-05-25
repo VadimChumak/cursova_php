@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="Content/css/style.css">
     <link rel="stylesheet" href="Content/css/materialize.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Khula" rel="stylesheet">
     <meta charset="utf-8">
 </head>
 <body>
@@ -50,9 +51,91 @@
             </div>
         </nav>
     </header>
+    <div class="row" id="content">
+        <div class="col l2 m3 hide-on-small-and-down" id="left-menu">
+            <div class="user-page-img">
+                <img src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" class="responsive-img left-menu-user-img" alt="">
+            </div>
+            <div class="left-menu-user-info">
+                <p class="user-name">PutinPutinPutinPutin</p>
+                <p class="user-surname">Xuylo<i class="material-icons right user-online">perm_identity</i></p>
+                <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
+                <button class="waves-effect waves-light btn chat"><i class="material-icons left">chat</i>Chat</button>
+            </div>
+            <div class="collection user-menu">
+                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">1</span>News</a>
+                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">123</span>Friends</a>
+                <a href="#!" class="collection-item waves-effect waves-light"><span class="new badge">17</span>Messages</a>
+                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">45</span>Groups</a>
+                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">874</span>Photo</a>
+                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">9</span>Music</a>
+                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">12</span>Video</a>
+            </div>
+        </div>
+        <div class="col l8 m9 s12" id="main-content">
+           <div class="row quick-acces">
+            <div class="col l6 m6 s12 right-border-gray valign-wrapper center-align quick-acces-item">
+                <span>Friends</span>
+                <a class="btn-floating btn-large waves-effect grey center-align center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
+            </div>
+            <div class="col l6 m6 s12 valign-wrapper quick-acces-item">
+                <span>Groups</span>
+                <a class="btn-floating btn-large waves-effect grey center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
+            </div>
+            </div>
+            <div class="row quick-acces top-border-gray bottom-border-gray">
+            <div class="col l6 m6 s12 right-border-gray valign-wrapper center-align quick-acces-item">
+                <span>Friends</span>
+                <a class="btn-floating btn-large waves-effect grey center-align center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
+            </div>
+            <div class="col l6 m6 s12 valign-wrapper quick-acces-item">
+                <span>Groups</span>
+                <a class="btn-floating btn-large waves-effect grey center-align valign-wrapper"><i class="large material-icons">play_arrow</i></a>
+            </div>
+            </div>
+            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+        <div class="col l2 hide-on-med-and-down left-border-gray" id="right-menu">
+            <ul class="collection">
+    <li class="collection-item avatar">
+      <img src="images/yuna.jpg" alt="" class="circle">
+      <span class="title">Title</span>
+      <p>First Line <br>
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    <li class="collection-item avatar">
+      <i class="material-icons circle">folder</i>
+      <span class="title">Title</span>
+      <p>First Line <br>
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    <li class="collection-item avatar">
+      <i class="material-icons circle green">insert_chart</i>
+      <span class="title">Title</span>
+      <p>First Line <br>
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+    <li class="collection-item avatar">
+      <i class="material-icons circle red">play_arrow</i>
+      <span class="title">Title</span>
+      <p>First Line <br>
+         Second Line
+      </p>
+      <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+    </li>
+  </ul>
+        </div>
+    </div>
 </div>
 <script src="Content/js/jquery-3.1.1.js"></script>
 <script src="Content/js/materialize.js"></script>
 <script src="Content/js/mainPage.js"></script>
+<!--<script src="Content/js/setHeight.js"></script>-->
 </body>
 </html>
