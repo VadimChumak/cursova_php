@@ -11,27 +11,42 @@ class Core
     }
     public static function Run()
     {
-        self::$IndexTPL->SetParam('PageTitle', "Початкова сторінка");
-        self::$IndexTPL->SetParam('PageHeaderTitle', "Початкова сторінка");
-        $url = $_GET['url'];
-        $parts = explode('/', $url);
-        $className = ucfirst(array_shift($parts)).'_Controller';
-        $methodName = ucfirst(array_shift($parts)).'Action';
-        if (class_exists($className))
-        {
-            $moduleObject = new $className();
-            if (method_exists($moduleObject, $methodName))
-            {
-                $params = $moduleObject->$methodName($parts);
+        if (isset($_SESSION['user'])) {
+            self::$IndexTPL->SetParam('PageTitle', "Початкова сторінка");
+            self::$IndexTPL->SetParam('PageHeaderTitle', "Початкова сторінка");
+            $url = $_GET['url'];
+            $parts = explode('/', $url);
+            if (count($parts) == 1) {
+                $moduleObject = new Menu_Controller();
+                $params = $moduleObject->CreateAction();
                 self::$IndexTPL->SetParams($params);
             }
-            else
-            {
-                // 404
+            else {
+                $className = ucfirst(array_shift($parts)).'_Controller';
+                $methodName = ucfirst(array_shift($parts)).'Action';
+                if (class_exists($className))
+                {
+                    $moduleObject = new $className();
+                    if (method_exists($moduleObject, $methodName))
+                    {
+                        $params = $moduleObject->$methodName($parts);
+                        self::$IndexTPL->SetParams($params);
+                    }
+                    else
+                    {
+                        // 404
+                    }
+                } else
+                {
+                    // 404
+                }
             }
-        } else
-        {
-            // 404
+
+        }
+        else {
+            $moduleObject = new Registration_Controller();
+            $params = $moduleObject->AddAction();
+            self::$IndexTPL->SetParams($params);
         }
     }
     public static function Done()

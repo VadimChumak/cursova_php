@@ -9,18 +9,17 @@ class Registration_Controller
             $user = $_POST;
             if ($model->AddUser($user))
             {
-                return array(
-                    "PageTitle" => "Сторінка додавання новини",
-                    /* "PageHeaderTitle" => "Сторінка додавання новини",*/
-                    "Content"  => "hedkdkdk"
-                );
+                return Menu_Controller::CreateAction();
             }
 
         }
         return array(
             "PageTitle" => "Сторінка додавання новини",
             /* "PageHeaderTitle" => "Сторінка додавання новини",*/
-            "Content"  => $view->Add()
+            "Content"  => array(
+                "Session" => $_SESSION['user'],
+                'Content' => $view->Add()
+            )
         );
     }
 }
