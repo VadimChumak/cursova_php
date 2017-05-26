@@ -295,7 +295,7 @@ body .row{
     color: #81827d;
 }
 
-#img-post{
+#content #main-content .write-post-section .img-post{
     width:200px;
     height:200px;
     object-fit: cover;

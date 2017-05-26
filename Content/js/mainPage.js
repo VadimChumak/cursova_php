@@ -9,7 +9,8 @@ window.addEventListener("load", function() {
         document.getElementById("right-menu").style.height = contentHeight + "px";
     }
     
-    $("#getFile").on("click", function() {
+    $("#getFile").on("click", function(event) {
+        event.preventDefault();
        $("#file").click(); 
     });
     
@@ -34,8 +35,13 @@ function showFile(e) {
       var fr = new FileReader();
       fr.onload = (function(theFile) {
         return function(e) {
-          document.getElementById('img-post').setAttribute("src", ""+e.target.result);
-            $("#img-post-block").slideDown(300); 
+            var img = document.createElement("img");
+            img.setAttribute("src", ""+e.target.result);
+            img.classList.add("hidden");
+            img.classList.add("z-depth-3");
+            img.classList.add("img-post");
+            document.getElementById("img-post-section").appendChild(img);
+            $(img).slideDown(300); 
         };
       })(f);
  

@@ -94,7 +94,7 @@
                 </header>
             </div>
             <div class="row write-post-section">
-                <form class="col s12">
+                <form class="col s12" enctype="multipart/form-data"> 
                    <div class="row">
                         <div class="input-field col s12">
                             <button id="getFile" class="waves-effect btn"><i class="material-icons right">note_add</i></button>
@@ -103,12 +103,12 @@
                     <div class="row">
                         <div class="input-field col s12">
                           <textarea id="icon_prefix2" class="materialize-textarea" placeholder="Write a post..."></textarea>
-                          <input type="file" id="file" class="hidden">
+                          <input type="file" id="file" multiple class="hidden">
                         </div>
                       </div>
-                      <div class="row hidden" id="img-post-block">
-                        <div class="input-field col s12">
-                          <img id="img-post" class="z-depth-3" src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" alt="">
+                      <div class="row" id="img-post-block">
+                        <div class="input-field col s12" id="img-post-section">
+                          <img class="z-depth-3 img-post hidden" src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" alt="">
                         </div>
                       </div>
                       <div class="row">
