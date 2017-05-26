@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 function __autoload($className)
 {
     $path = "modules/core/{$className}.inc.php";
