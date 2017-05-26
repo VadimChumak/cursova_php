@@ -14,12 +14,8 @@ class Registration_Controller
 
         }
         return array(
-            "PageTitle" => "Сторінка додавання новини",
-            /* "PageHeaderTitle" => "Сторінка додавання новини",*/
-            "Content"  => array(
-                "Session" => $_SESSION['user'],
-                'Content' => $view->Add()
-            )
+            "Content" => $view->Add(),
+            "Session" => $_SESSION["user"]
         );
     }
 }

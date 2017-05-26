@@ -35,7 +35,7 @@
             </div>
             <div class="col l2 hide-on-med-and-down left-border-green nav-section">
                 <ul class="left hide-on-med-and-down">
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><?php echo "asdasd"?><i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><?php echo $UserSession['name'] ?><i class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>
             </div>
         </nav>
