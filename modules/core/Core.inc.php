@@ -45,8 +45,16 @@ class Core
         }
         else {
             $moduleObject = new Registration_Controller();
-            $params = $moduleObject->AddAction();
-            self::$IndexTPL->SetParams($params);
+            $url = $_GET['url'];
+            if ($url == 'registration/add') {
+                $params = $moduleObject->AddAction();
+                self::$IndexTPL->SetParams($params);
+            }
+            else {
+                $params = $moduleObject->LoginAction();
+                self::$IndexTPL->SetParams($params);
+            }
+
         }
     }
     public static function Done()

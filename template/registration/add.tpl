@@ -7,5 +7,5 @@
     <div><input type="text" name="name" /></div>
     <div>Surname : </div>
     <div><input type="text" name="surname" /></div>
-    <div><input type="submit"></div>
+    <div><input type="submit" value="Зареєструватися"></div>
 </form>

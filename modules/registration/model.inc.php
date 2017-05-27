@@ -20,4 +20,18 @@ class Registration_Model
     public  function Authorise($item) {
         $_SESSION['user'] = $item;
     }
+    public function Login($item) {
+        $current_user = Core::$Db->Select('user_auth', 'id, email, password', array('email' => $item['email'], 'password' => $item['password']));
+        if (!empty($current_user)) {
+            $user_data = Core::$Db->Select('user_data', 'name, surname', array('user_id' => $current_user[0]['id']));
+            $this->Authorise(array(
+                'id' => $current_user[0]['id'],
+                'email' => $current_user[0]['email'],
+                'name' => $user_data[0]['name'],
+                'surname' => $user_data[0]['surname']
+            ));
+            return true;    
+        }
+        return false;
+    }
 }
