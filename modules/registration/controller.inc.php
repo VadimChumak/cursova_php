@@ -14,8 +14,7 @@ class Registration_Controller
 
         }
         return array(
-            "Content" => $view->Add(),
-            "Session" => $_SESSION["user"]
+            "Content" => $view->Add()
         );
     }
 }
