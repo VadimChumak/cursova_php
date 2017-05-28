@@ -21,7 +21,8 @@ class Registration_Model
         $_SESSION['user'] = $item;
     }
     public function Login($item) {
-        $current_user = Core::$Db->Select('user_auth', 'id, email, password', array('email' => $item['email'], 'password' => md5($item['password'])));
+        $current_user = Core::$Db->Select('user_auth', 'id, email, password', array('email' => $item['email'],
+            'password' => md5($item['password'])));
         if (!empty($current_user)) {
             $user_data = Core::$Db->Select('user_data', 'name, surname', array('user_id' => $current_user[0]['id']));
             $this->Authorise(array(
