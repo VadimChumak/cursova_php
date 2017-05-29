@@ -61,7 +61,7 @@
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">12</span>Video</a>
             </div>
         </div>
-        <div class="col l8 m9 s12" id="main-content">
+        <div class="col l10 m9 s12" id="main-content">
             <div class="row quick-acces">
                 <header>
                     <nav class="user-nav nav-extended">
@@ -110,42 +110,6 @@
                     </div>
                 </form>
             </div>
-        </div>
-        <div class="col l2 hide-on-med-and-down left-border-gray" id="right-menu">
-            <ul class="collection">
-                <li class="collection-item avatar">
-                    <img src="images/yuna.jpg" alt="" class="circle">
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-                <li class="collection-item avatar">
-                    <i class="material-icons circle">folder</i>
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-                <li class="collection-item avatar">
-                    <i class="material-icons circle green">insert_chart</i>
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-                <li class="collection-item avatar">
-                    <i class="material-icons circle red">play_arrow</i>
-                    <span class="title">Title</span>
-                    <p>First Line <br>
-                        Second Line
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-                </li>
-            </ul>
         </div>
     </div>
 </div>
