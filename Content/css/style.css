@@ -12,6 +12,10 @@ body{
     background-color: #32b38c;
 }
 
+.fixed{
+     position: fixed;
+}
+
 .main-color-text{
     color: #237d61;
 }

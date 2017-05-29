@@ -51,7 +51,7 @@
                 <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
                 <button class="waves-effect waves-light btn chat"><i class="material-icons left">chat</i>Chat</button>
             </div>
-            <div class="collection user-menu">
+            <div class="collection user-menu" id="user-menu">
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">1</span>News</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">123</span>Friends</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="new badge">17</span>Messages</a>

@@ -17,7 +17,7 @@ window.addEventListener("load", function() {
         event.preventDefault();
         $("#file").click(); 
     });
-    
+
     
     $(document).resize(function() {
         var contentHeight = document.getElementById("main-content").offsetHeight;
@@ -50,6 +50,18 @@ function showFile(e) {
  
     
 });
+
+window.addEventListener("scroll", function() {
+    if(window.pageYOffset > 430) {
+        document.getElementById("user-menu").style.position = "fixed";
+        document.getElementById("user-menu").style.top = "0px";
+        
+    }
+    else {
+        document.getElementById("user-menu").style.position = "static";
+    }
+    console.log(window.pageYOffset);
+})
 
 $(document).ready(function(){
     $('.materialboxed').materialbox();
