@@ -31,4 +31,8 @@ class Registration_Controller
             "Content" => $v->Login()
         );
     }
+    public function LogoutAction() {
+        $_SESSION['user'] = null;
+        header("Location: /");
+    }
 }

@@ -7,6 +7,9 @@ class Registration_Model
             Core::$Db->Insert("user_auth", array('email' => $item['email'], 'password' => md5($item['password'])));
             $id = Core::$Db->Select("user_auth", "id", array('email' => $item['email']));
             Core::$Db->Insert('user_data', array('user_id' => $id[0]['id'], 'name' => $item['name'], 'surname' => $item['surname']));
+            $path_dir = "./media/users/". $id[0]['id'];
+            mkdir($path_dir);
+            mkdir($path_dir . "/photo");
             $this->Authorise(array(
                 'id' => $id[0]['id'],
                 'email' => $item['email'],

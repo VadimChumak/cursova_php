@@ -3,9 +3,9 @@
     <li><a href="#!">Моя сторінка</a></li>
     <li class="divider"></li>
     <li><a href="#!">Налаштування</a></li>
-    <li><a href="#!">Редагувати</a></li>
+    <li><a href="/setting/edit">Редагувати</a></li>
     <li class="divider"></li>
-    <li><a href="#!">Вихід</a></li>
+    <li><a href="/registration/logout">Вихід</a></li>
 </ul>
 <!------->
 <div id="main">
@@ -62,7 +62,8 @@
             </div>
         </div>
         <div class="col l10 m9 s12" id="main-content">
-            <div class="row quick-acces">
+            <?php echo $Content?>
+            {*<div class="row quick-acces">
                 <header>
                     <nav class="user-nav nav-extended">
                         <div class="nav-wrapper">
@@ -163,7 +164,7 @@
                         </div>
                       </div>
                 </div>
-            </div>
+            </div>*}
         </div>
     </div>
 </div>

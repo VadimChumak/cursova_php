@@ -23,6 +23,7 @@ class Database
             array_push($setArray, "{$key} = '{$value}'");
         $setList = implode(',', $setArray);
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
+        var_dump($sql);
         $this->Pdo->exec($sql);
     }
     public function Select($tableName, $fieldArray, $assocArray = null)
