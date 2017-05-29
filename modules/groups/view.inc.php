@@ -14,10 +14,19 @@ class Groups_View
         return $tpl->GetHTML();
     }
 
-    public function Group($group)
+    public function Edit($group)
+    {
+        $tpl = new Template('template/groups/edit.tpl');
+        $tpl->SetParam('Group',$group);
+        return $tpl->GetHTML();
+    }
+
+    public function Group($group, $member, $admin)
     {
         $tpl = new Template('template/groups/group.tpl');
         $tpl->SetParam('List',$group);
+        $tpl->SetParam('member',$member);
+        $tpl->SetParam('admin',$admin);
         return $tpl->GetHTML();
     }
 }

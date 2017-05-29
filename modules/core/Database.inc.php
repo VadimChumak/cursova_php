@@ -11,6 +11,11 @@ class Database
         $sql = "DELETE FROM {$tableName} WHERE {$indexField} = '$indexValue'";
         $this->Pdo->exec($sql);
     }
+    public function DeleteByTwoCays($tableName, $indexField, $indexValue, $indexFieldT, $indexValueT)
+    {
+        $sql = "DELETE FROM {$tableName} WHERE ({$indexField} = '$indexValue') AND ({$indexFieldT} = '$indexValueT')";
+        $this->Pdo->exec($sql);
+    }
     public function UpdateById($tableName, $assocArray, $indexField, $indexValue)
     {
         $setArray = array();
