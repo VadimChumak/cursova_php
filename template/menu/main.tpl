@@ -35,7 +35,7 @@
             </div>
             <div class="col l2 hide-on-med-and-down left-border-green nav-section">
                 <ul class="left hide-on-med-and-down">
-                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><?php echo $UserSession['name'] ?><i class="material-icons right">arrow_drop_down</i></a></li>
+                    <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><?php echo $UserInfo['name'] ?><i class="material-icons right">arrow_drop_down</i></a></li>
                 </ul>
             </div>
         </nav>
@@ -43,7 +43,7 @@
     <div class="row" id="content">
         <div class="col l2 m3 hide-on-small-and-down" id="left-menu">
             <div class="user-page-img">
-                <img  src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" class="responsive-img left-menu-user-img" alt="">
+                <img  src="<?php echo "/media/users/".$UserInfo['id'].'/photo/'.$UserInfo['image']['image'] ?>" class="responsive-img left-menu-user-img" alt="">
             </div>
             <div class="left-menu-user-info">
                 <p class="user-name">PutinPutinPutinPutin</p>
