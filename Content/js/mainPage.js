@@ -1,32 +1,31 @@
 window.addEventListener("load", function() {
+    
     var contentHeight = document.getElementById("main-content").offsetHeight;
     var leftHeight = document.getElementById("left-menu").offsetHeight;
-    var rightHeight = document.getElementById("right-menu").offsetHeight;
     if(contentHeight > leftHeight) {
         document.getElementById("left-menu").style.height = contentHeight + "px";
     }
-    if(contentHeight > rightHeight) {
-        document.getElementById("right-menu").style.height = contentHeight + "px";
-    }
+    
+    $('.wall').masonry({
+        itemSelector: '.wall-item',
+        percentPosition: true
+    });
+    
+    $("time.timeago").timeago();
     
     $("#getFile").on("click", function(event) {
         event.preventDefault();
-       $("#file").click(); 
+        $("#file").click(); 
     });
     
     
     $(document).resize(function() {
         var contentHeight = document.getElementById("main-content").offsetHeight;
     var leftHeight = document.getElementById("left-menu").offsetHeight;
-    var rightHeight = document.getElementById("right-menu").offsetHeight;
     if(contentHeight > leftHeight) {
         document.getElementById("left-menu").style.height = contentHeight + "px";
     }
-    if(contentHeight > rightHeight) {
-        document.getElementById("right-menu").style.height = contentHeight + "px";
-    }
     });
-    
     
 function showFile(e) {
     var files = e.target.files;
@@ -49,11 +48,6 @@ function showFile(e) {
     }
   }
  
-  document.getElementById('file').addEventListener('change', showFile, false);
-
-    
-    
-    
     
 });
 

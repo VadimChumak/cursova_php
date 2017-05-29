@@ -83,32 +83,86 @@
                     </nav>
                 </header>
             </div>
-            <div class="row write-post-section">
-                <form class="col s12" enctype="multipart/form-data">
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <button id="getFile" class="waves-effect btn"><i class="material-icons right">note_add</i></button>
+            <div class="row wall">
+                <div class="col l4 m6 s12 wall-item create-post-area">
+                        <button class="btn waves-effect waves-light" id="createPost">
+                        <i class="material-icons md-48">mode_edit</i>
+                      </button>
+                </div>
+                <div class="col l4 m6 s12 wall-item">
+                    <div class="card">
+                        <div class="card-image">
+                          <img src="https://pp.userapi.com/c639727/v639727615/21281/QpXdA9CRD54.jpg">
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <textarea id="icon_prefix2" class="materialize-textarea" placeholder="Write a post..."></textarea>
-                            <input type="file" id="file" multiple class="hidden">
+                        <div class="card-content">
+                          <p>I am a very simple card. I am good at containing small bits of information.
+                              I am convenient because I require little markup to use effectively.</p>
                         </div>
-                    </div>
-                    <div class="row" id="img-post-block">
-                        <div class="input-field col s12" id="img-post-section">
-                            <img class="z-depth-3 img-post hidden" src="http://gearmix.ru/wp-content/uploads/2015/08/3253676-530x353.jpg" alt="">
+                        <div class="card-action">
+                           <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
+                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
+                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="input-field col s12">
-                            <button id="submit-post" class="btn waves-effect waves-light" type="submit" name="action">Post
-                                <i class="material-icons right">send</i>
-                            </button>
+                      </div>
+                </div>
+                <div class="col l4 m6 s12 wall-item">
+                    <div class="card">
+                        <div class="card-content">
+                          <p>I am a very simple card. I am good at containing small bits of information.
+                              I am convenient because I require little markup to use effectively.</p>
                         </div>
-                    </div>
-                </form>
+                        <div class="card-action">
+                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
+                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
+                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="col l4 m6 s12 wall-item">
+                    <div class="card">
+                        <div class="card-image">
+                          <img src="https://pp.userapi.com/c639727/v639727245/2c043/OSPUeIMUgVo.jpg">
+                        </div>
+                        <div class="card-content">
+                          <p>I am a very simple card. I am good at containing small bits of information.
+                              I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
+                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
+                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="col l4 m6 s12 wall-item">
+                    <div class="card">
+                        <div class="card-content">
+                          <p>I am a very simple card. I am good at containing small bits of information.
+                              I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
+                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
+                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
+                        </div>
+                      </div>
+                </div>
+                <div class="col l4 m6 s12 wall-item">
+                    <div class="card">
+                        <div class="card-image">
+                          <img src="https://pp.userapi.com/c836529/v836529536/3e76a/4KvMTuAfxlM.jpg">
+                        </div>
+                        <div class="card-content">
+                          <p>I am a very simple card. I am good at containing small bits of information.
+                              I am convenient because I require little markup to use effectively.</p>
+                        </div>
+                        <div class="card-action">
+                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
+                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
+                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
+                        </div>
+                      </div>
+                </div>
             </div>
         </div>
     </div>

@@ -10,7 +10,9 @@
 <body>
 <?php if (isset($Content)) echo $Content ?>
 <script src="/Content/js/jquery-3.1.1.js"></script>
+<script src="/Content/js/masonry.js"></script>
 <script src="/Content/js/materialize.js"></script>
 <script src="/Content/js/mainPage.js"></script>
+<script src="/Content/js/timeago.js"></script>
 </body>
 </html>
