@@ -27,7 +27,6 @@ class Registration_Model
         $current_user = Core::$Db->Select('user_auth', 'id, email, password', array('email' => $item['email'],
             'password' => md5($item['password'])));
         $user_photo = Core::$Db->Select('user_data', 'image', array('user_id' => $current_user[0]['id']));
-        var_dump($user_photo);
         if (!empty($current_user)) {
             $user_data = Core::$Db->Select('user_data', 'name, surname', array('user_id' => $current_user[0]['id']));
             $this->Authorise(array(

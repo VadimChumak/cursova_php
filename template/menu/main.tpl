@@ -1,6 +1,6 @@
 <!------->
 <ul id="dropdown1" class="dropdown-content">
-    <li><a href="#!">Моя сторінка</a></li>
+    <li><a href="#">Моя сторінка</a></li>
     <li class="divider"></li>
     <li><a href="#!">Налаштування</a></li>
     <li><a href="/setting/edit">Редагувати</a></li>
@@ -79,8 +79,8 @@
                 <img  src="<?php echo "/media/users/".$UserInfo['id'].'/photo/'.$UserInfo['image']['image'] ?>" class="responsive-img left-menu-user-img" alt="">
             </div>
             <div class="left-menu-user-info">
-                <p class="user-name">PutinPutinPutinPutin</p>
-                <p class="user-surname">Xuylo<i class="material-icons right user-online">perm_identity</i></p>
+                <p class="user-name"><?=$UserInfo['name']?></p>
+                <p class="user-surname"><?=$UserInfo['surname']?><i class="material-icons right user-online">perm_identity</i></p>
                 <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
                 <button class="waves-effect waves-light btn chat"><i class="material-icons left">chat</i>Chat</button>
             </div>
