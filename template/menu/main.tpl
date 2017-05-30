@@ -122,80 +122,6 @@
                         <i class="material-icons md-48">mode_edit</i>
                       </button>
                 </div>
-                <div class="col l4 m6 s12 wall-item">
-                    <div class="card">
-                        <div class="card-image">
-                          <img src="https://pp.userapi.com/c639727/v639727615/21281/QpXdA9CRD54.jpg">
-                        </div>
-                        <div class="card-content">
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                              I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                           <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
-                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
-                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col l4 m6 s12 wall-item">
-                    <div class="card">
-                        <div class="card-content">
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                              I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
-                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
-                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col l4 m6 s12 wall-item">
-                    <div class="card">
-                        <div class="card-image">
-                          <img src="https://pp.userapi.com/c639727/v639727245/2c043/OSPUeIMUgVo.jpg">
-                        </div>
-                        <div class="card-content">
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                              I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
-                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
-                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col l4 m6 s12 wall-item">
-                    <div class="card">
-                        <div class="card-content">
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                              I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
-                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
-                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
-                        </div>
-                      </div>
-                </div>
-                <div class="col l4 m6 s12 wall-item">
-                    <div class="card">
-                        <div class="card-image">
-                          <img src="https://pp.userapi.com/c836529/v836529536/3e76a/4KvMTuAfxlM.jpg">
-                        </div>
-                        <div class="card-content">
-                          <p>I am a very simple card. I am good at containing small bits of information.
-                              I am convenient because I require little markup to use effectively.</p>
-                        </div>
-                        <div class="card-action">
-                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
-                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
-                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
-                        </div>
-                      </div>
-                </div>
             </div>
         </div>
     </div>
@@ -204,6 +130,7 @@
 <div id="eror"></div>
 
 <script type="text" id="newsBlock">
+<div class="col l4 m6 s12 wall-item">
                     <div class="card">
                         <div class="card-image">
                           <img src="[image]">
@@ -216,5 +143,6 @@
                            <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
                            <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
                         </div>
+                      </div>
                       </div>
 </script>

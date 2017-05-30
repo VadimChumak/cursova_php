@@ -6,11 +6,7 @@ window.addEventListener("load", function() {
         document.getElementById("left-menu").style.height = contentHeight + "px";
     }
     
-    /*$('.wall').masonry({
-        itemSelector: '.wall-item',
-        percentPosition: true
-    });*/
-    var msnry = new Masonry( '.wall', {
+    var grid = $('.wall').masonry({
         itemSelector: '.wall-item',
         percentPosition: true
     });
@@ -44,41 +40,14 @@ window.addEventListener("load", function() {
                 var tmp = $("#newsBlock").html();
                 tmp = tmp.replace("[image]",("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
                 tmp = tmp.replace("[text]",result.post_text);
-                var div = document.createElement("div");
-                div.classList.add("col","l4","m6","s12","wall-item");
-                div.innerHTML = tmp;
-                document.querySelector(".wall").insertBefore(div, document.querySelector(".wall").firstElementChild.nextSibling);
-                msnry.appended(div);
-                msnry.reloadItems();
+                var tmpObj = $(tmp);
+                $(tmp).insertAfter($("#createPostBlock"));
+                grid.masonry("addItems", tmpObj);
+                grid.masonry("prepended", tmpObj).masonry('layout');;
+                grid.masonry('reloadItems');
+                grid.masonry('layout');
             }
         }
-        /*var post = $("#modal_createPost");
-        var postText = $(post).find("textarea").val();
-        var file = $(post).find("input[type=file]");
-        var fd = new FormData();
-        fd.append('img', file.prop('files')[0]);
-        console.log(file.prop('files')[0]);
-        $.ajax({
-            url: "news/save",
-            type: "POST",
-            async: true,
-            processData: false,
-            data: {"text": postText, "image": fd},
-            error: function(data) {
-                alert("error");
-            },
-            success: function(data) {
-                alert(data);
-            }
-        });*/
-    });
-    
-    $(document).resize(function() {
-        var contentHeight = document.getElementById("main-content").offsetHeight;
-    var leftHeight = document.getElementById("left-menu").offsetHeight;
-    if(contentHeight > leftHeight) {
-        document.getElementById("left-menu").style.height = contentHeight + "px";
-    }
     });
     
 function showFile(e) {

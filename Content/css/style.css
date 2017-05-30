@@ -357,6 +357,10 @@ body .row{
     border-radius: 0px;
 }
 
+.row.wall .col.wall-item {
+    float: left;
+}
+
 #createPost{
     padding: 20px;
     width: 100%;
