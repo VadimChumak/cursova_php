@@ -61,4 +61,44 @@ class Core
     {
         self::$IndexTPL->Display();
     }
+
+    public  function saveImgToDir($dirPath, $imgFile){ //. . . ned some more validation
+        // $imgFile = $FILES['name'];
+        $path = $dirPath; // директория для загрузки
+        $ext = array_pop(explode('.',$imgFile['name'])); // расширение
+        $new_name = time().'.'.$ext; // новое имя с расширением
+        $full_path = $path.$new_name; // полный путь с новым именем и расширением
+
+        if($imgFile['error'] == 0){
+            if(move_uploaded_file($imgFile['tmp_name'], $full_path)){
+                return $new_name;
+            }
+        }
+
+        return -1;
+    }
+
+    function deleteFile($directory,$filename)
+    {
+        // открываем директорию (получаем дескриптор директории)
+        $dir = opendir($directory);
+        // считываем содержание директории
+        while(($file = readdir($dir)))
+        {
+            // Если это файл и он равен удаляемому ...
+            if((is_file("$directory/$file")) && ("$directory/$file" == "$directory/$filename"))
+            {
+                // ...удаляем его.
+                unlink("$directory/$file");
+                // Если файла нет по запрошенному пути, возвращаем TRUE - значит файл удалён.
+                if(!file_exists($directory."/".$filename)) return $s = TRUE;
+            }
+        }
+        // Закрываем дескриптор директории.
+        closedir($dir);
+    }
+
+    function CreateDir($path ,$name){
+        mkdir($path.$name, 0777);
+    }
 }

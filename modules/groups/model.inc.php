@@ -14,8 +14,7 @@ class Groups_Model
     }
     //Edit group info
     public function Edit($array, $group) {
-        $List = Core::$Db->UpdateById( 'groups',$array,'id', $group[0]['id'] );
-        return $List;
+        Core::$Db->UpdateById( 'groups',$array,'id', $group[0]['id'] );
     }
 
     public function GetGroup($id) {
@@ -59,6 +58,19 @@ class Groups_Model
         $List = Core::$Db->Select( 'group_admin','group_id',
             array('group_id' => $group[0]['id'], 'user_id' => $user['id']  ) );
         return (isset($List[0]));
+    }
+
+    public function IdLastCreatedGroupByUser($user){
+        $List = Core::$Db->Select( 'groups','id',
+            array('owner_id' => $user['id']));
+
+        $max = $List[0]['id'];
+        foreach ($List as $value){
+            if($max<$value['id'])
+                $max = $value['id'];
+        }
+
+        return $max;
     }
 
 }
