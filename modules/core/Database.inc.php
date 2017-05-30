@@ -23,7 +23,6 @@ class Database
             array_push($setArray, "{$key} = '{$value}'");
         $setList = implode(',', $setArray);
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
-        var_dump($sql);
         $this->Pdo->exec($sql);
     }
     public function Select($tableName, $fieldArray, $assocArray = null)
@@ -51,7 +50,6 @@ class Database
         $fieldsList = implode(',', $fieldsArray);
         $valuesList = "'".implode("', '", $valuesArray)."'";
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
-        var_dump($sql);
         $this->Pdo->exec($sql);
     }
 }
