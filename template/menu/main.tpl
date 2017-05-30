@@ -122,6 +122,7 @@
                         <i class="material-icons md-48">mode_edit</i>
                       </button>
                 </div>
+                <?php echo $newsSection ?>
             </div>
         </div>
     </div>

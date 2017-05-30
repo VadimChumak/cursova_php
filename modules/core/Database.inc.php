@@ -52,4 +52,27 @@ class Database
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
         $this->Pdo->exec($sql);
     }
+    public function SelectNumberOfRecords($tableName, $fieldArray, $from, $to, $assocArray = null, $sortingCondotion = null)
+    {
+        $whereString = '';
+        if (is_string($fieldArray))
+            $fieldsString = $fieldArray;
+        if (is_array($fieldArray))
+            $fieldsString = implode(', ', $fieldArray);
+        if (is_array($assocArray))
+        {
+            $whereArray = array();
+            foreach ($assocArray as $key => $value)
+                array_push($whereArray, "($key = '$value')");
+            $whereString = 'WHERE '.implode('AND', $whereArray);
+        }
+        $sortingString = '';
+        if (is_string($sortingCondotion))
+            $soringString = "ORDER BY ".$sortingCondotion;
+        if (is_array($fieldArray))
+            $sortingString = "ORDER BY ".implode(', ', $sortingCondotion);
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString} LIMIT {$from}, {$to}";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
