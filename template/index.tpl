@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Khula" rel="stylesheet">
     <meta charset="utf-8">
 </head>
-<body>
+<body class="grey lighten-2">
 <?php if (isset($Content)) echo $Content ?>
 <script src="/Content/js/jquery-3.1.1.js"></script>
 <script src="/Content/js/masonry.js"></script>

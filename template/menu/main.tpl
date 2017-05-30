@@ -8,6 +8,39 @@
     <li><a href="/registration/logout">Вихід</a></li>
 </ul>
 <!------->
+
+  <div id="modal_createPost" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <div class="row">
+        <form class="col l12 m12 s12" name="formPost">
+            <div class="row">
+                <div class="input-field l12 m12 s12">
+                    <input type="hidden" name="pageType" value="user" />
+                    <input type="hidden" name="ownerId" value="3" />
+                    <i class="material-icons prefix">mode_edit</i>
+                    <textarea id="icon_prefix2" class="materialize-textarea" name="newsText"></textarea>
+                    <label for="icon_prefix2">Що у вас нового</label>
+                </div>
+                <div class="file-field input-field l12 m12 s12">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="newsImage">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-green btn-flat main-color" id="sendPost">Agree</button>
+    </div>
+  </div>
+
+
+
 <div id="main">
     <header>
         <nav class="main-color row nav-wrapper">
@@ -41,7 +74,7 @@
         </nav>
     </header>
     <div class="row" id="content">
-        <div class="col l2 m3 hide-on-small-and-down" id="left-menu">
+        <div class="col l2 m3 hide-on-small-and-down z-depth-4" id="left-menu">
             <div class="user-page-img">
                 <img  src="<?php echo "/media/users/".$UserInfo['id'].'/photo/'.$UserInfo['image']['image'] ?>" class="responsive-img left-menu-user-img" alt="">
             </div>
@@ -62,8 +95,7 @@
             </div>
         </div>
         <div class="col l10 m9 s12" id="main-content">
-            <?php echo $Content?>
-            {*<div class="row quick-acces">
+            <div class="row quick-acces">
                 <header>
                     <nav class="user-nav nav-extended">
                         <div class="nav-wrapper">
@@ -85,7 +117,7 @@
                 </header>
             </div>
             <div class="row wall">
-                <div class="col l4 m6 s12 wall-item create-post-area">
+                <div class="col l4 m6 s12 wall-item create-post-area" id="createPostBlock">
                         <button class="btn waves-effect waves-light" id="createPost">
                         <i class="material-icons md-48">mode_edit</i>
                       </button>
@@ -164,7 +196,25 @@
                         </div>
                       </div>
                 </div>
-            </div>*}
+            </div>
         </div>
     </div>
 </div>
+
+<div id="eror"></div>
+
+<script type="text" id="newsBlock">
+                    <div class="card">
+                        <div class="card-image">
+                          <img src="[image]">
+                        </div>
+                        <div class="card-content">
+                          [text]
+                        </div>
+                        <div class="card-action">
+                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
+                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
+                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
+                        </div>
+                      </div>
+</script>

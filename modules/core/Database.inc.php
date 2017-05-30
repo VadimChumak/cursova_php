@@ -51,7 +51,6 @@ class Database
         $fieldsList = implode(',', $fieldsArray);
         $valuesList = "'".implode("', '", $valuesArray)."'";
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
-        var_dump($sql);
         $this->Pdo->exec($sql);
     }
 }
