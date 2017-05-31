@@ -3,7 +3,6 @@ class News_Controller
 {
     public function SaveAction() {
         $model = new News_Model();
-        $view = new News_View();
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $news = array();
             $news = $_POST;
@@ -20,5 +19,13 @@ class News_Controller
             echo json_encode(array('status' => 'error'));
             die();
         }
+    }
+    public function GetAction() {
+        $from = $_POST['from'];
+        $to = $_POST['to'];
+        $newsList= Core::$Db->SelectNumberOfRecords("post", "*", $from, $to, array('page_owner_id' => '3', 'page_type' => 'user'), "publishing_date");
+        $res = json_encode($newsList);
+        echo $res;
+        die(); 
     }
 }

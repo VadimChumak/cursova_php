@@ -1,11 +1,68 @@
 window.addEventListener("load", function() {
-    
-    var contentHeight = document.getElementById("main-content").offsetHeight;
-    var leftHeight = document.getElementById("left-menu").offsetHeight;
-    if(contentHeight > leftHeight) {
+    function setMenuHeight() {
+        var contentHeight = document.getElementById("main-content").offsetHeight;
+        var leftHeight = document.getElementById("left-menu").offsetHeight;
+        if(contentHeight > leftHeight) {
         document.getElementById("left-menu").style.height = contentHeight + "px";
+    };
+    setMenuHeight();
     }
-    
+    var newsStartFrom = 0;
+    var newsEnd = 10;
+    var allNews = true;
+
+    $(window).scroll(function() 
+    {
+        if  (($(window).scrollTop() == $(document).height() - $(window).height()) && allNews == true) 
+        {
+            newsStartFrom = newsEnd;
+            newsEnd += 10;
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "news/get", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            var res = "from=" + encodeURIComponent(newsStartFrom) + "&to=" + encodeURIComponent(newsEnd);
+            xhr.send(res);
+            xhr.onload = function() {
+                var result = xhr.responseText;
+                var array = JSON.parse(result);
+                if(array.length == 0) {
+                    allNews = false;
+                }
+                else {
+                array.forEach(function(item, i, arr) {
+                    var tmp = $("#newsBlock").html();
+                    tmp = tmp.replace("[image]",("/media/users/" + item.page_owner_id + "/photo/" + item.photo_url));
+                    tmp = tmp.replace("[text]",item.id);
+                    var tmpObj = $(tmp);
+                    grid.append(tmpObj).masonry("appended", tmpObj);
+                });
+                setTimeout(setReload, 100);
+                setMenuHeight();
+                }
+            }
+            xhr.onreadystatechange = function() {
+                if(this.status != 200) {
+                if(this.readyState !=4) return;
+                 alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                    return;
+                }
+                else {
+                    /*
+                 var tmp = $("#newsBlock").html();
+                 tmp = tmp.replace("[image]",("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
+                 tmp = tmp.replace("[text]",result.post_text);
+                 var tmpObj = $(tmp);
+                 $(tmp).insertAfter($("#createPostBlock"));
+                 grid.masonry("addItems", tmpObj);
+                 grid.masonry("prepended", tmpObj).masonry('layout');;
+                 grid.masonry('reloadItems');
+                 grid.masonry('layout');*/
+                }
+            }   
+        }
+    });
+
+
     var grid = $('.wall').masonry({
         itemSelector: '.wall-item',
         percentPosition: true
@@ -42,13 +99,19 @@ window.addEventListener("load", function() {
                 tmp = tmp.replace("[text]",result.post_text);
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));
-                grid.masonry("addItems", tmpObj);
+                //grid.masonry("addItems", tmpObj);
                 grid.masonry("prepended", tmpObj).masonry('layout');;
-                grid.masonry('reloadItems');
-                grid.masonry('layout');
+                setTimeout(setReload, 100);
+                newsEnd++;
+                setMenuHeight();
             }
         }
     });
+
+function setReload() {
+    grid.masonry("reloadItems");
+    grid.masonry('layout');
+}
     
 function showFile(e) {
     var files = e.target.files;

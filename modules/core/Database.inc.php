@@ -71,7 +71,7 @@ class Database
             $soringString = "ORDER BY ".$sortingCondotion;
         if (is_array($fieldArray))
             $sortingString = "ORDER BY ".implode(', ', $sortingCondotion);
-        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString} LIMIT {$from}, {$to}";
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString} LIMIT {$from},10";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
