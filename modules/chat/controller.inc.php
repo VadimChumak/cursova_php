@@ -2,6 +2,7 @@
 class Chat_Controller
 {
     public function SetAction() {
+        session_write_close();
         $limit = 360;
         $time = time();
         $user_id = $_POST['user_id'];
@@ -14,7 +15,6 @@ class Chat_Controller
                 }
                 $res = json_encode($message);
                 echo $res;
-                flush();
                 exit();
             }
             sleep(5);
