@@ -43,7 +43,7 @@ window.addEventListener("load", function() {
                     grid.append(tmpObj).masonry("appended", tmpObj);
                     $("time.timeago").timeago();
                 });
-                setTimeout(setReload, 200);
+                setTimeout(setReload, 250);
                 setMenuHeight();
                 }
             }
@@ -114,7 +114,7 @@ window.addEventListener("load", function() {
                 $(tmp).insertAfter($("#createPostBlock"));
                 $("time.timeago").timeago();
                 grid.masonry("prepended", tmpObj).masonry('layout');;
-                setTimeout(setReload, 200);
+                setTimeout(setReload, 250);
                 newsEnd++;
                 setMenuHeight();
             }
