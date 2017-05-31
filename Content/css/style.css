@@ -395,3 +395,18 @@ body .row{
     font-size: 8px !important;
     box-shadow: none;
 }
+
+#floating-panel {
+    background-color: #fff;
+    padding: 5px;
+    border: 1px solid #999;
+    text-align: center;
+    font-family: 'Roboto','sans-serif';
+    line-height: 30px;
+    padding-left: 10px;
+}
+#map {
+    height: 500px;
+    width: 500px;
+    margin-left: 35%;
+}
