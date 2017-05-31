@@ -26,8 +26,8 @@ class Registration_Model
     public function Login($item) {
         $current_user = Core::$Db->Select('user_auth', 'id, email, password', array('email' => $item['email'],
             'password' => md5($item['password'])));
-        $user_photo = Core::$Db->Select('user_data', 'image', array('user_id' => $current_user[0]['id']));
         if (!empty($current_user)) {
+            $user_photo = Core::$Db->Select('user_data', 'image', array('user_id' => $current_user[0]['id']));
             $user_data = Core::$Db->Select('user_data', 'name, surname', array('user_id' => $current_user[0]['id']));
             $this->Authorise(array(
                 'id' => $current_user[0]['id'],

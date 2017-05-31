@@ -23,7 +23,7 @@ class News_Controller
     public function GetAction() {
         $from = $_POST['from'];
         $to = $_POST['to'];
-        $newsList= Core::$Db->SelectNumberOfRecords("post", "*", $from, $to, array('page_owner_id' => '3', 'page_type' => 'user'), array("publishing_date"));
+        $newsList= Core::$Db->SelectNumberOfRecords("post", "*", $from, $to, array('page_owner_id' => '', 'page_type' => 'user'), array("publishing_date"));
         $res = json_encode($newsList);
         echo $res;
         die(); 

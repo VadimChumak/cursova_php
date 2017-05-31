@@ -18,8 +18,8 @@ class Core
             $url = $_GET['url'];
             $parts = explode('/', $url);
             if (count($parts) == 1) {
-                $moduleObject = new Menu_Controller();
-                $params = $moduleObject->CreateAction();
+                $UserController = new User_Controller();
+                $params = $UserController->IdAction(array($_SESSION['user']['id']));
                 self::$IndexTPL->SetParams($params);
             }
             else {

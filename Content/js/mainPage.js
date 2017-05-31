@@ -22,7 +22,7 @@ window.addEventListener("load", function() {
             newsStartFrom = newsEnd;
             newsEnd += 10;
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "news/get", true);
+            xhr.open("POST", "/news/get", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
             var res = "from=" + encodeURIComponent(newsStartFrom) + "&to=" + encodeURIComponent(newsEnd);
             xhr.send(res);
@@ -87,7 +87,7 @@ window.addEventListener("load", function() {
     $("#sendPost").on("click", function() {
         var formData = new FormData(document.forms.formPost);
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "news/save", true);
+        xhr.open("POST", "/news/save", true);
         xhr.send(formData);
         xhr.onreadystatechange = function() {
             if(this.readyState !=4) return;

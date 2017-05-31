@@ -9,7 +9,8 @@ class Registration_Controller
             $user = $_POST;
             if ($model->AddUser($user))
             {
-                return Menu_Controller::CreateAction();
+                $UserController = new User_Controller();
+                return $UserController->IdAction(array($_SESSION['user']['id']));
             }
         }
         return array(
@@ -24,7 +25,8 @@ class Registration_Controller
             $user = $_POST;
             if ($m->Login($user))
             {
-                return Menu_Controller::CreateAction();
+                $UserController = new User_Controller();
+                return $UserController->IdAction(array($_SESSION['user']['id']));
             }
         }
         return array(
