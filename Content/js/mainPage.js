@@ -92,6 +92,7 @@ window.addEventListener("load", function() {
                 return;
             }
             else {
+                document.getElementById("eror").innerHTML = xhr.responseText;
                 var result = JSON.parse(xhr.responseText);
                 var fragment = document.createDocumentFragment();
                 var tmp = $("#newsBlock").html();
