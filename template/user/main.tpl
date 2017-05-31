@@ -6,6 +6,7 @@
     <li><a href="/setting/edit">Редагувати</a></li>
     <li class="divider"></li>
     <li><a href="/registration/logout">Вихід</a></li>
+    <input type="hidden" value="<?php echo $CurrentUser['id'] ?>" id="currentUserId"/>
 </ul>
 <!------->
 

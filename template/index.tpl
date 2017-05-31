@@ -17,5 +17,6 @@
 <script src="/Content/js/mainPage.js"></script>
 <script src="/Content/js/timeago.js"></script>
 <script src="/Content/js/timeagoLocalization.js"></script>
+<script src="/Content/js/chat.js"></script>
 </body>
 </html>

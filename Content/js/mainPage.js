@@ -96,6 +96,7 @@ window.addEventListener("load", function() {
                 return;
             }
             else {
+                document.getElementById("eror").innerHTML = xhr.responseText;
                 var result = JSON.parse(xhr.responseText);
                 var postImg = "";
                 if(result.photo_url != undefined) {

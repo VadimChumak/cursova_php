@@ -25,7 +25,7 @@ class Database
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
         $this->Pdo->exec($sql);
     }
-    public function Select($tableName, $fieldArray, $assocArray = null)
+    public function Select($tableName, $fieldArray, $assocArray = null, $sortingCondotion = null)
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -39,7 +39,12 @@ class Database
                 array_push($whereArray, "($key = '$value')");
             $whereString = 'WHERE '.implode('AND', $whereArray);
         }
-        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString}";
+        $sortingString = '';
+        if (is_string($sortingCondotion))
+            $soringString = "ORDER BY ".$sortingCondotion;
+        if (is_array($sortingCondotion))
+            $sortingString = "ORDER BY ".implode(', ', $sortingCondotion);
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString}";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -72,6 +77,11 @@ class Database
         if (is_array($sortingCondotion))
             $sortingString = "ORDER BY ".implode(', ', $sortingCondotion);
         $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString} DESC LIMIT {$from},10";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function SelectMessages($user_id) {
+        $sql = "SELECT * FROM mesages WHERE (reciever_id = '{$user_id}') AND (is_readed = '0') ORDER BY id DESC";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
