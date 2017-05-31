@@ -11,6 +11,10 @@ window.addEventListener("load", function() {
     var newsEnd = 10;
     var allNews = true;
 
+    $(window).on("resize", function() {
+        setTimeout(setMenuHeight, 2000);
+    });
+
     $(window).scroll(function() 
     {
         if  (($(window).scrollTop() == $(document).height() - $(window).height()) && allNews == true) 
@@ -44,7 +48,7 @@ window.addEventListener("load", function() {
                     $("time.timeago").timeago();
                 });
                 setTimeout(setReload, 250);
-                setMenuHeight();
+                setTimeout(setMenuHeight, 251);
                 }
             }
             xhr.onreadystatechange = function() {
@@ -54,19 +58,12 @@ window.addEventListener("load", function() {
                     return;
                 }
                 else {
-                    /*
-                 var tmp = $("#newsBlock").html();
-                 tmp = tmp.replace("[image]",("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
-                 tmp = tmp.replace("[text]",result.post_text);
-                 var tmpObj = $(tmp);
-                 $(tmp).insertAfter($("#createPostBlock"));
-                 grid.masonry("addItems", tmpObj);
-                 grid.masonry("prepended", tmpObj).masonry('layout');;
-                 grid.masonry('reloadItems');
-                 grid.masonry('layout');*/
                 }
             }   
         }
+        else if  (($(window).scrollTop() == $(document).height() - $(window).height()) && allNews != true) {
+            Materialize.toast('На стіні більше немає записів.', 4000);
+        } 
     });
 
 
@@ -116,7 +113,7 @@ window.addEventListener("load", function() {
                 grid.masonry("prepended", tmpObj).masonry('layout');;
                 setTimeout(setReload, 250);
                 newsEnd++;
-                setMenuHeight();
+                setTimeout(setMenuHeight, 251);
             }
         }
     });
@@ -148,6 +145,7 @@ function showFile(e) {
   }
  
   setTimeout(setReload, 100);
+  setTimeout(setMenuHeight, 251);
 });
 
 window.addEventListener("scroll", function() {
