@@ -11,8 +11,17 @@ class Setting_Model
         else {
             $image_name = "default.png";
         }
-        Core::$Db->UpdateById('user_data', array('birthday' => $item['birthday'], 'gender' => $item['gender'], 'city' => $item['city'],
-            'country' => $item['country'], 'image' => $image_name, 'about' => $item['about']), 'user_id', $_SESSION['user']['id']);
+        $arrayFoeSave = array( 
+            'gender' => $item['gender'], 
+            'city' => $item['city'],
+            'country' => $item['country'], 
+            'image' => $image_name, 
+            'about' => $item['about']
+        );
+        if(strlen($item['birthday']) > 0 ) {
+            $arrayFoeSave['birthday'] = $item['birthday'];
+        }
+        Core::$Db->UpdateById('user_data', $arrayFoeSave, 'user_id', $_SESSION['user']['id']);
         return true;
     }
     public function GetInfo($id)

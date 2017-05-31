@@ -81,8 +81,12 @@
             <div class="left-menu-user-info">
                 <p class="user-name"><?=$UserInfo['name']?></p>
                 <p class="user-surname"><?=$UserInfo['surname']?><i class="material-icons right user-online">perm_identity</i></p>
+                <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
                 <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
                 <button class="waves-effect waves-light btn chat"><i class="material-icons left">chat</i>Chat</button>
+                <?php else: ?>
+                <button class="waves-effect waves-light btn"><i class="material-icons left">photo_camera</i>Change photo</button>
+                <?php endif; ?>
             </div>
             <div class="collection user-menu" id="user-menu">
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">1</span>News</a>
