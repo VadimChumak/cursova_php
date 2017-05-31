@@ -11,9 +11,7 @@
                 <p><?php echo $item['post_text'] ?></p>
             </div>
             <div class="card-action">
-                <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
-                <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
-                <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
+                <time class="timeago" datetime="<?php echo $item['publishing_date'] ?>"></time>
             </div>
             </div>
     </div>

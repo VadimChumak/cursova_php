@@ -38,8 +38,10 @@ window.addEventListener("load", function() {
                     var tmp = $("#newsBlock").html();
                     tmp = tmp.replace("[PostImage]", postImg);
                     tmp = tmp.replace("[text]",item.id);
+                    tmp = tmp.replace("[date]", item.publishing_date);
                     var tmpObj = $(tmp);
                     grid.append(tmpObj).masonry("appended", tmpObj);
+                    $("time.timeago").timeago();
                 });
                 setTimeout(setReload, 200);
                 setMenuHeight();
@@ -105,11 +107,12 @@ window.addEventListener("load", function() {
                     postImg = postImg.replace("[image]", ("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
                 }
                 var tmp = $("#newsBlock").html();
-                tmp = tmp.replace("[PostImage]",postImg);
-                tmp = tmp.replace("[text]",result.post_text);
+                tmp = tmp.replace("[PostImage]", postImg);
+                tmp = tmp.replace("[text]", result.post_text);
+                tmp = tmp.replace("[date]", result.publishing_date);
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));
-                //grid.masonry("addItems", tmpObj);
+                $("time.timeago").timeago();
                 grid.masonry("prepended", tmpObj).masonry('layout');;
                 setTimeout(setReload, 200);
                 newsEnd++;
@@ -144,7 +147,7 @@ function showFile(e) {
     }
   }
  
-    
+  setTimeout(setReload, 100);
 });
 
 window.addEventListener("scroll", function() {

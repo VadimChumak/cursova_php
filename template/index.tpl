@@ -16,5 +16,6 @@
 <script src="/Content/js/materialize.js"></script>
 <script src="/Content/js/mainPage.js"></script>
 <script src="/Content/js/timeago.js"></script>
+<script src="/Content/js/timeagoLocalization.js"></script>
 </body>
 </html>
