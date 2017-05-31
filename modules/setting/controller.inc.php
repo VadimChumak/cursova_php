@@ -11,7 +11,8 @@ class Setting_Controller
             $user = $_POST;
             if ($model->Edit($user))
             {
-                return Menu_Controller::CreateAction();
+                $UserController = new User_Controller();
+                return $UserController->IdAction(array($_SESSION['user']['id']));
             }
         }
         else {
