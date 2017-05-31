@@ -9,6 +9,8 @@
 </head>
 <body class="grey lighten-2">
 <?php if (isset($Content)) echo $Content ?>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCj1Zt3Zvmuuh4YA7DTYmc1RtV-sevDSsE&callback=initMap"></script>
+<script src="/Content/js/map.js"></script>
 <script src="/Content/js/jquery-3.1.1.js"></script>
 <script src="/Content/js/masonry.js"></script>
 <script src="/Content/js/materialize.js"></script>
