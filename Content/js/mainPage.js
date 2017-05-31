@@ -28,10 +28,15 @@ window.addEventListener("load", function() {
                 if(array.length == 0) {
                     allNews = false;
                 }
-                else {
+                else {  
                 array.forEach(function(item, i, arr) {
+                    var postImg = "";
+                    if(item.photo_url != null) {
+                        postImg = $("#postIMG").html();
+                        postImg = postImg.replace("[image]", ("/media/users/" + item.page_owner_id + "/photo/" + item.photo_url));
+                    }   
                     var tmp = $("#newsBlock").html();
-                    tmp = tmp.replace("[image]",("/media/users/" + item.page_owner_id + "/photo/" + item.photo_url));
+                    tmp = tmp.replace("[PostImage]", postImg);
                     tmp = tmp.replace("[text]",item.id);
                     var tmpObj = $(tmp);
                     grid.append(tmpObj).masonry("appended", tmpObj);
@@ -94,9 +99,13 @@ window.addEventListener("load", function() {
             else {
                 document.getElementById("eror").innerHTML = xhr.responseText;
                 var result = JSON.parse(xhr.responseText);
-                var fragment = document.createDocumentFragment();
+                var postImg = "";
+                if(result.photo_url != undefined) {
+                    postImg = $("#postIMG").html();
+                    postImg = postImg.replace("[image]", ("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
+                }
                 var tmp = $("#newsBlock").html();
-                tmp = tmp.replace("[image]",("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
+                tmp = tmp.replace("[PostImage]",postImg);
                 tmp = tmp.replace("[text]",result.post_text);
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));

@@ -131,19 +131,22 @@
 <div id="eror"></div>
 
 <script type="text" id="newsBlock">
-<div class="col l4 m6 s12 wall-item">
-                    <div class="card">
-                        <div class="card-image">
-                          <img src="[image]">
-                        </div>
-                        <div class="card-content">
-                          [text]
-                        </div>
-                        <div class="card-action">
-                          <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
-                           <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
-                           <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
-                        </div>
-                      </div>
-                      </div>
+    <div class="col l4 m6 s12 wall-item">
+        <div class="card">
+            [PostImage]
+            <div class="card-content">
+                [text]
+            </div>
+            <div class="card-action">
+                <a class="waves-effect btn"><i class="material-icons left">thumb_up</i>Вподобати</a>
+                <a class="waves-effect btn"><i class="material-icons left">mode_comment</i>Коментарі</a>
+                <a class="waves-effect btn"><i class="material-icons left">share</i>Поділитись</a>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text" id="postIMG">
+    <div class="card-image">
+        <img src="[image]">
+    </div>
 </script>
