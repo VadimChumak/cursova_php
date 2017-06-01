@@ -25,7 +25,8 @@ class Database
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
         $this->Pdo->exec($sql);
     }
-    public function Select($tableName, $fieldArray, $assocArray = null)
+    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null,
+                           $groupByArray = null)
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -39,10 +40,28 @@ class Database
                 array_push($whereArray, "($key = '$value')");
             $whereString = 'WHERE '.implode('AND', $whereArray);
         }
-        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString}";
+
+        //now just 1 join
+        $joinString='';
+        if (is_array($joinArray))
+        {
+            $key = key($joinArray);
+            $val = $joinArray[$key];
+            $joinString = 'INNER JOIN '.$joinTabNames.' ON '."{$key} = {$val}";
+        }
+
+        $groupByString = '';
+        if(is_array($groupByArray)){
+            $groupByString = 'GROUP BY '.implode(',', $groupByArray);;
+        }
+
+
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$groupByString}";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
     public function Insert($tableName, $assocArray)
     {
         $fieldsArray = array_keys($assocArray);
@@ -52,6 +71,7 @@ class Database
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
         $this->Pdo->exec($sql);
     }
+
     public function SelectNumberOfRecords($tableName, $fieldArray, $from, $to, $assocArray = null, $sortingCondotion = null)
     {
         $whereString = '';
