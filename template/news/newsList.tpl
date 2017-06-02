@@ -7,6 +7,7 @@
             </div>
             <?php endif; ?>
             <div class="card-content">
+                <p><a href="<?php echo '/user/id/'.$item['user_id'] ?>"><?php echo $item['surname']." ".$item['name'] ?></a></p>
                 <p><?php echo $item['post_text'] ?></p>
             </div>
             <div class="card-action">

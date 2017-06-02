@@ -80,9 +80,47 @@ class Database
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function SelectMessages($user_id) {
-        $sql = "SELECT * FROM mesages WHERE (reciever_id = '{$user_id}') AND (is_readed = '0') ORDER BY id DESC";
+
+
+    public function SelectJoin($tableName, $fieldArray, $assocArray = null, $orderArray = null, $groupArray = null, $joinTable = null, $limit = null)
+    {
+        $whereString = '';
+        if (is_string($fieldArray))
+            $fieldsString = $fieldArray;
+        if (is_array($fieldArray))
+            $fieldsString = implode(', ', $fieldArray);
+        if (is_array($assocArray))
+        {
+            $whereArray = array();
+            foreach ($assocArray as $key => $value)
+                array_push($whereArray, "($key = '$value')");
+            $whereString = 'WHERE '.implode('AND', $whereArray);
+        }
+        $orderString = '';
+        if (is_string($orderArray))
+            $orderString = "ORDER BY ".$orderArray;
+        if (is_array($orderArray))
+            $orderString = "ORDER BY ".implode(', ', $orderArray);
+        $groupString = '';
+        if (is_string($groupArray))
+            $groupString = "GROUP BY ".$groupArray;
+        if (is_array($groupArray))
+            $groupString = "GROUP BY ".implode(', ', $groupArray);
+        $joinString = '';
+        if (is_array($joinTable)) {
+            $joinArray = array();
+            foreach ($joinTable as $tName => $tField)
+                foreach($tField as $firstField => $secondField)
+                    array_push($joinArray, "$tName ON $firstField = $secondField");
+            $joinString = "INNER JOIN ".implode(' INNER JOIN ', $joinArray);
+        }
+        $limitString = '';
+        if(is_array($limit)) {
+            $limitString = "LIMIT " . $limit['from'] .", " . $limit['count'];
+        }
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$orderString} {$groupString} {$limitString}";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
+
 }

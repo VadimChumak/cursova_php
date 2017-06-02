@@ -220,7 +220,8 @@ body .row{
     background-color: #32b38c;
 }
 
-#left-menu .left-menu-user-info button{
+#left-menu .left-menu-user-info button,
+#left-menu .left-menu-user-info a {
     width:100%;
     padding: 0px 5px;
     margin-top: 10px;

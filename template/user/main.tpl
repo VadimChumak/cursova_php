@@ -84,7 +84,7 @@
                 <p class="user-surname"><?=$UserInfo['surname']?><i class="material-icons right user-online">perm_identity</i></p>
                 <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
                 <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
-                <button class="waves-effect waves-light btn chat"><i class="material-icons left">chat</i>Chat</button>
+                <a href="/shat/messages/<?php echo $UserInfo['user_id'] ?>" class="waves-effect waves-light btn chat"><i class="material-icons left">chat</i>Chat</a>
                 <?php else: ?>
                 <button class="waves-effect waves-light btn"><i class="material-icons left">photo_camera</i>Change photo</button>
                 <?php endif; ?>
