@@ -42,6 +42,30 @@
 
 
 
+<div id="modal_createMessage" class="modal modal-fixed-footer">
+    <div class="modal-content">
+      <div class="row">
+        <form class="col l12 m12 s12" name="formMessage">
+            <div class="row">
+                <div class="input-field l12 m12 s12">
+                    <input type="hidden" name="reciever_id" value="<?php echo $UserInfo['user_id'] ?>" />
+                    <i class="material-icons prefix">mode_edit</i>
+                    <textarea id="icon_prefix2" class="materialize-textarea" name="text"></textarea>
+                    <label for="icon_prefix2">Що у вас нового</label>
+                </div>
+            </div>
+        </form>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="modal-action modal-close waves-effect waves-green btn-flat main-color" id="sendMessage">Agree</button>
+    </div>
+  </div>
+
+
+
+
+
 <div id="main">
     <header>
         <nav class="main-color row nav-wrapper">
@@ -85,7 +109,7 @@
                 <p class="user-surname"><?=$UserInfo['surname']?><i class="material-icons right user-online">perm_identity</i></p>
                 <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
                 <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
-                <a href="/shat/messages/<?php echo $UserInfo['user_id'] ?>" class="waves-effect waves-light btn chat"><i class="material-icons left">chat</i>Chat</a>
+                <button class="waves-effect waves-light btn chat" id="openMessage"><i class="material-icons left">chat</i>Chat</button>
                 <?php else: ?>
                 <button class="waves-effect waves-light btn"><i class="material-icons left">photo_camera</i>Change photo</button>
                 <?php endif; ?>

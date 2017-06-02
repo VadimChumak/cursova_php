@@ -11,8 +11,6 @@
         var userId = document.getElementById("currentUserId").value;
         var res = "user_id=" + encodeURIComponent(userId);
         xhr.send(res);
-        xhr.onload = function() {
-        }
         xhr.onreadystatechange = function() {
             if(this.readyState == 4) {
             if(this.status != 200) {
@@ -20,6 +18,7 @@
                 alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
             }
             else {
+                document.getElementById("eror").innerHTML = xhr.responseText;
                 var messages = JSON.parse(xhr.responseText);
                 Materialize.toast(messages[0].text, 4000);
                 setTimeout(connection, 1000);
