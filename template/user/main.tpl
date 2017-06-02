@@ -78,6 +78,7 @@
         <div class="col l2 m3 hide-on-small-and-down z-depth-4" id="left-menu">
             <div class="user-page-img">
                 <img  src="<?php echo "/media/users/".$UserInfo['user_id'].'/photo/'.$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
+                <input type="hidden" value="<?php echo $UserInfo['user_id'] ?>" id="page_owner_id"/>
             </div>
             <div class="left-menu-user-info">
                 <p class="user-name"><?=$UserInfo['name']?></p>
@@ -136,22 +137,3 @@
 </div>
 
 <div id="eror"></div>
-
-<script type="text" id="newsBlock">
-    <div class="col l4 m6 s12 wall-item">
-        <div class="card">
-            [PostImage]
-            <div class="card-content">
-                [text]
-            </div>
-            <div class="card-action">
-                <time class="timeago" datetime="[date]"></time>
-            </div>
-        </div>
-    </div>
-</script>
-<script type="text" id="postIMG">
-    <div class="card-image">
-        <img src="[image]">
-    </div>
-</script>

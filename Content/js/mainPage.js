@@ -21,12 +21,14 @@ window.addEventListener("load", function() {
         {
             newsStartFrom = newsEnd;
             newsEnd += 10;
+            var pageOwnerId = $("#page_owner_id").val();
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/news/get", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            var res = "from=" + encodeURIComponent(newsStartFrom) + "&to=" + encodeURIComponent(newsEnd);
+            var res = "from=" + encodeURIComponent(newsStartFrom) + "&to=" + encodeURIComponent(newsEnd) + "&owner=" + encodeURIComponent(pageOwnerId);
             xhr.send(res);
             xhr.onload = function() {
+                document.getElementById("eror").innerHTML = xhr.responseText;
                 var result = xhr.responseText;
                 var array = JSON.parse(result);
                 if(array.length == 0) {
@@ -43,6 +45,10 @@ window.addEventListener("load", function() {
                     tmp = tmp.replace("[PostImage]", postImg);
                     tmp = tmp.replace("[text]",item.id);
                     tmp = tmp.replace("[date]", item.publishing_date);
+                    tmp = tmp.replace("[userID]", item.user_id);
+                    tmp = tmp.replace("[userID]", item.user_id);
+                    tmp = tmp.replace("[userImage]", item.image);
+                    tmp = tmp.replace("[userName]", item.surname + " " + item.name);
                     var tmpObj = $(tmp);
                     grid.append(tmpObj).masonry("appended", tmpObj);
                     $("time.timeago").timeago();

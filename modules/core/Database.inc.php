@@ -82,7 +82,7 @@ class Database
     }
 
 
-    public function SelectJoin($tableName, $fieldArray, $assocArray = null, $orderArray = null, $groupArray = null, $joinTable = null, $limit = null)
+    public function SelectJoin($tableName, $fieldArray, $assocArray = null, $orderArray = null, $orderType = null, $groupArray = null, $joinTable = null, $limit = null)
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -101,6 +101,9 @@ class Database
             $orderString = "ORDER BY ".$orderArray;
         if (is_array($orderArray))
             $orderString = "ORDER BY ".implode(', ', $orderArray);
+        if(!is_null($orderType)) {
+            $orderString = $orderString . " DESC ";
+        }
         $groupString = '';
         if (is_string($groupArray))
             $groupString = "GROUP BY ".$groupArray;
