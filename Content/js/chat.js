@@ -14,14 +14,16 @@
         xhr.onreadystatechange = function() {
             if(this.readyState == 4) {
             if(this.status != 200) {
-                setTimeout(connection, 1000);
+                setTimeout(connection, 200);
                 alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
             }
             else {
                 document.getElementById("eror").innerHTML = xhr.responseText;
                 var messages = JSON.parse(xhr.responseText);
-                Materialize.toast(messages[0].text, 4000);
-                setTimeout(connection, 1000);
+                messages.forEach(function(item, i, arr) {
+                    Materialize.toast(item.name + " : " + item.text, 4000);
+                });
+                setTimeout(connection, 200);
             }
             }
         }
