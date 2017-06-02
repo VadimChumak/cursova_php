@@ -28,7 +28,6 @@ window.addEventListener("load", function() {
             var res = "from=" + encodeURIComponent(newsStartFrom) + "&to=" + encodeURIComponent(newsEnd) + "&owner=" + encodeURIComponent(pageOwnerId);
             xhr.send(res);
             xhr.onload = function() {
-                document.getElementById("eror").innerHTML = xhr.responseText;
                 var result = xhr.responseText;
                 var array = JSON.parse(result);
                 if(array.length == 0) {
