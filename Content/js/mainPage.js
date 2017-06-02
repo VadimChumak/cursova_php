@@ -113,6 +113,10 @@ window.addEventListener("load", function() {
                 tmp = tmp.replace("[PostImage]", postImg);
                 tmp = tmp.replace("[text]", result.post_text);
                 tmp = tmp.replace("[date]", result.publishing_date);
+                tmp = tmp.replace("[userID]", result.user_id);
+                tmp = tmp.replace("[userID]", result.user_id);
+                tmp = tmp.replace("[userImage]", result.image);
+                tmp = tmp.replace("[userName]", result.surname + " " + result.name);
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));
                 $("time.timeago").timeago();

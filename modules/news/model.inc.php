@@ -10,6 +10,11 @@ class News_Model
             $arrayForSave['photo_url'] = $imageName;
         }
         Core::$Db->Insert("post", $arrayForSave);
+        $userInfo = Core::$Db->Select('user_data', array('user_id', 'name', 'surname', 'image'), array('user_id' => $_SESSION['user']['id']));
+        $arrayForSave['user_id'] = $userInfo[0]['user_id'];
+        $arrayForSave['name'] = $userInfo[0]['name'];
+        $arrayForSave['surname'] = $userInfo[0]['surname'];
+        $arrayForSave['image'] = $userInfo[0]['image'];
         return $arrayForSave;
     }
 }
