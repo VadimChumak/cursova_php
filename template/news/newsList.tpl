@@ -1,3 +1,8 @@
+<div class="col l4 m6 s12 wall-item create-post-area" id="createPostBlock">
+                        <button class="btn waves-effect waves-light" id="createPost">
+                        <i class="material-icons md-48">mode_edit</i>
+                      </button>
+</div>
 <?php while (!is_null($item = array_shift($newsArray))): ?>
     <div class="col l4 m6 s12 wall-item">
         <div class="card">

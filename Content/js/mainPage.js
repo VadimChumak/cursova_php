@@ -52,8 +52,8 @@ window.addEventListener("load", function() {
                     grid.append(tmpObj).masonry("appended", tmpObj);
                     $("time.timeago").timeago();
                 });
-                setTimeout(setReload, 250);
-                setTimeout(setMenuHeight, 251);
+                setTimeout(setReload, 210);
+                setTimeout(setMenuHeight, 211);
                 }
             }
             xhr.onreadystatechange = function() {
@@ -119,9 +119,9 @@ window.addEventListener("load", function() {
                 $(tmp).insertAfter($("#createPostBlock"));
                 $("time.timeago").timeago();
                 grid.masonry("prepended", tmpObj).masonry('layout');;
-                setTimeout(setReload, 250);
+                setTimeout(setReload, 210);
                 newsEnd++;
-                setTimeout(setMenuHeight, 251);
+                setTimeout(setMenuHeight, 211);
             }
         }
     });

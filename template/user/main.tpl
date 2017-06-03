@@ -117,7 +117,7 @@
             <div class="collection user-menu" id="user-menu">
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">1</span>News</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">123</span>Friends</a>
-                <a href="#!" class="collection-item waves-effect waves-light"><span class="new badge">17</span>Messages</a>
+                <a href="/chat/messages" class="collection-item waves-effect waves-light"><span class="new badge">17</span>Messages</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">45</span>Groups</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">874</span>Photo</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">9</span>Music</a>
@@ -149,11 +149,6 @@
                 </header>
             </div>
             <div class="row wall">
-                <div class="col l4 m6 s12 wall-item create-post-area" id="createPostBlock">
-                        <button class="btn waves-effect waves-light" id="createPost">
-                        <i class="material-icons md-48">mode_edit</i>
-                      </button>
-                </div>
                 <?php echo $NewsSection ?>
             </div>
         </div>

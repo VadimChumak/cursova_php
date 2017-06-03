@@ -38,11 +38,28 @@ class Chat_Controller
     }
 
     public function MessagesAction() {
+        $chatView = new Chat_View();
+        $userModel = new User_Model();
+        $user = $userModel->GetUser((array($_SESSION['user']['id'])));
         $usersSend = Core::$Db->SelectJoin('mesages', array('DISTINCT user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('mesages.sender_id' => $_SESSION['user']['id']), null, null,  null, array('user_data' => array('mesages.reciever_id' => 'user_data.user_id')), null);
-        var_dump($usersSend);
         $usersRecieve = Core::$Db->SelectJoin('mesages', array('DISTINCT user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('mesages.reciever_id' => $_SESSION['user']['id']), null, null,  null, array('user_data' => array('mesages.sender_id' => 'user_data.user_id')), null);
-        var_dump($usersRecieve);
-        $result = array_merge(array_diff_assoc($usersSend, $usersRecieve), array_intersect_assoc($usersSend, $usersRecieve));
-        var_dump($result);
+        $result['messagesArray'] = array_merge_recursive(array_diff_assoc($usersSend, $usersRecieve), array_intersect_assoc($usersSend, $usersRecieve));
+        $userPage = new User_View();
+        $params = array(
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $user[0],
+            'NewsSection' => $chatView->MessagesList($result)
+        );
+        return array(
+            "Content"  => $userPage->GetUserPage($params)
+        );
+    }
+
+    public function ListAction() {
+        $firstUser = $_POST['userId'];
+        $messages = Core::$Db->SelectMessages($firstUser, $_SESSION['user']['id']);
+        $result = json_encode($messages);
+        echo $result;
+        exit();
     } 
 }
