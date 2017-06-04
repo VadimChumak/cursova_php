@@ -25,6 +25,24 @@ class Database
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
         $this->Pdo->exec($sql);
     }
+    public function SelectSearch($tableName, $fieldArray, $assocArray = null)
+    {
+        $whereString = '';
+        if (is_string($fieldArray))
+            $fieldsString = $fieldArray;
+        if (is_array($fieldArray))
+            $fieldsString = implode(', ', $fieldArray);
+        if (is_array($assocArray))
+        {
+            $whereArray = array();
+            foreach ($assocArray as $key => $value)
+                array_push($whereArray, "($key LIKE '%$value%')");
+            $whereString = 'WHERE '.implode('OR', $whereArray);
+        }
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} ";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null,
                            $groupByArray = null)
     {

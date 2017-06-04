@@ -58,9 +58,11 @@
                     <div class="col l9 m8 nav-section">
                         <form>
                             <div class="input-field">
-                                <input id="search" type="search" placeholder="Search" required>
-                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                <i class="material-icons">close</i>
+                                <form>
+                                    <input id="search" name="search" type="search" onchange="SendData()" placeholder="Search" required>
+                                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                                    <i class="material-icons">close</i>
+                                </form>
                             </div>
                         </form>
                     </div>
