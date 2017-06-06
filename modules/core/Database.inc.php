@@ -25,7 +25,30 @@ class Database
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
         $this->Pdo->exec($sql);
     }
+<<<<<<< HEAD
     public function Select($tableName, $fieldArray, $assocArray = null, $sortingCondotion = null)
+=======
+    public function SelectSearch($tableName, $fieldArray, $assocArray = null)
+    {
+        $whereString = '';
+        if (is_string($fieldArray))
+            $fieldsString = $fieldArray;
+        if (is_array($fieldArray))
+            $fieldsString = implode(', ', $fieldArray);
+        if (is_array($assocArray))
+        {
+            $whereArray = array();
+            foreach ($assocArray as $key => $value)
+                array_push($whereArray, "($key LIKE '%$value%')");
+            $whereString = 'WHERE '.implode('OR', $whereArray);
+        }
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} ";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null,
+                           $groupByArray = null)
+>>>>>>> 5b8e928cfdcafc883da971f182afba71c8b59486
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -39,15 +62,37 @@ class Database
                 array_push($whereArray, "($key = '$value')");
             $whereString = 'WHERE '.implode('AND', $whereArray);
         }
+<<<<<<< HEAD
         $sortingString = '';
         if (is_string($sortingCondotion))
             $soringString = "ORDER BY ".$sortingCondotion;
         if (is_array($sortingCondotion))
             $sortingString = "ORDER BY ".implode(', ', $sortingCondotion);
         $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString}";
+=======
+
+        //now just 1 join
+        $joinString='';
+        if (is_array($joinArray))
+        {
+            $key = key($joinArray);
+            $val = $joinArray[$key];
+            $joinString = 'INNER JOIN '.$joinTabNames.' ON '."{$key} = {$val}";
+        }
+
+        $groupByString = '';
+        if(is_array($groupByArray)){
+            $groupByString = 'GROUP BY '.implode(',', $groupByArray);;
+        }
+
+
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$groupByString}";
+>>>>>>> 5b8e928cfdcafc883da971f182afba71c8b59486
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
+
+
     public function Insert($tableName, $assocArray)
     {
         $fieldsArray = array_keys($assocArray);
@@ -57,6 +102,7 @@ class Database
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
         $this->Pdo->exec($sql);
     }
+
     public function SelectNumberOfRecords($tableName, $fieldArray, $from, $to, $assocArray = null, $sortingCondotion = null)
     {
         $whereString = '';
