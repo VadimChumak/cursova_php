@@ -25,9 +25,6 @@ class Database
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
         $this->Pdo->exec($sql);
     }
-<<<<<<< HEAD
-    public function Select($tableName, $fieldArray, $assocArray = null, $sortingCondotion = null)
-=======
     public function SelectSearch($tableName, $fieldArray, $assocArray = null)
     {
         $whereString = '';
@@ -48,7 +45,6 @@ class Database
     }
     public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null,
                            $groupByArray = null)
->>>>>>> 5b8e928cfdcafc883da971f182afba71c8b59486
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -62,16 +58,6 @@ class Database
                 array_push($whereArray, "($key = '$value')");
             $whereString = 'WHERE '.implode('AND', $whereArray);
         }
-<<<<<<< HEAD
-        $sortingString = '';
-        if (is_string($sortingCondotion))
-            $soringString = "ORDER BY ".$sortingCondotion;
-        if (is_array($sortingCondotion))
-            $sortingString = "ORDER BY ".implode(', ', $sortingCondotion);
-        $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString}";
-=======
-
-        //now just 1 join
         $joinString='';
         if (is_array($joinArray))
         {
@@ -87,7 +73,6 @@ class Database
 
 
         $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$groupByString}";
->>>>>>> 5b8e928cfdcafc883da971f182afba71c8b59486
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }

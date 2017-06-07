@@ -1,6 +1,7 @@
 $(window).on("load", function() {
     var currentUserId = $("#currentUserId").val();
     var recieverId = null;
+    var selectedUser = null;
 
     $("#openMessage").on("click", function() {
         $('#modal_createMessage').modal('open');
@@ -45,11 +46,33 @@ $(window).on("load", function() {
                 return;
             }
             else {
+                var item = JSON.parse(xhr.responseText);
+                var tmp = $("#messageItem").html();
+                tmp = tmp.replace("[text]", item.text);
+                if(item.sender_id == currentUserId) {
+                    tmp = tmp.replace("[sender]", "my");
+                }
+                else {
+                    tmp = tmp.replace("[sender]", "user");
+                }
+                tmp = tmp.replace("[date]", item.Date);
+                $("#textMessages").append($(tmp));
+                var block = document.getElementById("textMessages");
+                block.scrollTop = block.scrollHeight;
             }
         }
     });
 
-    $("#usersMessages").on("click", ".chip", function() {
+    $("#usersMessages .collection").on("click", ".collection-item", function() {
+        if(selectedUser == null) {
+            selectedUser = $(this);
+            selectedUser.toggleClass("selected-message");
+        }
+        else {
+            selectedUser.toggleClass("selected-message");
+            selectedUser = $(this);
+            selectedUser.toggleClass("selected-message");
+        }
         $("#textMessages").html("");
         recieverId = $(this).find("input[type='hidden']").val();
         var xhr = new XMLHttpRequest();
@@ -68,13 +91,16 @@ $(window).on("load", function() {
                     var tmp = $("#messageItem").html();
                     tmp = tmp.replace("[text]", item.text);
                     if(item.sender_id == currentUserId) {
-                        tmp = tmp.replace("[align]", "right-align");
+                        tmp = tmp.replace("[sender]", "my");
                     }
                     else {
-                        tmp = tmp.replace("[align]", "left-align");
+                        tmp = tmp.replace("[sender]", "user");
                     }
+                    tmp = tmp.replace("[date]", item.Date);
                     $("#textMessages").append($(tmp));
                 });
+                var block = document.getElementById("textMessages");
+                block.scrollTop = block.scrollHeight;
             }
             }
         }

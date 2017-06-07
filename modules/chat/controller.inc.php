@@ -8,7 +8,7 @@ class Chat_Controller
         $user_id = $_POST['user_id'];
         set_time_limit($limit + 5);
         while((time() - $time) < $limit ) {
-            $message = Core::$Db->SelectJoin("mesages", array('mesages.id', 'mesages.sender_id', 'mesages.reciever_id', 'mesages.text, user_data.name'), array('reciever_id' => $user_id, 'is_readed' => 0), array('Date'), 'DESC', null, array('user_data' => array('user_data.user_id' => 'mesages.sender_id')), null);
+            $message = Core::$Db->SelectJoin("mesages", array('mesages.id', 'mesages.sender_id', 'mesages.reciever_id', 'mesages.Date', 'mesages.text', 'user_data.name'), array('reciever_id' => $user_id, 'is_readed' => 0), array('Date'), 'DESC', null, array('user_data' => array('user_data.user_id' => 'mesages.sender_id')), null);
             if(!empty($message)) {
                 foreach($message as $item) {
                     Core::$Db->UpdateById("mesages", array('is_readed' => "1"), 'id', $item['id']);
@@ -43,7 +43,7 @@ class Chat_Controller
         $user = $userModel->GetUser((array($_SESSION['user']['id'])));
         $usersSend = Core::$Db->SelectJoin('mesages', array('DISTINCT user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('mesages.sender_id' => $_SESSION['user']['id']), null, null,  null, array('user_data' => array('mesages.reciever_id' => 'user_data.user_id')), null);
         $usersRecieve = Core::$Db->SelectJoin('mesages', array('DISTINCT user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('mesages.reciever_id' => $_SESSION['user']['id']), null, null,  null, array('user_data' => array('mesages.sender_id' => 'user_data.user_id')), null);
-        $result['messagesArray'] = array_merge_recursive(array_intersect_assoc($usersSend, $usersRecieve), array_diff_assoc($usersSend, $usersRecieve), array_diff_assoc($usersRecieve, $usersSend));
+        $result['messagesArray'] = array_unique(array_merge($usersRecieve, $usersSend), SORT_REGULAR);
         $userPage = new User_View();
         $params = array(
             'CurrentUser' => $_SESSION['user'],

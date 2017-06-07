@@ -8,8 +8,64 @@ body{
     background-color: white;
 }
 
+.message{
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.message span{
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.message.my .message-item{
+    background-color: #32b38c !important;
+    color: white !important;
+    float: right;
+    clear: both;
+    max-width: 50%;
+}
+.message.my .date{
+    padding: 0px 10px !important;
+    font-size: 10px;
+    color: lightslategray;
+    float: right;
+    clear: both;
+    margin-bottom: 15px;
+}
+.message.user .message-item{
+    background-color: #d9d9d9 !important;
+    float: left;
+    clear: both;
+    max-width: 50%;
+}
+.message.user .date{
+    padding: 0px 10px !important;
+    font-size: 10px;
+    color: lightslategray;
+    float: left;
+    clear: both;
+    margin-bottom: 15px;
+}
+
+#textMessages{
+    overflow-x: auto;
+    height: calc(100vh - 200px);
+}
+
+#messagesSection{
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
 .main-color{
     background-color: #32b38c;
+}
+
+.selected-message{
+    background-color: #63615E !important;
+    color: white !important;
 }
 
 .fixed{
@@ -150,7 +206,7 @@ body .row{
 }
 
 #content{
-    padding: 0px !impostant;
+    padding: 0px !important;
     margin: 0px !important;
     resize: both;
 }
