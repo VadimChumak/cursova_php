@@ -29,4 +29,9 @@ class News_Controller
         echo $res;
         exit(); 
     }
+
+    public function DeleteAction() {
+        $postId = $_POST['postId'];
+        Core::$Db->DeleteById("post", "id", $postId);
+    }
 }

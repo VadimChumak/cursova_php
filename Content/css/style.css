@@ -211,9 +211,6 @@ body .row{
     resize: both;
 }
 
-#main{
-    
-}
 
 .left-menu-user-img {
     min-height: 180px !important;
@@ -240,6 +237,13 @@ body .row{
     max-height: 180px !important;
     margin: 0px;
     padding:0px;
+}
+
+.delete-news{
+    color:#ffaa8f !important;
+    visibility: hidden;
+    transition-property: all;
+    transition-duration: 1s;
 }
 
 #left-menu .left-menu-user-info{
@@ -416,6 +420,10 @@ body .row{
 
 .row.wall .col.wall-item {
     float: left;
+}
+
+.row.wall .col.wall-item:hover .delete-news{
+    visibility: visible;
 }
 
 #createPost{

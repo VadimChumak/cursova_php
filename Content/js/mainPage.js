@@ -41,8 +41,9 @@ window.addEventListener("load", function() {
                         postImg = postImg.replace("[image]", ("/media/users/" + item.page_owner_id + "/photo/" + item.photo_url));
                     }   
                     var tmp = $("#newsBlock").html();
+                    tmp = tmp.replace("[id]", item.id);
                     tmp = tmp.replace("[PostImage]", postImg);
-                    tmp = tmp.replace("[text]",item.id);
+                    tmp = tmp.replace("[text]",item.post_text);
                     tmp = tmp.replace("[date]", item.publishing_date);
                     tmp = tmp.replace("[userID]", item.user_id);
                     tmp = tmp.replace("[userID]", item.user_id);
@@ -81,6 +82,18 @@ window.addEventListener("load", function() {
     $('#createPost').on("click", function(){
         $('#modal_createPost').modal('open');
     });
+
+    $(".wall").on("click", ".delete-news", function() {
+        var newsId = $(this).parent().parent().find("input[type=hidden]").val();
+        setTimeout(setReload, 100);
+        setTimeout(setMenuHeight, 101);
+        $(this).parent().parent().parent().remove();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/news/delete", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var res = "postId=" + encodeURIComponent(newsId);
+        xhr.send(res);
+    });
     
     $("time.timeago").timeago();
     
@@ -108,6 +121,7 @@ window.addEventListener("load", function() {
                     postImg = postImg.replace("[image]", ("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
                 }
                 var tmp = $("#newsBlock").html();
+                tmp = tmp.replace("[id]", result.id);
                 tmp = tmp.replace("[PostImage]", postImg);
                 tmp = tmp.replace("[text]", result.post_text);
                 tmp = tmp.replace("[date]", result.publishing_date);
