@@ -57,6 +57,13 @@ window.addEventListener("load", function() {
                     tmp = tmp.replace("[userImage]", item.image);
                     tmp = tmp.replace("[userName]", item.surname + " " + item.name);
                     tmp = tmp.replace("[delete]", deletePost);
+                    if(item.isLiked == true) {
+                        tmp = tmp.replace("[isLiked]", "favorite");
+                    }
+                    else {
+                        tmp = tmp.replace("[isLiked]", "favorite_border");
+                    }
+                    tmp = tmp.replace("[count]", item.count);
                     var tmpObj = $(tmp);
                     grid.append(tmpObj).masonry("appended", tmpObj);
                     $("time.timeago").timeago();
@@ -106,6 +113,40 @@ window.addEventListener("load", function() {
         xhr.send(res);
         Materialize.toast("Запис видалено.", 1000);
     });
+
+    $(".wall").on("click", ".like-heart", function() {
+        var thisHeart = $(this);
+        var likeConditions =  $(this).html();
+        var id = $(this).parent().parent().parent().find("input[type=hidden]").val();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/news/like", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        if(likeConditions == "favorite") {
+            $(this).html("favorite_border");
+            var res = "postId=" + encodeURIComponent(id) + "&action='delete'";
+        }
+        else{
+            $(this).html("favorite");
+            var res = "postId=" + encodeURIComponent(id) + "&action=set";
+        }
+        xhr.send(res);
+        xhr.onreadystatechange = function() {
+            if(this.readyState !=4) return;
+            if(this.status != 200) {
+                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                return;
+            }
+            else {
+                var likeCount = +xhr.responseText;
+                if(likeCount > 0) {
+                    $(thisHeart).parent().find("span").html(likeCount.toString());
+                }
+                else {
+                    $(thisHeart).parent().find("span").html("0");
+                }
+            }
+        }
+    });
     
     $("time.timeago").timeago();
     
@@ -146,6 +187,8 @@ window.addEventListener("load", function() {
                 tmp = tmp.replace("[userImage]", result.image);
                 tmp = tmp.replace("[userName]", result.surname + " " + result.name);
                 tmp = tmp.replace("[delete]", deletePost);
+                tmp = tmp.replace("[isLiked]", "favorite_border");
+                tmp = tmp.replace("[count]", "0");
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));
                 $("time.timeago").timeago();

@@ -24,7 +24,15 @@ class News_Controller
         $from = $_POST['from'];
         $to = $_POST['to'];
         $owner = $_POST['owner'];
-        $newsList=Core::$Db->SelectJoin("post", array('post.id', 'post.owner_id', 'post.post_text', 'post.publishing_date', 'post.photo_url', 'post.page_owner_id', 'user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('page_owner_id' => $owner, 'page_type' => 'user'), array("publishing_date"), 'DESC', null, array('user_data' => array('user_data.user_id' => 'post.owner_id')), array('from' => $from, 'count' => 10));
+        $newsList=Core::$Db->SelectPosts($owner, 'user', $from);
+        for($i = 0; $i <count($newsList); $i++) {
+            if(empty(Core::$Db->SelectJoin('bookmarks', '*', array('item_id' => $newsList[$i]['id'], 'user_id' => $_SESSION['user']['id']), null,  null, null, null, null))) {
+                $newsList[$i]['isLiked'] = false;
+            }
+            else {
+                $newsList[$i]['isLiked'] = true;
+            }
+        }
         $res = json_encode($newsList);
         echo $res;
         exit(); 
@@ -33,5 +41,21 @@ class News_Controller
     public function DeleteAction() {
         $postId = $_POST['postId'];
         Core::$Db->DeleteById("post", "id", $postId);
+    }
+
+    public function LikeAction() {
+        $postId = $_POST['postId'];
+        $action = $_POST['action'];
+        $likeCount = 0;
+        if($action == "set") {
+            Core::$Db->Insert('bookmarks', array('user_id' => $_SESSION['user']['id'], 'item_id' => $postId));
+            $likeCount = Core::$Db->SelectJoin('bookmarks', array('COUNT(item_id) as count'), array('item_id' => $postId), null,  null, null, null, null);
+        }
+        else {
+            Core::$Db->DeleteByTwoCays("bookmarks", 'item_id', $postId, 'user_id', $_SESSION['user']['id']);
+            $likeCount = Core::$Db->SelectJoin('bookmarks', array('COUNT(item_id) as count'), array('item_id' => $postId), null,  null, null, null, null);
+        }
+        echo($likeCount[0]['count']);
+        exit();
     }
 }

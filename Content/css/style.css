@@ -226,6 +226,14 @@ body .row{
     height:100%;
 }
 
+.like-heart{
+    color: #ef5350  !important;
+}
+
+.like-heart:hover{
+    cursor: pointer;
+}
+
 #right-menu{
     padding: 0 !important;
     height:100%;
@@ -243,7 +251,6 @@ body .row{
     color:#ffaa8f !important;
     visibility: hidden;
     transition-property: all;
-    transition-duration: 1s;
 }
 
 #left-menu .left-menu-user-info{

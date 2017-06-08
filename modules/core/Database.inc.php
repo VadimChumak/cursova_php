@@ -43,8 +43,7 @@ class Database
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null,
-                           $groupByArray = null)
+    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null, $groupByArray = null)
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -70,8 +69,6 @@ class Database
         if(is_array($groupByArray)){
             $groupByString = 'GROUP BY '.implode(',', $groupByArray);;
         }
-
-
         $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$groupByString}";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
@@ -154,6 +151,11 @@ class Database
             $limitString = "LIMIT " . $limit['from'] .", " . $limit['count'];
         }
         $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$orderString} {$groupString} {$limitString}";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function SelectPosts($pageOwnerId, $pageType, $from) {
+        $sql = "SELECT post.id, COUNT(bookmarks.item_id) as count, post.post_text, post.publishing_date, post.photo_url, post.page_owner_id, user_data.user_id, user_data.name, user_data.surname, user_data.image FROM post left JOIN user_data ON user_data.user_id = post.owner_id left JOIN bookmarks ON bookmarks.item_id = post.id WHERE (page_owner_id = {$pageOwnerId})AND(page_type = '{$pageType}') GROUP BY post.id ORDER BY post.publishing_date DESC LIMIT {$from}, 10";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }

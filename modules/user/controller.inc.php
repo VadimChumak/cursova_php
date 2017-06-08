@@ -9,7 +9,23 @@ class User_Controller
             "Content"  => "404"
         );
         }
-        $newsList['newsArray'] = Core::$Db->SelectJoin("post", array('post.id', 'post.post_text', 'post.publishing_date', 'post.photo_url', 'post.page_owner_id', 'user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('page_owner_id' => $id[0], 'page_type' => 'user'), array("publishing_date"), 'DESC', null, array('user_data' => array('user_data.user_id' => 'post.owner_id')), array('from' => 0, 'count' => 10));
+        $newsList['newsArray'] = Core::$Db->SelectPosts($user[0]['user_id'], 'user', 0);
+        for($i = 0; $i <count($newsList['newsArray']); $i++) {
+            if(empty(Core::$Db->SelectJoin('bookmarks', '*', array('item_id' => $newsList['newsArray'][$i]['id'], 'user_id' => $_SESSION['user']['id']), null,  null, null, null, null))) {
+                $newsList['newsArray'][$i]['isLiked'] = false;
+            }
+            else {
+                $newsList['newsArray'][$i]['isLiked'] = true;
+            }
+        }
+        //foreach($newsList['newsArray'] as $item) {
+         //   if(empty(Core::$Db->SelectJoin('bookmarks', '*', array('item_id' => $item['id'], 'user_id' => $_SESSION['user']['id']), null,  null, null, null, null))) {
+          //      $item['isLiked'] = false;
+           // }
+           // else {
+            //    $item['isLiked'] = true;
+           // }
+       // }
         $newsList['UserInfo'] = $user[0];
         $newsList['CurrentUser'] = $_SESSION['user'];
         $NewsView = new News_View();

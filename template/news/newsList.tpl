@@ -18,12 +18,17 @@
                     <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>" />
                     <a href="<?php echo '/user/id/'.$item['user_id'] ?>"><?php echo $item['surname']." ".$item['name'] ?></a>
                 </div>
+                <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
+                        <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                <?php endif; ?>
                 <p><?php echo $item['post_text'] ?></p>
             </div>
             <div class="card-action">
                 <time class="timeago" datetime="<?php echo $item['publishing_date'] ?>"></time>
-                <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
-                <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                <?php if($item['isLiked'] == false): ?>
+                    <span class="badge"><i class="material-icons like-heart">favorite_border</i><span><?php echo $item['count'] ?></span></span>
+                <?php else: ?>
+                    <span class="badge"><i class="material-icons like-heart">favorite</i><span><?php echo $item['count'] ?></span></span>
                 <?php endif; ?>
             </div>
             </div>
@@ -39,11 +44,12 @@
                     <img src="/media/users/[userID]/photo/[userImage]"/>
                     <a href="/user/id/[userID]">[userName]</a>
                 </div>
+                [delete]
                 <p>[text]</p>
             </div>
             <div class="card-action">
                 <time class="timeago" datetime="[date]"></time>
-                [delete]
+                <span class="badge"><i class="material-icons like-heart">[isLiked]</i><span>[count]</span></span>
             </div>
         </div>
     </div>
