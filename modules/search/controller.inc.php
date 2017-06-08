@@ -8,7 +8,7 @@ class Search_Controller
         $peoples = $m->GetPeoples($search);
         $groups = $m->GetGroups($search);
         echo json_encode($peoples);
-        echo json_encode($groups);
+        //echo json_encode($groups);
         die();
     }
 }

@@ -482,3 +482,21 @@ body .row{
     width: 500px;
     margin-left: 35%;
 }
+.search_res {
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+    width: 75%;
+    padding: 10px;
+}
+.search_res img {
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+}
+.search_res a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #00C853;
+    vertical-align: middle;
+}
