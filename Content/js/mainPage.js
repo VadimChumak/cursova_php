@@ -85,9 +85,12 @@ window.addEventListener("load", function() {
 
     $(".wall").on("click", ".delete-news", function() {
         var newsId = $(this).parent().parent().find("input[type=hidden]").val();
-        setTimeout(setReload, 100);
-        setTimeout(setMenuHeight, 101);
-        $(this).parent().parent().parent().remove();
+        var block = $(this).parent().parent().parent();
+        $(block).fadeOut(200, function(){
+            $(block).remove();
+            setTimeout(setReload, 100);
+            setTimeout(setMenuHeight, 101);
+        });
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/news/delete", true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
