@@ -8,6 +8,9 @@
     <li><a href="/registration/logout">Вихід</a></li>
     <input type="hidden" value="<?php echo $CurrentUser['id'] ?>" id="currentUserId"/>
 </ul>
+<?php if($UserInfo['user_id'] == $CurrentUser['id']): ?>
+    <input type="hidden" id="isOwner" />
+<?php endif; ?>
 <!------->
 
   <div id="modal_createPost" class="modal modal-fixed-footer">

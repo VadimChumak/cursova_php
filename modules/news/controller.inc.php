@@ -24,7 +24,7 @@ class News_Controller
         $from = $_POST['from'];
         $to = $_POST['to'];
         $owner = $_POST['owner'];
-        $newsList=Core::$Db->SelectJoin("post", array('post.id', 'post.post_text', 'post.publishing_date', 'post.photo_url', 'post.page_owner_id', 'user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('page_owner_id' => $owner, 'page_type' => 'user'), array("publishing_date"), 'DESC', null, array('user_data' => array('user_data.user_id' => 'post.owner_id')), array('from' => $from, 'count' => 10));
+        $newsList=Core::$Db->SelectJoin("post", array('post.id', 'post.owner_id', 'post.post_text', 'post.publishing_date', 'post.photo_url', 'post.page_owner_id', 'user_data.user_id', 'user_data.name', 'user_data.surname', 'user_data.image'), array('page_owner_id' => $owner, 'page_type' => 'user'), array("publishing_date"), 'DESC', null, array('user_data' => array('user_data.user_id' => 'post.owner_id')), array('from' => $from, 'count' => 10));
         $res = json_encode($newsList);
         echo $res;
         exit(); 

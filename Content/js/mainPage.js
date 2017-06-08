@@ -10,7 +10,10 @@ window.addEventListener("load", function() {
     var newsStartFrom = 0;
     var newsEnd = 10;
     var allNews = true;
-
+    var isOwner = false;
+    if($("#isOwner")[0] != undefined) {
+        isOwner = true;
+    }
     $(window).on("resize", function() {
         setTimeout(setMenuHeight, 2000);
     });
@@ -36,10 +39,14 @@ window.addEventListener("load", function() {
                 else {  
                 array.forEach(function(item, i, arr) {
                     var postImg = "";
+                    var deletePost = "";
                     if(item.photo_url != null) {
                         postImg = $("#postIMG").html();
                         postImg = postImg.replace("[image]", ("/media/users/" + item.page_owner_id + "/photo/" + item.photo_url));
-                    }   
+                    }
+                    if(isOwner || item.owner_id == $("#currentUserId").val()) {
+                        deletePost = $("#postDelete").html();
+                    }
                     var tmp = $("#newsBlock").html();
                     tmp = tmp.replace("[id]", item.id);
                     tmp = tmp.replace("[PostImage]", postImg);
@@ -49,6 +56,7 @@ window.addEventListener("load", function() {
                     tmp = tmp.replace("[userID]", item.user_id);
                     tmp = tmp.replace("[userImage]", item.image);
                     tmp = tmp.replace("[userName]", item.surname + " " + item.name);
+                    tmp = tmp.replace("[delete]", deletePost);
                     var tmpObj = $(tmp);
                     grid.append(tmpObj).masonry("appended", tmpObj);
                     $("time.timeago").timeago();
@@ -120,9 +128,13 @@ window.addEventListener("load", function() {
             else {
                 var result = JSON.parse(xhr.responseText);
                 var postImg = "";
+                var deletePost = "";
                 if(result.photo_url != undefined) {
                     postImg = $("#postIMG").html();
                     postImg = postImg.replace("[image]", ("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
+                }
+                if(isOwner || result.owner_id == $("#currentUserId").val()) {
+                    deletePost = $("#postDelete").html();
                 }
                 var tmp = $("#newsBlock").html();
                 tmp = tmp.replace("[id]", result.id);
@@ -133,6 +145,7 @@ window.addEventListener("load", function() {
                 tmp = tmp.replace("[userID]", result.user_id);
                 tmp = tmp.replace("[userImage]", result.image);
                 tmp = tmp.replace("[userName]", result.surname + " " + result.name);
+                tmp = tmp.replace("[delete]", deletePost);
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));
                 $("time.timeago").timeago();

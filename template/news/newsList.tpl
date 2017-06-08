@@ -22,7 +22,9 @@
             </div>
             <div class="card-action">
                 <time class="timeago" datetime="<?php echo $item['publishing_date'] ?>"></time>
-                <a class="dropdown-button delete-news" href="#!"><i class="material-icons right">delete</i></a></li>
+                <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
+                <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                <?php endif; ?>
             </div>
             </div>
     </div>
@@ -41,7 +43,7 @@
             </div>
             <div class="card-action">
                 <time class="timeago" datetime="[date]"></time>
-                <a class="dropdown-button delete-news" href="#!"><i class="material-icons right">delete</i></a></li>
+                [delete]
             </div>
         </div>
     </div>
@@ -50,4 +52,7 @@
     <div class="card-image">
         <img src="[image]">
     </div>
+</script>
+<script type="text" id="postDelete">
+    <a class="dropdown-button delete-news" href="#!"><i class="material-icons right">delete</i></a></li>
 </script>
