@@ -9,12 +9,13 @@ class News_Model
             move_uploaded_file($item['imageTmp'], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $item['ownerId']. "/photo/" . $imageName);
             $arrayForSave['photo_url'] = $imageName;
         }
-        Core::$Db->Insert("post", $arrayForSave);
+        $id = Core::$Db->Insert("post", $arrayForSave);
         $userInfo = Core::$Db->Select('user_data', array('user_id', 'name', 'surname', 'image'), array('user_id' => $_SESSION['user']['id']));
         $arrayForSave['user_id'] = $userInfo[0]['user_id'];
         $arrayForSave['name'] = $userInfo[0]['name'];
         $arrayForSave['surname'] = $userInfo[0]['surname'];
         $arrayForSave['image'] = $userInfo[0]['image'];
+        $arrayForSave['id'] = $id;
         return $arrayForSave;
     }
 }

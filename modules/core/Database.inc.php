@@ -86,6 +86,7 @@ class Database
         $valuesList = "'".implode("', '", $valuesArray)."'";
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
         $this->Pdo->exec($sql);
+        return $this->Pdo->lastInsertId("post");
     }
 
     public function SelectNumberOfRecords($tableName, $fieldArray, $from, $to, $assocArray = null, $sortingCondotion = null)

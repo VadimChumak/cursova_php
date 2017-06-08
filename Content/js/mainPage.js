@@ -93,6 +93,7 @@ window.addEventListener("load", function() {
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         var res = "postId=" + encodeURIComponent(newsId);
         xhr.send(res);
+        Materialize.toast("Запис видалено.", 1000);
     });
     
     $("time.timeago").timeago();
