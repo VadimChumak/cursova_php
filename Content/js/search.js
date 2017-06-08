@@ -9,10 +9,15 @@ function SendData() {
             for (var i = 0; i < res.length; i++) {
                 var block = document.createElement('div');
                 var a = document.createElement('a');
-                a.innerHTML = res[i].name + " " + res[i].surname;
-                a.href = '/user/id/' + res[i].user_id;
+                a.innerHTML = res[i].names;
+                if (res[i].type == 'user') {
+                    a.href = '/user/id/' + res[i].id;    
+                }
+                else {
+                    a.href = '/groups/group/' + res[i].id;
+                }
                 var photo = document.createElement('img');
-                photo.src = '/media/users/' + res[i].user_id + '/photo/' + res[i].image;
+                photo.src = '/media/users/' + res[i].id + '/photo/' + res[i].image;
                 block.appendChild(photo);
                 block.appendChild(a);
                 container.appendChild(block);

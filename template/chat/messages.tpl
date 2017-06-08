@@ -1,10 +1,9 @@
-
 <div class="col l4 m4" id="usersMessages">
 <ul class="collection card">
     <?php while (!is_null($item = array_shift($messagesArray))): ?>
         <li class="collection-item avatar">
             <input type="hidden" value="<?php echo $item['user_id'] ?>" />
-            <img src="/media/users/<?php echo $item['user_id'] ?>/photos/<?php echo $item['image'] ?>" alt="" class="circle">
+            <img src="/media/users/<?php echo $item['user_id'] ?>/photo/<?php echo $item['image'] ?>" alt="" class="circle">
             <span class="title"><?php echo $item['surname'].' '.$item['name'] ?></span>
         </li>
     <?php endwhile; ?>

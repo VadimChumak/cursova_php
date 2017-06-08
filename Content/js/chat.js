@@ -1,5 +1,4 @@
-
-    $(window).on("load", function() {
+$(window).on("load", function() {
         var interval = 360;
         connection();
         setInterval(connection, interval * 1000);
@@ -15,7 +14,6 @@
             if(this.readyState == 4) {
             if(this.status != 200) {
                 setTimeout(connection, 200);
-                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
             }
             else {
                 document.getElementById("eror").innerHTML = xhr.responseText;

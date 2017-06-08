@@ -500,3 +500,7 @@ body .row{
     color: #00C853;
     vertical-align: middle;
 }
+.card .chip img {
+    object-fit: cover;
+    object-position: center;
+}
