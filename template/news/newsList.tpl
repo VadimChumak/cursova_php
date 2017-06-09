@@ -30,6 +30,16 @@
                 <?php else: ?>
                     <span class="badge"><i class="material-icons like-heart">favorite</i><span><?php echo $item['count'] ?></span></span>
                 <?php endif; ?>
+                 <span class="badge"><i class="material-icons coment">comment</i><span><?php echo $item['comment_count'] ?></span></span>
+            </div>
+            <div class="divider"></div>
+            <div class="card-content comment hidden">
+                <div class="comment-list">
+                </div>
+                <div class="comment-field">
+                    <input id="commentField" type="text">
+                    <button class="btn comment-btn"><i class="material-icons">add_circle</i></button>
+                </div>
             </div>
             </div>
     </div>
@@ -50,6 +60,15 @@
             <div class="card-action">
                 <time class="timeago" datetime="[date]"></time>
                 <span class="badge"><i class="material-icons like-heart">[isLiked]</i><span>[count]</span></span>
+                <span class="badge"><i class="material-icons coment">comment</i><span>[comment_count]</span></span>
+            </div>
+            <div class="card-content comment hidden">
+                <div class="comment-list">
+                </div>
+                <div class="comment-field">
+                    <input id="commentField" type="text">
+                    <button class="btn comment-btn"><i class="material-icons">add_circle</i></button>
+                </div>
             </div>
         </div>
     </div>
@@ -61,4 +80,14 @@
 </script>
 <script type="text" id="postDelete">
     <a class="dropdown-button delete-news" href="#!"><i class="material-icons right">delete</i></a></li>
+</script>
+<script type="text" id="sendComment">
+    <div class="comment-item">
+        <div class="chip">
+            <img src="/media/users/[userID]/photo/[userImage]" />
+            <a href="/user/id/[userID]">[userName]</a>
+            <time class="timeago" datetime="[date]"></time>
+        </div>
+    <p>[text]<p>
+    </div>
 </script>

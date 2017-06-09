@@ -18,14 +18,6 @@ class User_Controller
                 $newsList['newsArray'][$i]['isLiked'] = true;
             }
         }
-        //foreach($newsList['newsArray'] as $item) {
-         //   if(empty(Core::$Db->SelectJoin('bookmarks', '*', array('item_id' => $item['id'], 'user_id' => $_SESSION['user']['id']), null,  null, null, null, null))) {
-          //      $item['isLiked'] = false;
-           // }
-           // else {
-            //    $item['isLiked'] = true;
-           // }
-       // }
         $newsList['UserInfo'] = $user[0];
         $newsList['CurrentUser'] = $_SESSION['user'];
         $NewsView = new News_View();

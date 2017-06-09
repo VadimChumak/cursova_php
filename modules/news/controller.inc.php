@@ -58,4 +58,25 @@ class News_Controller
         echo($likeCount[0]['count']);
         exit();
     }
+
+    public function AddcommentAction() {
+        date_default_timezone_set("Europe/Riga");
+        $postId = $_POST['postId'];
+        $text = $_POST['text'];
+        $arrayForSave = array('item_id' => $postId, 'item_type' => 'post', 'user_id' => $_SESSION['user']['id'], 'text' => $text, 'date' => date('Y-m-d H:i:s', time()));
+        Core::$Db->Insert("comment", $arrayForSave);
+        $user = Core::$Db->SelectJoin("user_data", 'image, name, surname', array("user_id" => $_SESSION['user']['id']));
+        $arrayForSave['image'] = $user[0]['image'];
+        $arrayForSave['name'] = $user[0]['name'];
+        $arrayForSave['surname'] = $user[0]['surname'];
+        echo json_encode($arrayForSave);   
+        exit();
+    }
+
+    public function GetcommentAction() {
+        $postId = $_POST['postId'];
+        $comments = Core::$Db->SelectJoin("comment", array('user_data.image', 'user_data.name', 'user_data.user_id', 'user_data.surname', 'comment.text', 'comment.date'), array('item_id' => $postId), array('date'), null, null, array('user_data' => array('user_data.user_id' => 'comment.user_id')), null);
+        echo json_encode($comments);
+        exit();
+    }
 }

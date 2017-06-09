@@ -64,6 +64,7 @@ window.addEventListener("load", function() {
                         tmp = tmp.replace("[isLiked]", "favorite_border");
                     }
                     tmp = tmp.replace("[count]", item.count);
+                    tmp = tmp.replace('[comment_count]', item.comment_count);
                     var tmpObj = $(tmp);
                     grid.append(tmpObj).masonry("appended", tmpObj);
                     $("time.timeago").timeago();
@@ -112,6 +113,97 @@ window.addEventListener("load", function() {
         var res = "postId=" + encodeURIComponent(newsId);
         xhr.send(res);
         Materialize.toast("Запис видалено.", 1000);
+    });
+
+    $(".wall").on("click", ".comment-btn", function() {
+        var id = $(this).parent().parent().parent().parent().find("input[type=hidden]").val();
+        var text = $(this).parent().find("input").val();
+        var commentImg = $(this).parent().parent().parent().find(".coment").parent().find("span");
+        var commentList = $(this).parent().parent().find(".comment-list");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/news/addcomment", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var res = "postId=" + encodeURIComponent(id) + "&text=" + encodeURIComponent(text);
+        xhr.send(res);
+        xhr.onreadystatechange = function() {
+            if(this.readyState !=4) return;
+            if(this.status != 200) {
+                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                return;
+            }
+            else {
+                var count = $(commentImg).html();
+                count++;
+                $(commentImg).html(count.toString());
+                var result = JSON.parse(xhr.responseText);
+                var tmp = $("#sendComment").html();
+                tmp = tmp.replace('[userID]', result.user_id);
+                tmp = tmp.replace('[userID]', result.user_id);
+                tmp = tmp.replace('[userImage]', result.image);
+                tmp = tmp.replace("[userName]", result.surname + " " + result.name);
+                tmp = tmp.replace('[date]', result.date);
+                tmp = tmp.replace('[text]', result.text);
+                $(commentList).append($(tmp));
+                $("time.timeago").timeago();
+                setTimeout(setReload, 100);
+                setTimeout(setMenuHeight, 101);
+            }
+        }
+    });
+
+
+    $(".wall").on("click", ".coment", function() {
+        var thisComment = $(this);
+        var card = $(this).parent().parent().parent();
+        var id = $(this).parent().parent().parent().find("input[type=hidden]").val();
+        var commentList = $(this).parent().parent().parent().find(".comment-list");
+        commentList.html("");
+        if(card.find(".comment").hasClass("hidden")) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/news/getcomment", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            var res = "postId=" + encodeURIComponent(id);
+            xhr.send(res);
+            xhr.onreadystatechange = function() {
+            if(this.readyState !=4) return;
+            if(this.status != 200) {
+                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                return;
+            }
+            else {
+                var result = JSON.parse(xhr.responseText);
+                if(result.length == 0) {
+                }
+                else {
+                    result.forEach(function(item, i, arr) {
+                        var tmp = $("#sendComment").html();
+                        tmp = tmp.replace('[userID]', item.user_id);
+                        tmp = tmp.replace('[userID]', item.user_id);
+                        tmp = tmp.replace('[userImage]', item.image);
+                        tmp = tmp.replace("[userName]", item.surname + " " + item.name);
+                        tmp = tmp.replace('[date]', item.date);
+                        tmp = tmp.replace('[text]', item.text);
+                        $(commentList).append($(tmp));
+                        $("time.timeago").timeago();
+                        setTimeout(setReload, 100);
+                        setTimeout(setMenuHeight, 101);
+                    });
+                }
+                card.find(".comment").slideDown(10, function() {
+                setTimeout(setReload, 0);
+                setTimeout(setMenuHeight, 1);
+                card.find(".comment").removeClass("hidden");
+            });
+            }
+        }
+        }
+        else {
+            card.find(".comment").slideUp(10, function() {
+                setTimeout(setReload, 0);
+                setTimeout(setMenuHeight, 1);
+                card.find(".comment").addClass("hidden");
+            });
+        }
     });
 
     $(".wall").on("click", ".like-heart", function() {
@@ -189,6 +281,7 @@ window.addEventListener("load", function() {
                 tmp = tmp.replace("[delete]", deletePost);
                 tmp = tmp.replace("[isLiked]", "favorite_border");
                 tmp = tmp.replace("[count]", "0");
+                tmp = tmp.replace('[comment_count]', "0");
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));
                 $("time.timeago").timeago();

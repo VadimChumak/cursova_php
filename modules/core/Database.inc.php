@@ -155,7 +155,7 @@ class Database
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
     public function SelectPosts($pageOwnerId, $pageType, $from) {
-        $sql = "SELECT post.id, COUNT(bookmarks.item_id) as count, post.post_text, post.publishing_date, post.photo_url, post.page_owner_id, user_data.user_id, user_data.name, user_data.surname, user_data.image FROM post left JOIN user_data ON user_data.user_id = post.owner_id left JOIN bookmarks ON bookmarks.item_id = post.id WHERE (page_owner_id = {$pageOwnerId})AND(page_type = '{$pageType}') GROUP BY post.id ORDER BY post.publishing_date DESC LIMIT {$from}, 10";
+        $sql = "SELECT post.id, COUNT(bookmarks.item_id) as count, COUNT(comment.item_id) as comment_count, post.post_text, post.publishing_date, post.photo_url, post.page_owner_id, user_data.user_id, user_data.name, user_data.surname, user_data.image FROM post left JOIN user_data ON user_data.user_id = post.owner_id left JOIN bookmarks ON bookmarks.item_id = post.id left JOIN comment ON comment.item_id = post.id WHERE (page_owner_id = {$pageOwnerId})AND(page_type = '{$pageType}') GROUP BY post.id ORDER BY post.publishing_date DESC LIMIT {$from}, 10";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }

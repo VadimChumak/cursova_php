@@ -34,6 +34,11 @@ body{
     clear: both;
     margin-bottom: 15px;
 }
+
+.wall .wall-item .card .coment :hover{
+    cursor:pointer !important;
+}
+
 .message.user .message-item{
     background-color: #d9d9d9 !important;
     float: left;
@@ -220,10 +225,37 @@ body .row{
     object-position: center;
 }
 
+.comment-list{
+    max-height: 300px;
+    overflow-y:auto;
+}
+
 #left-menu{
     background-color: #393836;
     padding: 0 !important;
     height:100%;
+}
+
+.comment-field input{
+    margin:0px !important;
+}
+
+.comment-item{
+    margin-bottom: 10px !important;
+}
+
+.comment-field button{
+    padding: 0px !important;
+    margin:0px !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.comment-field i{
+    margin:0px !important;
+    padding:0px !important;
+    color: #393836 !important;
 }
 
 .like-heart{
@@ -447,6 +479,19 @@ body .row{
 #createPost:hover{
     background-color: #ffaa8f;
     color: white;
+}
+
+
+.comment .comment-item .chip {
+    background-color: transparent !important;
+}
+
+.comment .comment-item .chip .timeago{
+    font-size: 10px;
+}
+
+.comment .comment-item p{
+    margin-left: 35px !important;
 }
 
 .wall .wall-item .card .card-action{
