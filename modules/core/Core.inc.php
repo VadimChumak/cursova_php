@@ -6,7 +6,9 @@ class Core
     public static $IndexTPL;
     public static function Init()
     {
-        session_start();
+        if(!isset($_SESSION)) {
+            session_start();
+        }
         self::$Db = new Database("localhost", 'social_network', 'root', '');
         self::$IndexTPL = new Template("template/index.tpl");
     }

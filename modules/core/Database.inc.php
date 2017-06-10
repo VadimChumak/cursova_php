@@ -43,8 +43,7 @@ class Database
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null,
-                           $groupByArray = null)
+    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null, $groupByArray = null)
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -58,8 +57,6 @@ class Database
                 array_push($whereArray, "($key = '$value')");
             $whereString = 'WHERE '.implode('AND', $whereArray);
         }
-
-        //now just 1 join
         $joinString='';
         if (is_array($joinArray))
         {
@@ -72,8 +69,6 @@ class Database
         if(is_array($groupByArray)){
             $groupByString = 'GROUP BY '.implode(',', $groupByArray);;
         }
-
-
         $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$groupByString}";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
@@ -88,8 +83,7 @@ class Database
         $valuesList = "'".implode("', '", $valuesArray)."'";
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
         $this->Pdo->exec($sql);
-        $last_id = $this->Pdo->lastInsertId();
-        return $last_id;
+        return $this->Pdo->lastInsertId("post");
     }
 
     public function SelectNumberOfRecords($tableName, $fieldArray, $from, $to, $assocArray = null, $sortingCondotion = null)
@@ -112,6 +106,62 @@ class Database
         if (is_array($sortingCondotion))
             $sortingString = "ORDER BY ".implode(', ', $sortingCondotion);
         $sql = "SELECT {$fieldsString} FROM {$tableName} {$whereString} {$sortingString} DESC LIMIT {$from},10";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function SelectJoin($tableName, $fieldArray, $assocArray = null, $orderArray = null, $orderType = null, $groupArray = null, $joinTable = null, $limit = null)
+    {
+        $whereString = '';
+        if (is_string($fieldArray))
+            $fieldsString = $fieldArray;
+        if (is_array($fieldArray))
+            $fieldsString = implode(', ', $fieldArray);
+        if (is_array($assocArray))
+        {
+            $whereArray = array();
+            foreach ($assocArray as $key => $value)
+                array_push($whereArray, "($key = '$value')");
+            $whereString = 'WHERE '.implode('AND', $whereArray);
+        }
+        $orderString = '';
+        if (is_string($orderArray))
+            $orderString = "ORDER BY ".$orderArray;
+        if (is_array($orderArray))
+            $orderString = "ORDER BY ".implode(', ', $orderArray);
+        if(!is_null($orderType)) {
+            $orderString = $orderString . " DESC ";
+        }
+        $groupString = '';
+        if (is_string($groupArray))
+            $groupString = "GROUP BY ".$groupArray;
+        if (is_array($groupArray))
+            $groupString = "GROUP BY ".implode(', ', $groupArray);
+        $joinString = '';
+        if (is_array($joinTable)) {
+            $joinArray = array();
+            foreach ($joinTable as $tName => $tField)
+                foreach($tField as $firstField => $secondField)
+                    array_push($joinArray, "$tName ON $firstField = $secondField");
+            $joinString = "INNER JOIN ".implode(' INNER JOIN ', $joinArray);
+        }
+        $limitString = '';
+        if(is_array($limit)) {
+            $limitString = "LIMIT " . $limit['from'] .", " . $limit['count'];
+        }
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$orderString} {$groupString} {$limitString}";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function SelectPosts($pageOwnerId, $pageType, $from) {
+        $sql = "SELECT post.id, COUNT(bookmarks.item_id) as count, COUNT(comment.item_id) as comment_count, post.post_text, post.publishing_date, post.photo_url, post.page_owner_id, user_data.user_id, user_data.name, user_data.surname, user_data.image FROM post left JOIN user_data ON user_data.user_id = post.owner_id left JOIN bookmarks ON bookmarks.item_id = post.id left JOIN comment ON comment.item_id = post.id WHERE (page_owner_id = {$pageOwnerId})AND(page_type = '{$pageType}') GROUP BY post.id ORDER BY post.publishing_date DESC LIMIT {$from}, 10";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function SelectMessages($firstUser, $secondUser) {
+        $sql = "SELECT * FROM mesages WHERE (sender_id = {$firstUser} AND reciever_id = {$secondUser}) OR (sender_id = {$secondUser} AND reciever_id = {$firstUser}) ORDER BY Date ASC";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }

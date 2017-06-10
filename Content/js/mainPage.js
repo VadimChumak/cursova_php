@@ -10,7 +10,10 @@ window.addEventListener("load", function() {
     var newsStartFrom = 0;
     var newsEnd = 10;
     var allNews = true;
-
+    var isOwner = false;
+    if($("#isOwner")[0] != undefined) {
+        isOwner = true;
+    }
     $(window).on("resize", function() {
         setTimeout(setMenuHeight, 2000);
     });
@@ -21,10 +24,11 @@ window.addEventListener("load", function() {
         {
             newsStartFrom = newsEnd;
             newsEnd += 10;
+            var pageOwnerId = $("#page_owner_id").val();
             var xhr = new XMLHttpRequest();
             xhr.open("POST", "/news/get", true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            var res = "from=" + encodeURIComponent(newsStartFrom) + "&to=" + encodeURIComponent(newsEnd);
+            var res = "from=" + encodeURIComponent(newsStartFrom) + "&to=" + encodeURIComponent(newsEnd) + "&owner=" + encodeURIComponent(pageOwnerId);
             xhr.send(res);
             xhr.onload = function() {
                 var result = xhr.responseText;
@@ -35,20 +39,38 @@ window.addEventListener("load", function() {
                 else {  
                 array.forEach(function(item, i, arr) {
                     var postImg = "";
+                    var deletePost = "";
                     if(item.photo_url != null) {
                         postImg = $("#postIMG").html();
                         postImg = postImg.replace("[image]", ("/media/users/" + item.page_owner_id + "/photo/" + item.photo_url));
-                    }   
+                    }
+                    if(isOwner || item.owner_id == $("#currentUserId").val()) {
+                        deletePost = $("#postDelete").html();
+                    }
                     var tmp = $("#newsBlock").html();
+                    tmp = tmp.replace("[id]", item.id);
                     tmp = tmp.replace("[PostImage]", postImg);
-                    tmp = tmp.replace("[text]",item.id);
+                    tmp = tmp.replace("[text]",item.post_text);
                     tmp = tmp.replace("[date]", item.publishing_date);
+                    tmp = tmp.replace("[userID]", item.user_id);
+                    tmp = tmp.replace("[userID]", item.user_id);
+                    tmp = tmp.replace("[userImage]", item.image);
+                    tmp = tmp.replace("[userName]", item.surname + " " + item.name);
+                    tmp = tmp.replace("[delete]", deletePost);
+                    if(item.isLiked == true) {
+                        tmp = tmp.replace("[isLiked]", "favorite");
+                    }
+                    else {
+                        tmp = tmp.replace("[isLiked]", "favorite_border");
+                    }
+                    tmp = tmp.replace("[count]", item.count);
+                    tmp = tmp.replace('[comment_count]', item.comment_count);
                     var tmpObj = $(tmp);
                     grid.append(tmpObj).masonry("appended", tmpObj);
                     $("time.timeago").timeago();
                 });
-                setTimeout(setReload, 250);
-                setTimeout(setMenuHeight, 251);
+                setTimeout(setReload, 210);
+                setTimeout(setMenuHeight, 211);
                 }
             }
             xhr.onreadystatechange = function() {
@@ -76,6 +98,147 @@ window.addEventListener("load", function() {
     $('#createPost').on("click", function(){
         $('#modal_createPost').modal('open');
     });
+
+    $(".wall").on("click", ".delete-news", function() {
+        var newsId = $(this).parent().parent().find("input[type=hidden]").val();
+        var block = $(this).parent().parent().parent();
+        $(block).fadeOut(200, function(){
+            $(block).remove();
+            setTimeout(setReload, 100);
+            setTimeout(setMenuHeight, 101);
+        });
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/news/delete", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var res = "postId=" + encodeURIComponent(newsId);
+        xhr.send(res);
+        Materialize.toast("Запис видалено.", 1000);
+    });
+
+    $(".wall").on("click", ".comment-btn", function() {
+        var id = $(this).parent().parent().parent().parent().find("input[type=hidden]").val();
+        var text = $(this).parent().find("input").val();
+        var commentImg = $(this).parent().parent().parent().find(".coment").parent().find("span");
+        var commentList = $(this).parent().parent().find(".comment-list");
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/news/addcomment", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var res = "postId=" + encodeURIComponent(id) + "&text=" + encodeURIComponent(text);
+        xhr.send(res);
+        xhr.onreadystatechange = function() {
+            if(this.readyState !=4) return;
+            if(this.status != 200) {
+                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                return;
+            }
+            else {
+                var count = $(commentImg).html();
+                count++;
+                $(commentImg).html(count.toString());
+                var result = JSON.parse(xhr.responseText);
+                var tmp = $("#sendComment").html();
+                tmp = tmp.replace('[userID]', result.user_id);
+                tmp = tmp.replace('[userID]', result.user_id);
+                tmp = tmp.replace('[userImage]', result.image);
+                tmp = tmp.replace("[userName]", result.surname + " " + result.name);
+                tmp = tmp.replace('[date]', result.date);
+                tmp = tmp.replace('[text]', result.text);
+                $(commentList).append($(tmp));
+                $("time.timeago").timeago();
+                setTimeout(setReload, 100);
+                setTimeout(setMenuHeight, 101);
+            }
+        }
+    });
+
+
+    $(".wall").on("click", ".coment", function() {
+        var thisComment = $(this);
+        var card = $(this).parent().parent().parent();
+        var id = $(this).parent().parent().parent().find("input[type=hidden]").val();
+        var commentList = $(this).parent().parent().parent().find(".comment-list");
+        commentList.html("");
+        if(card.find(".comment").hasClass("hidden")) {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/news/getcomment", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            var res = "postId=" + encodeURIComponent(id);
+            xhr.send(res);
+            xhr.onreadystatechange = function() {
+            if(this.readyState !=4) return;
+            if(this.status != 200) {
+                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                return;
+            }
+            else {
+                var result = JSON.parse(xhr.responseText);
+                if(result.length == 0) {
+                }
+                else {
+                    result.forEach(function(item, i, arr) {
+                        var tmp = $("#sendComment").html();
+                        tmp = tmp.replace('[userID]', item.user_id);
+                        tmp = tmp.replace('[userID]', item.user_id);
+                        tmp = tmp.replace('[userImage]', item.image);
+                        tmp = tmp.replace("[userName]", item.surname + " " + item.name);
+                        tmp = tmp.replace('[date]', item.date);
+                        tmp = tmp.replace('[text]', item.text);
+                        $(commentList).append($(tmp));
+                        $("time.timeago").timeago();
+                        setTimeout(setReload, 100);
+                        setTimeout(setMenuHeight, 101);
+                    });
+                }
+                card.find(".comment").slideDown(10, function() {
+                setTimeout(setReload, 0);
+                setTimeout(setMenuHeight, 1);
+                card.find(".comment").removeClass("hidden");
+            });
+            }
+        }
+        }
+        else {
+            card.find(".comment").slideUp(10, function() {
+                setTimeout(setReload, 0);
+                setTimeout(setMenuHeight, 1);
+                card.find(".comment").addClass("hidden");
+            });
+        }
+    });
+
+    $(".wall").on("click", ".like-heart", function() {
+        var thisHeart = $(this);
+        var likeConditions =  $(this).html();
+        var id = $(this).parent().parent().parent().find("input[type=hidden]").val();
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "/news/like", true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        if(likeConditions == "favorite") {
+            $(this).html("favorite_border");
+            var res = "postId=" + encodeURIComponent(id) + "&action='delete'";
+        }
+        else{
+            $(this).html("favorite");
+            var res = "postId=" + encodeURIComponent(id) + "&action=set";
+        }
+        xhr.send(res);
+        xhr.onreadystatechange = function() {
+            if(this.readyState !=4) return;
+            if(this.status != 200) {
+                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                return;
+            }
+            else {
+                var likeCount = +xhr.responseText;
+                if(likeCount > 0) {
+                    $(thisHeart).parent().find("span").html(likeCount.toString());
+                }
+                else {
+                    $(thisHeart).parent().find("span").html("0");
+                }
+            }
+        }
+    });
     
     $("time.timeago").timeago();
     
@@ -98,21 +261,34 @@ window.addEventListener("load", function() {
             else {
                 var result = JSON.parse(xhr.responseText);
                 var postImg = "";
+                var deletePost = "";
                 if(result.photo_url != undefined) {
                     postImg = $("#postIMG").html();
                     postImg = postImg.replace("[image]", ("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
                 }
+                if(isOwner || result.owner_id == $("#currentUserId").val()) {
+                    deletePost = $("#postDelete").html();
+                }
                 var tmp = $("#newsBlock").html();
+                tmp = tmp.replace("[id]", result.id);
                 tmp = tmp.replace("[PostImage]", postImg);
                 tmp = tmp.replace("[text]", result.post_text);
                 tmp = tmp.replace("[date]", result.publishing_date);
+                tmp = tmp.replace("[userID]", result.user_id);
+                tmp = tmp.replace("[userID]", result.user_id);
+                tmp = tmp.replace("[userImage]", result.image);
+                tmp = tmp.replace("[userName]", result.surname + " " + result.name);
+                tmp = tmp.replace("[delete]", deletePost);
+                tmp = tmp.replace("[isLiked]", "favorite_border");
+                tmp = tmp.replace("[count]", "0");
+                tmp = tmp.replace('[comment_count]', "0");
                 var tmpObj = $(tmp);
                 $(tmp).insertAfter($("#createPostBlock"));
                 $("time.timeago").timeago();
                 grid.masonry("prepended", tmpObj).masonry('layout');;
-                setTimeout(setReload, 250);
+                setTimeout(setReload, 210);
                 newsEnd++;
-                setTimeout(setMenuHeight, 251);
+                setTimeout(setMenuHeight, 211);
             }
         }
     });

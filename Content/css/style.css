@@ -8,8 +8,69 @@ body{
     background-color: white;
 }
 
+.message{
+    margin: 0px;
+    margin-bottom: 10px;
+    padding: 0px;
+}
+
+.message span{
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.message.my .message-item{
+    background-color: #32b38c !important;
+    color: white !important;
+    float: right;
+    clear: both;
+    max-width: 50%;
+}
+.message.my .date{
+    padding: 0px 10px !important;
+    font-size: 10px;
+    color: lightslategray;
+    float: right;
+    clear: both;
+    margin-bottom: 15px;
+}
+
+.wall .wall-item .card .coment :hover{
+    cursor:pointer !important;
+}
+
+.message.user .message-item{
+    background-color: #d9d9d9 !important;
+    float: left;
+    clear: both;
+    max-width: 50%;
+}
+.message.user .date{
+    padding: 0px 10px !important;
+    font-size: 10px;
+    color: lightslategray;
+    float: left;
+    clear: both;
+    margin-bottom: 15px;
+}
+
+#textMessages{
+    overflow-x: auto;
+    height: calc(100vh - 200px);
+}
+
+#messagesSection{
+    min-height: 100vh;
+    max-height: 100vh;
+}
+
 .main-color{
     background-color: #32b38c;
+}
+
+.selected-message{
+    background-color: #63615E !important;
+    color: white !important;
 }
 
 .fixed{
@@ -150,14 +211,11 @@ body .row{
 }
 
 #content{
-    padding: 0px !impostant;
+    padding: 0px !important;
     margin: 0px !important;
     resize: both;
 }
 
-#main{
-    
-}
 
 .left-menu-user-img {
     min-height: 180px !important;
@@ -167,10 +225,45 @@ body .row{
     object-position: center;
 }
 
+.comment-list{
+    max-height: 300px;
+    overflow-y:auto;
+}
+
 #left-menu{
     background-color: #393836;
     padding: 0 !important;
     height:100%;
+}
+
+.comment-field input{
+    margin:0px !important;
+}
+
+.comment-item{
+    margin-bottom: 10px !important;
+}
+
+.comment-field button{
+    padding: 0px !important;
+    margin:0px !important;
+    background-color: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.comment-field i{
+    margin:0px !important;
+    padding:0px !important;
+    color: #393836 !important;
+}
+
+.like-heart{
+    color: #ef5350  !important;
+}
+
+.like-heart:hover{
+    cursor: pointer;
 }
 
 #right-menu{
@@ -184,6 +277,12 @@ body .row{
     max-height: 180px !important;
     margin: 0px;
     padding:0px;
+}
+
+.delete-news{
+    color:#ffaa8f !important;
+    visibility: hidden;
+    transition-property: all;
 }
 
 #left-menu .left-menu-user-info{
@@ -220,7 +319,8 @@ body .row{
     background-color: #32b38c;
 }
 
-#left-menu .left-menu-user-info button{
+#left-menu .left-menu-user-info button,
+#left-menu .left-menu-user-info a {
     width:100%;
     padding: 0px 5px;
     margin-top: 10px;
@@ -361,6 +461,10 @@ body .row{
     float: left;
 }
 
+.row.wall .col.wall-item:hover .delete-news{
+    visibility: visible;
+}
+
 #createPost{
     padding: 20px;
     width: 100%;
@@ -375,6 +479,19 @@ body .row{
 #createPost:hover{
     background-color: #ffaa8f;
     color: white;
+}
+
+
+.comment .comment-item .chip {
+    background-color: transparent !important;
+}
+
+.comment .comment-item .chip .timeago{
+    font-size: 10px;
+}
+
+.comment .comment-item p{
+    margin-left: 35px !important;
 }
 
 .wall .wall-item .card .card-action{
@@ -409,4 +526,26 @@ body .row{
     height: 500px;
     width: 500px;
     margin-left: 35%;
+}
+.search_res {
+    position: absolute;
+    background-color: white;
+    z-index: 10;
+    width: 75%;
+    padding: 10px;
+}
+.search_res img {
+    width: 70px;
+    height: 70px;
+    margin-right: 20px;
+}
+.search_res a {
+    text-decoration: none;
+    font-size: 20px;
+    color: #00C853;
+    vertical-align: middle;
+}
+.card .chip img {
+    object-fit: cover;
+    object-position: center;
 }

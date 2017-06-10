@@ -7,8 +7,8 @@ class Search_Controller
         $m = new Search_Model();
         $peoples = $m->GetPeoples($search);
         $groups = $m->GetGroups($search);
-        echo json_encode($peoples);
-        echo json_encode($groups);
+        $res = array_merge($peoples, $groups);
+        echo json_encode($res);
         die();
     }
 }
