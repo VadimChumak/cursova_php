@@ -444,17 +444,56 @@ body .row{
 
 .row.wall{
     margin:0px !important;
-    padding:0px !important
+    padding:10px !important
 }
 
 .row.wall .col{
     margin:0px !important;
-    padding: 5px !important;
+    padding: 10px!important;
 }
 .row.wall .col .card{
     margin:0px !important;
     box-shadow: none;
     border-radius: 0px;
+    position: relative;
+}
+.row.wall .col .card .card-image{
+    padding: 10px !important;
+    padding-top: 0px !important;
+}
+
+.row.wall .col .card .card-info img{
+    height:60px;
+    width:60px;
+    object-fit: cover;
+    object-position: center;
+    border:3px solid white;
+    border-radius: 50%;
+    position: relative;
+    left:-9px;
+    top:-9px;
+}
+
+.row.wall .col .card .card-info a{
+    position:absolute;
+    margin-top: 10px;
+    font-family: 'Port Lligat Slab', serif;
+    font-size: 21px;
+    color:#444444;
+    transition-property: color;
+    transition-duration: 0.3s;
+}
+.row.wall .col .card .card-info a:hover{
+    color:#32B38C;
+}
+
+.row.wall .col .card .card-info .timeago{
+    float: right;
+    clear: both;
+    margin: 10px;
+    font-family: 'Port Lligat Slab', serif;
+    font-size: 16px;
+    color: #CECECE;
 }
 
 .row.wall .col.wall-item {
