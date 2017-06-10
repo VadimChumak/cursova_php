@@ -1,0 +1,12 @@
+<form enctype="multipart/form-data" method="post"  action="../Add">
+
+    <div class="newGroup-block">
+        <span>Название: </span>
+        <input name='title' type="text" value=""/></br>
+
+        <span>Файл: </span></br>
+        <input style="margin:10px;" name='song_file' type="file"/></br>
+        <input type="submit" value="Добавить" id="add">
+    </div>
+
+</form>

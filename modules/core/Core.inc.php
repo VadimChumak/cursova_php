@@ -63,15 +63,15 @@ class Core
         self::$IndexTPL->Display();
     }
 
-    public  function saveImgToDir($dirPath, $imgFile){ //. . . ned some more validation
+    public  function saveToDir($dirPath, $File){ //. . . ned some more validation
         // $imgFile = $FILES['name'];
         $path = $dirPath; // директория для загрузки
-        $ext = array_pop(explode('.',$imgFile['name'])); // расширение
+        $ext = array_pop(explode('.',$File['name'])); // расширение
         $new_name = time().'.'.$ext; // новое имя с расширением
         $full_path = $path.$new_name; // полный путь с новым именем и расширением
 
-        if($imgFile['error'] == 0){
-            if(move_uploaded_file($imgFile['tmp_name'], $full_path)){
+        if($File['error'] == 0){
+            if(move_uploaded_file($File['tmp_name'], $full_path)){
                 return $new_name;
             }
         }

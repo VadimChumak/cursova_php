@@ -45,7 +45,7 @@ class Groups_Controller
             //add more validation
             if (isset($_FILES['photo_url'])) {
                 //load new to the server
-                $name = $core->saveImgToDir("media/groups/" . $groupId . "/photo/",
+                $name = $core->saveToDir("media/groups/" . $groupId . "/photo/",
                     $_FILES['photo_url']);
 
                 if ($name != -1) {
@@ -145,7 +145,7 @@ class Groups_Controller
                 if(isset($_FILES['photo_url'])) {
 
                     //load new to the server
-                    $name = $core->saveImgToDir("media/groups/".$groupId."/photo/",
+                    $name = $core->saveToDir("media/groups/".$groupId."/photo/",
                         $_FILES['photo_url']);
 
                     if($name != -1) {

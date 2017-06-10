@@ -12,4 +12,17 @@ class Music_Model
         return $List;
     }
 
+    public function AddMusic($arr){
+        $id = Core::$Db->Insert("music", array('title' => $arr['title'], 'url' =>  $arr['url'] ));
+        return $id;
+    }
+
+    public function AddOwner($userId, $musicId){
+        $id = Core::$Db->Insert("user_music", array('user_id' => $userId, 'music_id' =>  $musicId ));
+        return $id;
+    }
+
+    public function DeleteOwner($userId, $musicId){
+        Core::$Db->DeleteByTwoCays("user_music", 'user_id',  $userId , 'music_id', $musicId);
+    }
 }

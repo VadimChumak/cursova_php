@@ -1,4 +1,4 @@
-<form enctype="multipart/form-data" method="post"  action="../AddGroup">
+<form enctype="multipart/form-data" method="post"  action="../groups/AddGroup">
 
     <div class="newGroup-block">
         <span>Название: </span>
