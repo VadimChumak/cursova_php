@@ -472,6 +472,7 @@ body .row{
     position: relative;
     left:-9px;
     top:-9px;
+    background-color: white;
 }
 
 .row.wall .col .card .card-info a{
