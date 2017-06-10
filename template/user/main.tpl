@@ -105,7 +105,11 @@
     <div class="row" id="content">
         <div class="col l2 m3 hide-on-small-and-down z-depth-4" id="left-menu">
             <div class="user-page-img">
-                <img  src="<?php echo "/media/users/".$UserInfo['user_id'].'/photo/'.$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
+                <?php if(explode('_', $UserInfo['image'])[0] == 'default'): ?>
+                    <img  src="<?php echo "/media/users/".$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
+                <?php else: ?>
+                    <img  src="<?php echo "/media/users/".$UserInfo['user_id'].'/photo/'.$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
+                <?php endif; ?>
                 <input type="hidden" value="<?php echo $UserInfo['user_id'] ?>" id="page_owner_id"/>
             </div>
             <div class="left-menu-user-info">

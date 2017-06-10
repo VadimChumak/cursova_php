@@ -6,7 +6,7 @@ class Registration_Model
         if (empty($registered_users)) {
             Core::$Db->Insert("user_auth", array('email' => $item['email'], 'password' => md5($item['password'])));
             $id = Core::$Db->Select("user_auth", "id", array('email' => $item['email']));
-            Core::$Db->Insert('user_data', array('user_id' => $id[0]['id'], 'name' => $item['name'], 'surname' => $item['surname']));
+            Core::$Db->Insert('user_data', array('user_id' => $id[0]['id'], 'name' => $item['name'], 'surname' => $item['surname'], 'gender' => 1, 'image' => 'default_m.png'));
             $path_dir = "./media/users/". $id[0]['id'];
             mkdir($path_dir);
             mkdir($path_dir . "/photo");

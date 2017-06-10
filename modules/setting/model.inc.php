@@ -3,19 +3,18 @@ class Setting_Model
 {
     public function Edit($item)
     {
-       if ($_FILES && $_FILES['photo']['error'] == UPLOAD_ERR_OK)
-        {
-            $image_name = $_FILES['photo']['name'];
-            move_uploaded_file($_FILES['photo']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $_SESSION['user']['id'] . "/photo/" . $image_name);
-        }
+        $image = "";
+        if($item['gender'] == 0) {
+            $image = "default_w.png";
+        } 
         else {
-            $image_name = "default.png";
+            $image = "default_m.png";
         }
         $arrayFoeSave = array( 
             'gender' => $item['gender'], 
             'city' => $item['city'],
             'country' => $item['country'], 
-            'image' => $image_name, 
+            'image' => $image, 
             'about' => $item['about']
         );
         if(strlen($item['birthday']) > 0 ) {

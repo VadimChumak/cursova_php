@@ -9,7 +9,11 @@
         <div class="card">
             <input type="hidden" value="<?php echo $item['id'] ?>" />
             <div class="card-info">
-                <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>"/>
+                <?php if(explode('_', $item['image'])[0] == 'default'): ?>
+                    <img src="<?php echo "/media/users/".$item['image'] ?>"/>
+                <?php else: ?>
+                    <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>"/>
+                <?php endif; ?>
                 <time class="timeago" datetime="<?php echo $item['publishing_date'] ?>"></time>
                 <a href="<?php echo '/user/id/'.$item['user_id'] ?>"><?php echo $item['surname']." ".$item['name'] ?></a>
             </div>
@@ -49,7 +53,7 @@
         <div class="card">
             <input type="hidden" value="[id]" />
             <div class="card-info">
-                <img src="/media/users/[userID]/photo/[userImage]"/>
+                <img src="[userImage]"/>
                 <time class="timeago" datetime="[date]"></time>
                 <a href="/user/id/[userID]">[userName]</a>
             </div>
@@ -84,7 +88,7 @@
 <script type="text" id="sendComment">
     <div class="comment-item">
         <div class="chip">
-            <img src="/media/users/[userID]/photo/[userImage]" />
+            <img src="[userImage]" />
             <a href="/user/id/[userID]">[userName]</a>
             <time class="timeago" datetime="[date]"></time>
         </div>

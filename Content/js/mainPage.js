@@ -54,7 +54,12 @@ window.addEventListener("load", function() {
                     tmp = tmp.replace("[date]", item.publishing_date);
                     tmp = tmp.replace("[userID]", item.user_id);
                     tmp = tmp.replace("[userID]", item.user_id);
-                    tmp = tmp.replace("[userImage]", item.image);
+                    if(item.image.split('_')[0] == 'default') {
+                        tmp = tmp.replace("[userImage]", "/media/users/" + item.image);
+                    }
+                    else {
+                        tmp = tmp.replace("[userImage]", "/media/users/" + item.user_id + "/photo/" + item.image);
+                    }
                     tmp = tmp.replace("[userName]", item.surname + " " + item.name);
                     tmp = tmp.replace("[delete]", deletePost);
                     if(item.isLiked == true) {
@@ -139,7 +144,12 @@ window.addEventListener("load", function() {
                 var tmp = $("#sendComment").html();
                 tmp = tmp.replace('[userID]', result.user_id);
                 tmp = tmp.replace('[userID]', result.user_id);
-                tmp = tmp.replace('[userImage]', result.image);
+                if(result.image.split('_')[0] == 'default') {
+                    tmp = tmp.replace("[userImage]", "/media/users/" + result.image);
+                }
+                else {
+                    tmp = tmp.replace("[userImage]", "/media/users/" + result.user_id + "/photo/" + result.image);
+                }
                 tmp = tmp.replace("[userName]", result.surname + " " + result.name);
                 tmp = tmp.replace('[date]', result.date);
                 tmp = tmp.replace('[text]', result.text);
@@ -179,7 +189,12 @@ window.addEventListener("load", function() {
                         var tmp = $("#sendComment").html();
                         tmp = tmp.replace('[userID]', item.user_id);
                         tmp = tmp.replace('[userID]', item.user_id);
-                        tmp = tmp.replace('[userImage]', item.image);
+                        if(item.image.split('_')[0] == 'default') {
+                            tmp = tmp.replace("[userImage]", "/media/users/" + item.image);
+                        }
+                        else {
+                            tmp = tmp.replace("[userImage]", "/media/users/" + item.user_id + "/photo/" + item.image);
+                        }
                         tmp = tmp.replace("[userName]", item.surname + " " + item.name);
                         tmp = tmp.replace('[date]', item.date);
                         tmp = tmp.replace('[text]', item.text);
@@ -276,7 +291,12 @@ window.addEventListener("load", function() {
                 tmp = tmp.replace("[date]", result.publishing_date);
                 tmp = tmp.replace("[userID]", result.user_id);
                 tmp = tmp.replace("[userID]", result.user_id);
-                tmp = tmp.replace("[userImage]", result.image);
+                if(result.image.split('_')[0] == 'default') {
+                    tmp = tmp.replace("[userImage]", "/media/users/" + result.image);
+                }
+                else {
+                    tmp = tmp.replace("[userImage]", "/media/users/" + result.user_id + "/photo/" + result.image);
+                }
                 tmp = tmp.replace("[userName]", result.surname + " " + result.name);
                 tmp = tmp.replace("[delete]", deletePost);
                 tmp = tmp.replace("[isLiked]", "favorite_border");
