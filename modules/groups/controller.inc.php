@@ -1,20 +1,29 @@
 <?php
 class Groups_Controller
 {
-    public static function ListAction()
+    public static function ListAction($arg)
     {
+
+        $id = $arg;
         $userModel = new Registration_Model();
+
+
+        $modelUser = new User_Model();
+        $user = $modelUser->GetUserAuth($arg[0]);
+
+        if($user == null)
+            header("Location:/");
 
         $model = new Groups_Model();
         $view = new Groups_View();
 
-        $user = $_SESSION['user'];
+        $CurrentUser = $_SESSION['user'];
 
-        $groupList = $model->GetGroupList($user);
+        $groupList = $model->GetGroupList($user[0]);
 
         return array(
             "PageTitle" => "Групи",
-            'Content' => $view->GroupList($groupList)
+            'Content' => $view->GroupList($groupList, $user[0], $CurrentUser)
         );
 
     }
