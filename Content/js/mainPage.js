@@ -5,7 +5,6 @@ window.addEventListener("load", function() {
         if(contentHeight > leftHeight) {
         document.getElementById("left-menu").style.height = contentHeight + "px";
     };
-    setMenuHeight();
     }
     var newsStartFrom = 0;
     var newsEnd = 10;

@@ -133,29 +133,6 @@
             </div>
         </div>
         <div class="col l10 m9 s12" id="main-content">
-            <div class="row quick-acces">
-                <header>
-                    <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
-                    <nav class="user-nav nav-extended">
-                        <div class="nav-wrapper">
-                            <ul class="user-nav-box">
-                                <li><a href="sass.html"><i class="material-icons left">contacts</i>Friends</a></li>
-                                <li><a href="badges.html"><i class="material-icons left">supervisor_account</i>Groups</a></li>
-                                <li><a href="badges.html"><i class="material-icons left">perm_media</i>Photos</a></li>
-                                <li><a href="badges.html"><i class="material-icons left">library_music</i>Musics</a></li>
-                            </ul>
-                        </div>
-                        <?php endif; ?>
-                        <div class="nav-content user-dop-panel">
-                            <ul class="tabs tabs-transparent user-nav-box">
-                                <li class="tab"><a href="#test1">All</a></li>
-                                <li class="tab"><a class="active" href="#test2">Online</a></li>
-                                <li class="tab"><a href="#test4">Request</a></li>
-                            </ul>
-                        </div>
-                    </nav>
-                </header>
-            </div>
             <div class="row wall">
                 <?php echo $NewsSection ?>
             </div>
