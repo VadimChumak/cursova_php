@@ -484,6 +484,10 @@ body .row{
     transition-property: color;
     transition-duration: 0.3s;
 }
+
+.row.wall .col .card .badge{
+    float: none !important;
+}
 .row.wall .col .card .card-info a:hover{
     color:#32B38C;
 }
