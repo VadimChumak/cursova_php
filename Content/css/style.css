@@ -69,8 +69,7 @@ body{
 }
 
 .selected-message{
-    background-color: #63615E !important;
-    color: white !important;
+    background-color: white !important;
 }
 
 .fixed{
@@ -490,6 +489,25 @@ body .row{
 }
 .row.wall .col .card .card-info a:hover{
     color:#32B38C;
+}
+
+#usersMessages .card .collection-item{
+    padding: 10px 10px 10px 110px !important;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#usersMessages .card .collection-item a span{
+    display: inline-block;
+    padding-top: 20px;
+    font-size: 20px !important;
+}
+#usersMessages .card {
+    background-color: transparent !important;
+}
+
+.collection-item .message-img{
+    margin: 0px !important;
+    width:65px !important;
+    height:65px !important;
 }
 
 .row.wall .col .card .card-info .timeago{
