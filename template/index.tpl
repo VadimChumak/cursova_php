@@ -18,8 +18,9 @@
 <script src="/Content/js/materialize.js"></script>
 <script src="/Content/js/mainPage.js"></script>
 <script src="/Content/js/timeago.js"></script>
-<!--<script src="/Content/js/timeagoLocalization.js"></script>-->
 <script src="/Content/js/chat.js"></script>
 <script src="/Content/js/messanger.js"></script>
+<script src="/Content/js/timeagoLocalization.js"></script>
+<script src="/Content/js/musicList.js"></script>
 </body>
 </html>

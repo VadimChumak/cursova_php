@@ -7,10 +7,12 @@ class Groups_View
         return $tpl->GetHTML();
     }
 
-    public function GroupList($groupList)
+    public function GroupList($groupList, $currentUser, $UserPage)
     {
         $tpl = new Template('template/groups/list.tpl');
         $tpl->SetParam('List',$groupList);
+        $tpl->SetParam('User',$currentUser);
+        $tpl->SetParam('UserPage',$UserPage);
         return $tpl->GetHTML();
     }
 

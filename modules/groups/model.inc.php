@@ -2,9 +2,8 @@
 class Groups_Model
 {
     public function GetGroupList($user) {
-        //now get all group of all user
-        //add (inner ... join to select)
-        $List = Core::$Db->Select('groups','id,title,owner_id,photo_url');
+        $List = Core::$Db->Select('groups','id,title,owner_id,photo_url', array('group_user.user_id' => $user['id'] ) ,
+            'group_user',array('group_user.group_id' => 'id'), array('groups.id'));
         return $List;
     }
 
