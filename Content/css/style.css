@@ -35,7 +35,7 @@ body{
     margin-bottom: 15px;
 }
 
-.wall .wall-item .card .coment :hover{
+.wall .wall-item .card .coment:hover{
     cursor:pointer !important;
 }
 

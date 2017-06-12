@@ -6,6 +6,10 @@ window.addEventListener("load", function() {
         document.getElementById("left-menu").style.height = contentHeight + "px";
     };
     }
+    $('.dropdown-button').dropdown({
+        constrainWidth: false
+        }
+    );
     var newsStartFrom = 0;
     var newsEnd = 10;
     var allNews = true;
