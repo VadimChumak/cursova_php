@@ -504,6 +504,19 @@ body .row{
     background-color: transparent !important;
 }
 
+#friendList .card .collection-item{
+    padding: 10px 10px 10px 110px !important;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#friendList .card .collection-item a span{
+    display: inline-block;
+    padding-top: 20px;
+    font-size: 20px !important;
+}
+#friendList .card {
+    background-color: transparent !important;
+}
+
 .collection-item .message-img{
     margin: 0px !important;
     width:65px !important;
