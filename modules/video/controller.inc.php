@@ -10,56 +10,81 @@ class Video_Controller
 
         $modelUser = new User_Model();
         $user = $modelUser->GetUserAuth($arg[0]);
-
         if($user == null)
             header("Location:/");
 
-        $videoList = $model->GetVideoList($user[0]);
+        $musicList = $model->GetVideoList($user[0]);
 
         return array(
             "PageTitle" => "Video",
-            'Content' => $view->VideoList($videoList, $CurrentUser['id'], $user[0]['id'])
+            'Content' => $view->VideoList($musicList, $CurrentUser['id'], $user[0]['id'])
         );
     }
 
-    public function AddAction()
-    {
-        $user = $_SESSION['user'];
-        $core = new Core();
+    public function CopyAction(){
         $model = new Video_Model();
 
-        if ($user == null || $_SERVER['REQUEST_METHOD'] != "POST")
-            header("Location:/");
+        $user = $_SESSION['user'];
+        $data = "__Bad_Argument__";
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['id'])) {
+            $videoId = $_POST['id'];
 
+            $CurrentVideo = $model->GetVideoById($videoId);
 
-        if (!isset($_POST['title']) || !isset($_FILES['video_file']))
-            header("Location:/");
-
-        $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"]."/media/video/", $_FILES['video_file']);
-
-        if ($name != -1) {
             $arr = array(
-                'title' => $_POST['title'],
-                'url' => "media/video/" .pathinfo("media/video/" . $name, PATHINFO_FILENAME)
+                'title' => $CurrentVideo['title'],
+                'url' => $CurrentVideo['url'],
+                'date' => date("Y-m-d H:i:s")
             );
+
             $videoId = $model->AddVideo($arr);
+
             $model->AddOwner($user['id'], $videoId);
+            $data =  $data = "__Add__";
         }
-        header("Location:".$_SERVER["DOCUMENT_ROOT"] . "/video/list/" . $user['id']);
+        echo(json_encode($data));
     }
 
-    public function DeleteAction($attr){
-        $DeleteId = $attr[0];
+    public function AddAction()
+    {   date_default_timezone_set("Europe/Riga");
+        $user = $_SESSION['user'];
+        $core = new Core();
+        $model = new Music_Model();
 
+        $data = "__Bad_Argument__";
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
+
+            $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"] . "/media/video/", $_FILES['video_file']);
+
+            if ($name != -1) {
+                $arr = array(
+                    'title' => $_POST['title'],
+                    'url' => "media/music/" . pathinfo("media/video/" . $name, PATHINFO_FILENAME),
+                    'date' => date("Y-m-d H:i:s", time())
+                );
+
+                $videoId = $model->AddVideo($arr);
+                $model->AddOwner($user['id'], $videoId);
+                $data = "__Add__";
+            }
+        }
+        echo(json_encode($data));
+        exit();
+    }
+
+    public function DeleteAction(){
         $user = $_SESSION['user'];
         $model = new Video_Model();
 
-        if ($user == null || $_SERVER['REQUEST_METHOD'] != "POST")
-            header("Location:/");
+        $data = "__error__";
 
+        if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST") {
+            $DeleteId = $_POST['num'];
+            $model->DeleteOwner($user['id'], $DeleteId);
+            $data = "__deleted__";
+        }
 
-        $model->DeleteOwner($user['id'], $DeleteId);
-
-        header("Location:".$_SERVER["DOCUMENT_ROOT"] . "/video/list/" . $user['id']);
+        echo(json_encode($data));
+        exit();
     }
 }
