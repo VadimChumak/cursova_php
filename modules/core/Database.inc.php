@@ -19,10 +19,18 @@ class Database
     public function UpdateById($tableName, $assocArray, $indexField, $indexValue)
     {
         $setArray = array();
-        foreach ($assocArray as $key => $value)
-            array_push($setArray, "{$key} = '{$value}'");
+        foreach ($assocArray as $key => $value) array_push($setArray, "{$key} = '{$value}'");
         $setList = implode(',', $setArray);
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}'";
+        $this->Pdo->exec($sql);
+    }
+
+    public function UpdateFriends($tableName, $assocArray, $indexField, $indexValue, $indexField2, $indexValue2)
+    {
+        $setArray = array();
+        foreach ($assocArray as $key => $value) array_push($setArray, "{$key} = '{$value}'");
+        $setList = implode(',', $setArray);
+        $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}' AND {$indexField2} = '{$indexValue2}'";
         $this->Pdo->exec($sql);
     }
     public function SelectSearch($tableName, $fieldArray, $assocArray = null)

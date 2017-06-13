@@ -516,7 +516,14 @@ body .row{
 #friendList .card {
     background-color: transparent !important;
 }
+.accept_btn {
+    float: right;
+    margin-top: 13px;
+}
 
+ul.collection.card>li {
+    margin-bottom: 20px;
+}
 .collection-item .message-img{
     margin: 0px !important;
     width:65px !important;

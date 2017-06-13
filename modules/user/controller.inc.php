@@ -26,7 +26,7 @@ class User_Controller
         $params = array(
             'CurrentUser' => $_SESSION['user'],
             'UserInfo' => $user[0],
-            'NewsSection' => $NewsView->GetNewsList($newsList)
+            'NewsSection' => $NewsView->GetNewsList($newsList),
         );
         return array(
             "Content"  => $userPage->GetUserPage($params)
