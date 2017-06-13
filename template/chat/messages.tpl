@@ -3,12 +3,8 @@
     <?php while (!is_null($item = array_shift($messagesArray))): ?>
         <li class="collection-item avatar">
             <input type="hidden" value="<?php echo $item['user_id'] ?>" />
-            <?php if(explode('_', $item['image'])[0] == 'default'): ?>
-                    <img src="<?php echo "/media/users/".$item['image'] ?>" class="circle message-img z-depth-3"/>
-                <?php else: ?>
-                    <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>" class="circle message-img z-depth-3"/>
-                <?php endif; ?>
-            <a href="/user/id/<?php echo $item['user_id'] ?>"><span class="title"><?php echo $item['surname'].' '.$item['name'] ?></span></a>
+            <img src="/media/users/<?php echo $item['user_id'] ?>/photo/<?php echo $item['image'] ?>" alt="" class="circle">
+            <span class="title"><?php echo $item['surname'].' '.$item['name'] ?></span>
         </li>
     <?php endwhile; ?>
   </ul>

@@ -27,38 +27,37 @@ class Music_Controller
         $core = new Core();
         $model = new Music_Model();
 
-        if ($user == null || $_SERVER['REQUEST_METHOD'] != "POST")
-            header("Location:/");
+        $data = "__Bad_Argument__";
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
+        print_r($_POST);
 
+            $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"] . "/media/music/", $_FILES['song_file']);
 
-        if (!isset($_POST['title']) || !isset($_FILES['song_file']))
-            header("Location:/");
-
-        $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"]."/media/music/", $_FILES['song_file']);
-
-        if ($name != -1) {
-            $arr = array(
-                'title' => $_POST['title'],
-                'url' => "media/music/" .pathinfo("media/music/" . $name, PATHINFO_FILENAME)
-            );
-            $musicId = $model->AddMusic($arr);
-            $model->AddOwner($user['id'], $musicId);
+            if ($name != -1) {
+                $arr = array(
+                    'title' => $_POST['title'],
+                    'url' => "media/music/" . pathinfo("media/music/" . $name, PATHINFO_FILENAME)
+                );
+                $musicId = $model->AddMusic($arr);
+                $model->AddOwner($user['id'], $musicId);
+                $data = "__Add__";
+            }
         }
-        header("Location:".$_SERVER["DOCUMENT_ROOT"] . "/music/list/" . $user['id']);
+        echo(json_encode($data));
     }
 
-    public function DeleteAction($attr){
-        $DeleteId = $attr[0];
-
+    public function DeleteAction(){
         $user = $_SESSION['user'];
         $model = new Music_Model();
 
-        if ($user == null || $_SERVER['REQUEST_METHOD'] != "POST")
-            header("Location:/");
+        $data = "__error__";
 
+        if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST") {
+            $DeleteId = $_POST['num'];
+            $model->DeleteOwner($user['id'], $DeleteId);
+            $data = "__deleted__";
+        }
 
-        $model->DeleteOwner($user['id'], $DeleteId);
-
-        header("Location:".$_SERVER["DOCUMENT_ROOT"] . "/music/list/" . $user['id']);
+        echo(json_encode($data));
     }
 }

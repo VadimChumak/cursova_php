@@ -17,7 +17,6 @@ class User_Controller
             else {
                 $newsList['newsArray'][$i]['isLiked'] = true;
             }
-            $newsList['newsArray'][$i]['comment_count'] = Core::$Db->SelectJoin('comment', 'COUNT(item_id) as count', array('item_id' => $newsList['newsArray'][$i]['id']))[0]['count'];
         }
         $newsList['UserInfo'] = $user[0];
         $newsList['CurrentUser'] = $_SESSION['user'];

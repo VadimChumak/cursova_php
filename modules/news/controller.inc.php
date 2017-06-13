@@ -32,7 +32,6 @@ class News_Controller
             else {
                 $newsList[$i]['isLiked'] = true;
             }
-            $newsList[$i]['comment_count'] = Core::$Db->SelectJoin('comment', 'COUNT(item_id) as count', array('item_id' => $newsList[$i]['id']))[0]['count'];
         }
         $res = json_encode($newsList);
         echo $res;

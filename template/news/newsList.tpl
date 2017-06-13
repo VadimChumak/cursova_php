@@ -23,6 +23,9 @@
             </div>
             <?php endif; ?>
             <div class="card-content">
+                <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
+                        <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                <?php endif; ?>
                 <p><?php echo $item['post_text'] ?></p>
             </div>
             <div class="card-action">
@@ -32,9 +35,6 @@
                     <span class="badge"><i class="material-icons like-heart">favorite</i><span><?php echo $item['count'] ?></span></span>
                 <?php endif; ?>
                  <span class="badge"><i class="material-icons coment">comment</i><span><?php echo $item['comment_count'] ?></span></span>
-                 <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
-                        <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
-                <?php endif; ?>
             </div>
             <div class="divider"></div>
             <div class="card-content comment hidden">
@@ -59,12 +59,12 @@
             </div>
             [PostImage]
             <div class="card-content">
+                [delete]
                 <p>[text]</p>
             </div>
             <div class="card-action">
                 <span class="badge"><i class="material-icons like-heart">[isLiked]</i><span>[count]</span></span>
                 <span class="badge"><i class="material-icons coment">comment</i><span>[comment_count]</span></span>
-                [delete]
             </div>
             <div class="card-content comment hidden">
                 <div class="comment-list">

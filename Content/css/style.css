@@ -35,7 +35,7 @@ body{
     margin-bottom: 15px;
 }
 
-.wall .wall-item .card .coment:hover{
+.wall .wall-item .card .coment :hover{
     cursor:pointer !important;
 }
 
@@ -69,7 +69,8 @@ body{
 }
 
 .selected-message{
-    background-color: white !important;
+    background-color: #63615E !important;
+    color: white !important;
 }
 
 .fixed{
@@ -483,44 +484,8 @@ body .row{
     transition-property: color;
     transition-duration: 0.3s;
 }
-
-.row.wall .col .card .badge{
-    float: none !important;
-}
 .row.wall .col .card .card-info a:hover{
     color:#32B38C;
-}
-
-#usersMessages .card .collection-item{
-    padding: 10px 10px 10px 110px !important;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-#usersMessages .card .collection-item a span{
-    display: inline-block;
-    padding-top: 20px;
-    font-size: 20px !important;
-}
-#usersMessages .card {
-    background-color: transparent !important;
-}
-
-#friendList .card .collection-item{
-    padding: 10px 10px 10px 110px !important;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-#friendList .card .collection-item a span{
-    display: inline-block;
-    padding-top: 20px;
-    font-size: 20px !important;
-}
-#friendList .card {
-    background-color: transparent !important;
-}
-
-.collection-item .message-img{
-    margin: 0px !important;
-    width:65px !important;
-    height:65px !important;
 }
 
 .row.wall .col .card .card-info .timeago{

@@ -5,11 +5,8 @@ window.addEventListener("load", function() {
         if(contentHeight > leftHeight) {
         document.getElementById("left-menu").style.height = contentHeight + "px";
     };
+    setMenuHeight();
     }
-    $('.dropdown-button').dropdown({
-        constrainWidth: false
-        }
-    );
     var newsStartFrom = 0;
     var newsEnd = 10;
     var allNews = true;
