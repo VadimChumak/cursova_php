@@ -95,6 +95,28 @@ body{
     float: none !important;
  }
 
+ .edit-user-data input[type=radio] {
+     display:none!important;
+ }
+
+#content #main-content .edit-user-data .row{
+     margin:15px 0px !important;
+ }
+
+ #content #main-content .edit-user-data form{
+     padding:20px 0px !important;
+ }
+
+.user-about-section h6{
+    margin:10px 15px 10px 20px;
+    display: inline-block;
+    font-size: 20px;
+}
+.user-about-section p{
+    display: inline-block;
+    font-size: 16px;
+}
+
 #messagesSection{
     min-height: 100vh;
     max-height: 100vh;
@@ -591,7 +613,6 @@ body .row{
 #floating-panel {
     background-color: #fff;
     padding: 5px;
-    border: 1px solid #999;
     text-align: center;
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
@@ -599,8 +620,7 @@ body .row{
 }
 #map {
     height: 500px;
-    width: 500px;
-    margin-left: 35%;
+    width:100%;
 }
 .search_res {
     position: absolute;

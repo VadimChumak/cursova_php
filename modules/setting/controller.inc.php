@@ -3,6 +3,13 @@ class Setting_Controller
 {
     public function EditAction()
     {
+        $userModel = new User_Model();
+        $user = $userModel->GetUser(array($_SESSION['user']['id']));
+        if(empty($user)) {
+            return array(
+            "Content"  => "404"
+        );}
+        $userPage = new User_View();
         $view = new Setting_View();
         $model = new Setting_Model();
         $settingTPL = new Template("template/setting/main.tpl");
@@ -17,8 +24,13 @@ class Setting_Controller
         }
         else {
             $settingTPL->SetParam('UserInfo', $model->GetInfo($_SESSION['user']['id'])[0]);
+            $params = array(
+                'CurrentUser' => $_SESSION['user'],
+                'UserInfo' => $user[0],
+                'AboutSection' => $settingTPL->GetHTML()
+            );
             return array(
-                'Content' => $settingTPL->GetHTML()
+                 "Content"  => $userPage->GetUserPage($params)
             );
         }
         return array(

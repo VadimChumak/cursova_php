@@ -156,8 +156,11 @@
                     </nav>
                 </header>
             </div>
+            <div class="row">
+                <?php if(isset($AboutSection)) echo $AboutSection ?>
+            </div>
             <div class="row wall">
-                <?php echo $NewsSection ?>
+                <?php if(isset($NewsSection)) echo $NewsSection ?>
             </div>
         </div>
     </div>
