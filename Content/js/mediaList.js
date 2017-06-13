@@ -29,7 +29,7 @@ $('#my_form').on('submit', function(e){
             console.log(data);
         }
     });
-    location.reload();
+    setTimeout(location.reload(), 1000);
 });
 
 function addListener() {
@@ -40,6 +40,7 @@ function Checker(event) {
     var id = event.target.id;
 
     var splitId = id.split('_');
+
     if( splitId[0]== 'deleteBtn' && splitId.length == 2)
     {
         var block = document.getElementById('element_' + splitId[1]);
@@ -55,6 +56,29 @@ function Checker(event) {
             }
         });
     }
+
+    if( splitId[0]== 'add' && splitId.length == 2) {
+
+        $.ajax({
+            url: "/music/Copy",
+            type: "POST",
+            dataType: 'text',
+            data: ('id=' + splitId[1]),
+            success: function(data){
+                var response = data.split('__')[1];
+                if(response == 'Add') {
+                    AddToYou(event.target);
+                }
+            }
+        });
+    }
+}
+
+function AddToYou(btn) {
+    console.log(1);
+    btn.value = "Done";
+    btn.setAttribute("disabled","")
+    console.log(btn);
 }
 
 function isDeleted(response, block){
