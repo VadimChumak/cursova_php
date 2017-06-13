@@ -25,7 +25,7 @@ class Video_Controller
         $model = new Video_Model();
 
         $user = $_SESSION['user'];
-        $data = "__Bad_Argument__";
+        $data = "Bad_Argument";
         if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['id'])) {
             $videoId = $_POST['id'];
 
@@ -40,7 +40,7 @@ class Video_Controller
             $videoId = $model->AddVideo($arr);
 
             $model->AddOwner($user['id'], $videoId);
-            $data =  $data = "__Add__";
+            $data =  $data = "Add";
         }
         echo(json_encode($data));
     }
@@ -49,9 +49,9 @@ class Video_Controller
     {   date_default_timezone_set("Europe/Riga");
         $user = $_SESSION['user'];
         $core = new Core();
-        $model = new Music_Model();
+        $model = new Video_Model();
 
-        $data = "__Bad_Argument__";
+        $data = "Bad_Argument";
         if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
 
             $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"] . "/media/video/", $_FILES['video_file']);
@@ -65,7 +65,7 @@ class Video_Controller
 
                 $videoId = $model->AddVideo($arr);
                 $model->AddOwner($user['id'], $videoId);
-                $data = "__Add__";
+                $data = "Add";
             }
         }
         echo(json_encode($data));
@@ -76,12 +76,12 @@ class Video_Controller
         $user = $_SESSION['user'];
         $model = new Video_Model();
 
-        $data = "__error__";
+        $data = "error";
 
         if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST") {
             $DeleteId = $_POST['num'];
             $model->DeleteOwner($user['id'], $DeleteId);
-            $data = "__deleted__";
+            $data = "deleted";
         }
 
         echo(json_encode($data));

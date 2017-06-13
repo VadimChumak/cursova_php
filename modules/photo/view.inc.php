@@ -2,10 +2,10 @@
 class Photo_View
 {
 
-    public function VideoList($videoList, $currentUserId, $pageUserId)
+    public function PhotoList($photoList, $currentUserId, $pageUserId)
     {
-        $tpl = new Template('template/video/list.tpl');
-        $tpl->SetParam('List',$videoList);
+        $tpl = new Template('template/photo/list.tpl');
+        $tpl->SetParam('List',$photoList);
         $tpl->SetParam('CurrentId',$currentUserId);
         $tpl->SetParam('PageId',$pageUserId);
         return $tpl->GetHTML();

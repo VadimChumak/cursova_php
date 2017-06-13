@@ -32,3 +32,4 @@ if($CurrentId == $PageId){
 
     </div>
 </div>
+<script src="/Content/js/mediaList.js"></script>

@@ -22,6 +22,5 @@
 <script src="/Content/js/chat.js"></script>
 <script src="/Content/js/messanger.js"></script>
 <script src="/Content/js/timeagoLocalization.js"></script>
-<script src="/Content/js/mediaList.js"></script>
 </body>
 </html>
