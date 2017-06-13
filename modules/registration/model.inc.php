@@ -29,16 +29,16 @@ class Registration_Model
         if (!empty($current_user)) {
             $user_photo = Core::$Db->Select('user_data', 'image', array('user_id' => $current_user[0]['id']));
             $user_data = Core::$Db->Select('user_data', 'name, surname', array('user_id' => $current_user[0]['id']));
-            $model = new Friends_Model();
-            $res['userArray'] = $model->FriendList();
             $this->Authorise(array(
                 'id' => $current_user[0]['id'],
                 'email' => $current_user[0]['email'],
                 'name' => $user_data[0]['name'],
                 'surname' => $user_data[0]['surname'],
-                'image' => $user_photo[0],
-                'friends_count' => count($res)
+                'image' => $user_photo[0]
             ));
+            $model = new Friends_Model();
+            $res = $model->FriendList();
+            $_SESSION['user']['friends_count'] = count($res);
             return true;    
         }
         return false;
