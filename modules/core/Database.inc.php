@@ -51,7 +51,8 @@ class Database
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
-    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null, $groupByArray = null)
+    public function Select($tableName, $fieldArray, $assocArray = null, $joinTabNames = null, $joinArray = null, $groupByArray = null,
+                            $orderBy = null, $desc = null)
     {
         $whereString = '';
         if (is_string($fieldArray))
@@ -77,7 +78,17 @@ class Database
         if(is_array($groupByArray)){
             $groupByString = 'GROUP BY '.implode(',', $groupByArray);;
         }
-        $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$groupByString}";
+
+        $orderByString = '';
+        if(is_array($orderBy)){
+            $orderByString = 'ORDER BY '.implode(',', $orderBy);;
+        }
+
+        if(is_array($orderBy) && $orderByString!=''){
+            $orderByString = $orderByString." DESC";
+        }
+
+        $sql = "SELECT {$fieldsString} FROM {$tableName} {$joinString} {$whereString} {$groupByString}{$orderByString}";
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }

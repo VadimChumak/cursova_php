@@ -6,4 +6,10 @@ class User_View
         $userTMP->SetParams($params);
         return $userTMP->GetHTML();
     }
+
+    public function GetUserInfo($params) {
+        $userTMP = new Template("template/user/about.tpl");
+        $userTMP->SetParams($params);
+        return $userTMP->GetHTML();
+    }
 }

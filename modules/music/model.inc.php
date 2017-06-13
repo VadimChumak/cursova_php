@@ -3,7 +3,7 @@ class Music_Model
 {
     public function GetMusicList($user) {
         $List = Core::$Db->Select('music', 'id,url,title', array('user_id' => $user['id']),
-            'user_music',array('music.id' => 'music_id'), array('music.id')   );
+            'user_music',array('music.id' => 'music_id'),null, array('date'), array(true));
         return $List;
     }
 
@@ -12,8 +12,13 @@ class Music_Model
         return $List;
     }
 
+    public function GetSongById($id){
+        $song = Core::$Db->Select("music", "url,title", array('id' => $id));
+        return $song[0];
+    }
+
     public function AddMusic($arr){
-        $id = Core::$Db->Insert("music", array('title' => $arr['title'], 'url' =>  $arr['url'] ));
+        $id = Core::$Db->Insert("music", array('title' => $arr['title'], 'url' =>  $arr['url'], 'date' =>  $arr['date'] ));
         return $id;
     }
 

@@ -116,7 +116,7 @@
                 <p class="user-name"><?=$UserInfo['name']?></p>
                 <p class="user-surname"><?=$UserInfo['surname']?><i class="material-icons right user-online">perm_identity</i></p>
                 <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
-                <button onclick="AddToFriends()" class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
+                <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
                 <button class="waves-effect waves-light btn chat" id="openMessage"><i class="material-icons left">chat</i>Chat</button>
                 <?php else: ?>
                 <button class="waves-effect waves-light btn"><i class="material-icons left">photo_camera</i>Change photo</button>
@@ -133,8 +133,34 @@
             </div>
         </div>
         <div class="col l10 m9 s12" id="main-content">
+            <div class="row quick-acces">
+                <header>
+                    <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
+                    <nav class="user-nav nav-extended">
+                        <div class="nav-wrapper">
+                            <ul class="user-nav-box">
+                                <li><a href="sass.html"><i class="material-icons left">contacts</i>Friends</a></li>
+                                <li><a href="badges.html"><i class="material-icons left">supervisor_account</i>Groups</a></li>
+                                <li><a href="badges.html"><i class="material-icons left">perm_media</i>Photos</a></li>
+                                <li><a href="badges.html"><i class="material-icons left">library_music</i>Musics</a></li>
+                            </ul>
+                        </div>
+                        <?php endif; ?>
+                        <div class="nav-content user-dop-panel">
+                            <ul class="tabs tabs-transparent user-nav-box">
+                                <li class="tab"><a href="#test1">All</a></li>
+                                <li class="tab"><a class="active" href="#test2">Online</a></li>
+                                <li class="tab"><a href="#test4">Request</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+            <div class="row">
+                <?php if(isset($AboutSection)) echo $AboutSection ?>
+            </div>
             <div class="row wall">
-                <?php echo $NewsSection ?>
+                <?php if(isset($NewsSection)) echo $NewsSection ?>
             </div>
         </div>
     </div>

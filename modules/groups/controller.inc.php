@@ -12,7 +12,7 @@ class Groups_Controller
         $user = $modelUser->GetUserAuth($arg[0]);
 
         if($user == null)
-            header("Location:/");
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]);
 
         $model = new Groups_Model();
         $view = new Groups_View();
@@ -35,44 +35,51 @@ class Groups_Controller
         $user = $_SESSION['user'];
         $core = new Core();
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if(isset($_POST['title'])) {
+        if ($_SERVER['REQUEST_METHOD'] != "POST" ) {
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
+        }
+
+        if(isset($_POST['title'])) {
+            $arr = array(
+                'title' => $_POST['title'],
+                'photo_url' => "/media/system/photo/base.jpg"
+            );
+            $model->AddGroup($user, $arr);
+            $groupId = $model->IdLastCreatedGroupByUser($user);
+            $group = $model->GetGroup($groupId);
+
+            $core->CreateDir('media/groups/', $groupId);
+            $core->CreateDir('media/groups/'.$groupId."/",'photo');
+        }
+        else{
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
+        }
+        //add more validation
+        if (isset($_FILES['photo_url'])) {
+            if($_FILES['photo_url']['type'] != 'png' &&  $_FILES['photo_url']['type'] != 'jpg') {
+                header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
+            }
+
+            //load new to the server
+            $name = $core->saveToDir("media/groups/" . $groupId . "/photo/",
+                $_FILES['photo_url']);
+
+            if ($name != -1) {
+
                 $arr = array(
                     'title' => $_POST['title'],
-                    'photo_url' => "/media/system/photo/base.jpg"
-                );
-                $model->AddGroup($user, $arr);
-                $groupId = $model->IdLastCreatedGroupByUser($user);
-                $group = $model->GetGroup($groupId);
-
-                $core->CreateDir('media/groups/', $groupId);
-                $core->CreateDir('media/groups/'.$groupId."/",'photo');
-            }
-            else{
-                header("Location:/groups/list/");
-            }
-            //add more validation
-            if (isset($_FILES['photo_url'])) {
-                //load new to the server
-                $name = $core->saveToDir("media/groups/" . $groupId . "/photo/",
-                    $_FILES['photo_url']);
-
-                if ($name != -1) {
-                    //check '/media' is correct in linux
-                    $arr = array(
-                        'title' => $_POST['title'],
-                        'photo_url' => "/media/groups/".$groupId."/photo/" . $name
-                    );
-                    $model->Edit($arr,$group);
-                }
-            } else {
-                $arr = array(
-                    'title' => $_POST['title']
+                    'photo_url' => "/media/groups/".$groupId."/photo/" . $name
                 );
                 $model->Edit($arr,$group);
             }
+        } else {
+            $arr = array(
+                'title' => $_POST['title']
+            );
+            $model->Edit($arr,$group);
         }
-        header("Location:/groups/list/");
+
+        header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
     }
 
     public static function GroupAction($arg)
@@ -107,7 +114,7 @@ class Groups_Controller
     public function LeaveOrJoinAction($arg){
         $groupId = ($arg[0]);
         if ($_SERVER['REQUEST_METHOD'] == "GET") {
-            header("Location:/groups/group/".$groupId);
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
         }
         $model = new Groups_Model();
 
@@ -121,7 +128,7 @@ class Groups_Controller
             $model->AddUserToGroup($user, $group);
         }
 
-        header("Location:/groups/group/".$groupId);
+        header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
     }
 
     public function EditAction($arg)
@@ -143,7 +150,7 @@ class Groups_Controller
         if(!$model ->isGroupAdmin($group, $user)){
             //need 404
             //now back to group page
-            header("Location:/groups/group/".$groupId);
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
         }
 
         //save new info
@@ -179,7 +186,7 @@ class Groups_Controller
                     $model->Edit($arr,$group);
                 }
             }
-            header("Location:/groups/group/".$groupId);
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
         }
 
         return array(

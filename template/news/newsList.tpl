@@ -32,8 +32,8 @@
                     <span class="badge"><i class="material-icons like-heart">favorite</i><span><?php echo $item['count'] ?></span></span>
                 <?php endif; ?>
                  <span class="badge"><i class="material-icons coment">comment</i><span><?php echo $item['comment_count'] ?></span></span>
-                 <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
-                        <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
+                      <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
                 <?php endif; ?>
             </div>
             <div class="divider"></div>

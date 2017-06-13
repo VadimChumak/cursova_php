@@ -14,6 +14,39 @@ body{
     padding: 0px;
 }
 
+#usersMessages .card .collection-item{
+     padding: 10px 10px 10px 110px !important;
+     background-color: rgba(255, 255, 255, 0.5);
+ }
+ #usersMessages .card .collection-item a span{
+     display: inline-block;
+     padding-top: 20px;
+     font-size: 20px !important;
+ }
+ #usersMessages .card {
+     background-color: transparent !important;
+ }
+ 
+ #friendList .card .collection-item{
+     padding: 10px 10px 10px 110px !important;
+     background-color: rgba(255, 255, 255, 0.5);
+ }
+ #friendList .card .collection-item a span{
+     display: inline-block;
+     padding-top: 20px;
+     font-size: 20px !important;
+ }
+ #friendList .card {
+     background-color: transparent !important;
+ }
+ 
+ .collection-item .message-img{
+     margin: 0px !important;
+     width:65px !important;
+     height:65px !important;
+ }
+
+
 .message span{
     padding: 10px;
     border-radius: 15px;
@@ -35,7 +68,7 @@ body{
     margin-bottom: 15px;
 }
 
-.wall .wall-item .card .coment:hover{
+.wall .wall-item .card .coment :hover{
     cursor:pointer !important;
 }
 
@@ -57,6 +90,31 @@ body{
 #textMessages{
     overflow-x: auto;
     height: calc(100vh - 200px);
+}
+.row.wall .col .card .badge{
+    float: none !important;
+ }
+
+ .edit-user-data input[type=radio] {
+     display:none!important;
+ }
+
+#content #main-content .edit-user-data .row{
+     margin:15px 0px !important;
+ }
+
+ #content #main-content .edit-user-data form{
+     padding:20px 0px !important;
+ }
+
+.user-about-section h6{
+    margin:10px 15px 10px 20px;
+    display: inline-block;
+    font-size: 20px;
+}
+.user-about-section p{
+    display: inline-block;
+    font-size: 16px;
 }
 
 #messagesSection{
@@ -483,25 +541,8 @@ body .row{
     transition-property: color;
     transition-duration: 0.3s;
 }
-
-.row.wall .col .card .badge{
-    float: none !important;
-}
 .row.wall .col .card .card-info a:hover{
     color:#32B38C;
-}
-
-#usersMessages .card .collection-item{
-    padding: 10px 10px 10px 110px !important;
-    background-color: rgba(255, 255, 255, 0.5);
-}
-#usersMessages .card .collection-item a span{
-    display: inline-block;
-    padding-top: 20px;
-    font-size: 20px !important;
-}
-#usersMessages .card {
-    background-color: transparent !important;
 }
 
 #friendList .card .collection-item{
@@ -524,6 +565,7 @@ body .row{
 ul.collection.card>li {
     margin-bottom: 20px;
 }
+
 .collection-item .message-img{
     margin: 0px !important;
     width:65px !important;
@@ -598,7 +640,6 @@ ul.collection.card>li {
 #floating-panel {
     background-color: #fff;
     padding: 5px;
-    border: 1px solid #999;
     text-align: center;
     font-family: 'Roboto','sans-serif';
     line-height: 30px;
@@ -606,8 +647,7 @@ ul.collection.card>li {
 }
 #map {
     height: 500px;
-    width: 500px;
-    margin-left: 35%;
+    width:100%;
 }
 .search_res {
     position: absolute;

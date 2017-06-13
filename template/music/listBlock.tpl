@@ -4,5 +4,7 @@
         <source src="/<?php echo $value['url']?>.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
-    <?php if($CurrentId == $PageId) include 'template/music/deleteItemBlock.tpl';  ?></br>
+    <?php if($CurrentId != $PageId) include 'template/music/addItemBlock.tpl';  ?>
+    <?php if($CurrentId == $PageId) include 'template/music/deleteItemBlock.tpl';  ?>
+    </br>
 </div>

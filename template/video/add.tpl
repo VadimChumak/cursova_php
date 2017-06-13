@@ -6,7 +6,7 @@
 
         <span>Файл: </span></br>
         <input style="margin:10px;" name='video_file' type="file"/></br>
-        <input type="submit" value="Добавить" id="add">
+        <input accept=".mp4" type="submit" value="Добавить" id="add">
     </div>
 
 </form>
