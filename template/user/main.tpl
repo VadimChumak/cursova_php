@@ -16,7 +16,7 @@
   <div id="modal_createPost" class="modal modal-fixed-footer">
     <div class="modal-content">
       <div class="row">
-        <form class="col l12 m12 s12" name="formPost">
+        <form class="col l12 m12 s12" name="formPost" enctype="multipart/form-data">
             <div class="row">
                 <div class="input-field l12 m12 s12">
                     <input type="hidden" name="pageType" value="user" />
@@ -28,7 +28,25 @@
                 <div class="file-field input-field l12 m12 s12">
                     <div class="btn">
                         <span>File</span>
-                        <input type="file" name="newsImage">
+                        <input type="file" name="news_images[]" accept="image/*" multiple />
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+                <div class="file-field input-field l12 m12 s12">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="news_audios[]" accept="audio/*" multiple />
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+                <div class="file-field input-field l12 m12 s12">
+                    <div class="btn">
+                        <span>File</span>
+                        <input type="file" name="news_videos[]" accept="video/*" multiple />
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">

@@ -1,11 +1,13 @@
-<div class="col l6 m6 s12 wall-item create-post-area" id="createPostBlock">
+<div class="col l6 m12 s12 wall-item create-post-area" id="createPostBlock">
     <button class="btn waves-effect waves-light" id="createPost">
     <i class="material-icons md-48">mode_edit</i>
 </button>
 
+
+
 </div>
 <?php while (!is_null($item = array_shift($newsArray))): ?>
-    <div class="col l6 m6 s12 wall-item">
+    <div class="col l6 m12 s12 wall-item">
         <div class="card">
             <input type="hidden" value="<?php echo $item['id'] ?>" />
             <div class="card-info">
@@ -17,14 +19,38 @@
                 <time class="timeago" datetime="<?php echo $item['publishing_date'] ?>"></time>
                 <a href="<?php echo '/user/id/'.$item['user_id'] ?>"><?php echo $item['surname']." ".$item['name'] ?></a>
             </div>
-            <?php if(!is_null($item['photo_url'])): ?>
-            <div class="card-image">
-                <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/" .$item['photo_url'] ?>"/>
-            </div>
+                <?php if(strlen($item['post_text']) > 0): ?>
+                    <div class="card-content">
+                        <p><?php echo $item['post_text'] ?></p>
+                    </div>
+                <?php endif; ?>
+            <?php if(!empty($item['images'])): ?>
+                <div class="card-image">
+                    <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/" . array_shift($item['images'])['title'] ?>"/>
+                    <?php while (!is_null($photo = array_shift($item['images']))): ?>
+                        <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/". $photo['title']  ?>"/>
+                    <?php endwhile; ?>
+                </div>
             <?php endif; ?>
-            <div class="card-content">
-                <p><?php echo $item['post_text'] ?></p>
-            </div>
+            <?php if(!empty($item['videos'])): ?>
+                <div class="card-content">
+                    <?php while (!is_null($audio = array_shift($item['videos']))): ?>
+                        <video controls>
+                            <source src="<?php echo "/media/video/". $audio['title']  ?>" />
+                        </audio>
+                    <?php endwhile; ?>
+                </div>
+            <?php endif; ?>
+            <?php if(!empty($item['audios'])): ?>
+                <div class="card-content">
+                    <?php while (!is_null($audio = array_shift($item['audios']))): ?>
+                        <p><?php echo $audio['title'] ?></p>
+                        <audio controls>
+                            <source src="<?php echo "/media/music/". $audio['title']  ?>" />
+                        </audio>
+                    <?php endwhile; ?>
+                </div>
+            <?php endif; ?>
             <div class="card-action">
                 <?php if($item['isLiked'] == false): ?>
                     <span class="badge"><i class="material-icons like-heart">favorite_border</i><span><?php echo $item['count'] ?></span></span>
@@ -57,10 +83,12 @@
                 <time class="timeago" datetime="[date]"></time>
                 <a href="/user/id/[userID]">[userName]</a>
             </div>
-            [PostImage]
             <div class="card-content">
-                <p>[text]</p>
+                [text]
             </div>
+            [PostImage]
+            [PostVideo]
+            [PostAudio]
             <div class="card-action">
                 <span class="badge"><i class="material-icons like-heart">[isLiked]</i><span>[count]</span></span>
                 <span class="badge"><i class="material-icons coment">comment</i><span>[comment_count]</span></span>
@@ -79,7 +107,8 @@
 </script>
 <script type="text" id="postIMG">
     <div class="card-image">
-        <img src="[image]">
+        [MainImage]
+        [OtherImage]
     </div>
 </script>
 <script type="text" id="postDelete">
@@ -93,5 +122,15 @@
             <time class="timeago" datetime="[date]"></time>
         </div>
     <p>[text]<p>
+    </div>
+</script>
+<script type="text" id="postAUDIO">
+    <div class="card-content">
+        [musicList]
+    </div>
+</script>
+<script type="text" id="postVIDEO">
+    <div class="card-content">
+        [videoList]
     </div>
 </script>

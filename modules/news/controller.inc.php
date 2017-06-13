@@ -6,10 +6,17 @@ class News_Controller
         if($_SERVER['REQUEST_METHOD'] == 'POST') {
             $news = array();
             $news = $_POST;
-            if ($_FILES && $_FILES['newsImage']['error'] == UPLOAD_ERR_OK)
+            if ($_FILES && $_FILES['news_images']['error'][0] == UPLOAD_ERR_OK)
             {
-                $news['imageName'] = $_FILES['newsImage']['name'];
-                $news['imageTmp'] = $_FILES['newsImage']['tmp_name'];
+                $news['images'] = $_FILES['news_images'];
+            }
+            if ($_FILES && $_FILES['news_audios']['error'][0] == UPLOAD_ERR_OK)
+            {
+                $news['audios'] = $_FILES['news_audios'];
+            }
+            if ($_FILES && $_FILES['news_videos']['error'][0] == UPLOAD_ERR_OK)
+            {
+                $news['videos'] = $_FILES['news_videos'];
             }
             $res = json_encode($model->Save($news));
             echo $res;
@@ -33,6 +40,10 @@ class News_Controller
                 $newsList[$i]['isLiked'] = true;
             }
             $newsList[$i]['comment_count'] = Core::$Db->SelectJoin('comment', 'COUNT(item_id) as count', array('item_id' => $newsList[$i]['id']))[0]['count'];
+            $newsList[$i]['images'] = Core::$Db->SelectJoin("post_element", "photo.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'photo'), null, null, null, array('photo' => array('photo.id' => 'post_element.element_id')));
+            $newsList[$i]['audios'] = Core::$Db->SelectJoin("post_element", "music.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'music'), null, null, null, array('music' => array('music.id' => 'post_element.element_id')));
+            $newsList[$i]['videos'] = Core::$Db->SelectJoin("post_element", "video.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'video'), null, null, null, array('video' => array('video.id' => 'post_element.element_id')));
+
         }
         $res = json_encode($newsList);
         echo $res;

@@ -11,6 +11,7 @@ class Database
         $sql = "DELETE FROM {$tableName} WHERE {$indexField} = '$indexValue'";
         $this->Pdo->exec($sql);
     }
+
     public function DeleteByTwoCays($tableName, $indexField, $indexValue, $indexFieldT, $indexValueT)
     {
         $sql = "DELETE FROM {$tableName} WHERE ({$indexField} = '$indexValue') AND ({$indexFieldT} = '$indexValueT')";
@@ -83,7 +84,7 @@ class Database
         $valuesList = "'".implode("', '", $valuesArray)."'";
         $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
         $this->Pdo->exec($sql);
-        return $this->Pdo->lastInsertId("post");
+        return $this->Pdo->lastInsertId($tableName);
     }
 
     public function SelectNumberOfRecords($tableName, $fieldArray, $from, $to, $assocArray = null, $sortingCondotion = null)

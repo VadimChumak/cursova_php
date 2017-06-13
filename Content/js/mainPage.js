@@ -49,17 +49,47 @@ $('.dropdown-button').dropdown({
                 else {  
                 array.forEach(function(item, i, arr) {
                     var postImg = "";
+                    var postVideo = "";
+                    var postMusic = "";
                     var deletePost = "";
-                    if(item.photo_url != null) {
+                    if(item.images.length > 0) {
                         postImg = $("#postIMG").html();
-                        postImg = postImg.replace("[image]", ("/media/users/" + item.page_owner_id + "/photo/" + item.photo_url));
+                        postImg = postImg.replace("[MainImage]", "<img src='/media/users/" + item.page_owner_id + "/photo/" + item.images.name[0] + "'>");
+                        if(result.images.name.length > 1) {
+                            var imgs = "";
+                            for(var i = 1; i < item.images.name.length; i++) {
+                                imgs += "<img src='/media/users/" + item.page_owner_id + "/photo/" + item.images.name[i] + "'>";
+                            }
+                            postImg = postImg.replace("[OtherImage]", imgs);
+                        }
+                        else {
+                            postImg = postImg.replace("[OtherImage]", "");
+                        }
                     }
-                    if(isOwner || item.owner_id == $("#currentUserId").val()) {
-                        deletePost = $("#postDelete").html();
+                    if(item.audios.length > 0) {
+                        var audioList = "";
+                        item.audios.forEach(function(item, i, arr) {
+                            audioList += '<p>' + item.title + '<audio controls><source src="/media/music/' + item.title + '"></audio>';
+                        });
+                        postMusic = $("#postAUDIO").html();
+                        postMusic = postMusic.replace("[musicList]", audioList);
                     }
+                    if(item.videos.length > 0) {
+                        var videoList = "";
+                        item.videos.forEach(function(item, i, arr) {
+                            videoList += "<video controls><source src='/media/video/" + item.title + "'></video>";
+                        });
+                        postVideo = $("#postVIDEO").html();
+                        postVideo = postVideo.replace("[videoList]", videoList);
+                    }
+                        if(isOwner || item.owner_id == $("#currentUserId").val()) {
+                            deletePost = $("#postDelete").html();
+                        }
                     var tmp = $("#newsBlock").html();
                     tmp = tmp.replace("[id]", item.id);
                     tmp = tmp.replace("[PostImage]", postImg);
+                    tmp = tmp.replace("[PostAudio]", postMusic);
+                    tmp = tmp.replace("[PostVideo]", postVideo);
                     tmp = tmp.replace("[text]",item.post_text);
                     tmp = tmp.replace("[date]", item.publishing_date);
                     tmp = tmp.replace("[userID]", item.user_id);
@@ -284,12 +314,41 @@ $('.dropdown-button').dropdown({
                 return;
             }
             else {
+                document.getElementById("eror").innerHTML = xhr.responseText;
                 var result = JSON.parse(xhr.responseText);
                 var postImg = "";
+                var postVideo = "";
+                var postMusic = "";
                 var deletePost = "";
-                if(result.photo_url != undefined) {
+                if(result.images != undefined) {
                     postImg = $("#postIMG").html();
-                    postImg = postImg.replace("[image]", ("/media/users/" + result.page_owner_id + "/photo/" + result.photo_url));
+                    postImg = postImg.replace("[MainImage]", "<img src='/media/users/" + result.page_owner_id + "/photo/" + result.images.name[0] + "'>");
+                    if(result.images.name.length > 1) {
+                        var imgs = "";
+                        for(var i = 1; i < result.images.name.length; i++) {
+                            imgs += "<img src='/media/users/" + result.page_owner_id + "/photo/" + result.images.name[i] + "'>";
+                        }
+                        postImg = postImg.replace("[OtherImage]", imgs);
+                    }
+                    else {
+                        postImg = postImg.replace("[OtherImage]", "");
+                    }
+                }
+                if(result.audios != undefined) {
+                    var audioList = "";
+                    result.audios.name.forEach(function(item, i, arr) {
+                        audioList += '<p>' + item + '<audio controls><source src="/media/music/' + item + '"></audio>';
+                    });
+                    postMusic = $("#postAUDIO").html();
+                    postMusic = postMusic.replace("[musicList]", audioList);
+                }
+                if(result.videos != undefined) {
+                    var videoList = "";
+                    result.videos.name.forEach(function(item, i, arr) {
+                        videoList += "<video controls><source src='/media/video/" + item + "'></video>";
+                    });
+                    postVideo = $("#postVIDEO").html();
+                    postVideo = postVideo.replace("[videoList]", videoList);
                 }
                 if(isOwner || result.owner_id == $("#currentUserId").val()) {
                     deletePost = $("#postDelete").html();
@@ -301,6 +360,8 @@ $('.dropdown-button').dropdown({
                 tmp = tmp.replace("[date]", result.publishing_date);
                 tmp = tmp.replace("[userID]", result.user_id);
                 tmp = tmp.replace("[userID]", result.user_id);
+                tmp = tmp.replace("[PostAudio]", postMusic);
+                tmp = tmp.replace("[PostVideo]", postVideo);
                 if(result.image.split('_')[0] == 'default') {
                     tmp = tmp.replace("[userImage]", "/media/users/" + result.image);
                 }
