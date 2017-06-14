@@ -20,12 +20,18 @@ class Groups_Controller
         $CurrentUser = $_SESSION['user'];
 
         $groupList = $model->GetGroupList($user[0]);
+        $userPage = new User_View();
+        $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
 
-        return array(
-            "PageTitle" => "Групи",
-            'Content' => $view->GroupList($groupList, $user[0], $CurrentUser)
+        $params = array(
+            "PageTitle" => "Groups",
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $userInPage[0],
+            'NewsSection' => $view->GroupList($groupList, $user[0], $CurrentUser)
         );
-
+        return array(
+            "Content"  => $userPage->GetUserPage($params)
+        );
     }
 
     public function AddGroupAction()
@@ -105,10 +111,21 @@ class Groups_Controller
         $group = $model->GetGroup($groupId);
         $isMember = $model->isMember($group, $user);
         $isAdmin = $model->isGroupAdmin($group, $user);
-        return array(
+
+        $modelUser = new User_Model();
+        $userPage = new User_View();
+        $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
+
+        $params = array(
             "PageTitle" => $group['title'],
-            'Content' => $view->Group($group, $isMember, $isAdmin)
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $userInPage[0],
+            'NewsSection' => $view->Group($group, $isMember, $isAdmin)
         );
+        return array(
+            "Content"  => $userPage->GetUserPage($params)
+        );
+
     }
 
     public function LeaveOrJoinAction($arg){
@@ -189,9 +206,18 @@ class Groups_Controller
             header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
         }
 
-        return array(
+        $modelUser = new User_Model();
+        $userPage = new User_View();
+        $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
+
+        $params = array(
             "PageTitle" => $group['title'].' Edit',
-            'Content' => $view->Edit($group)
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $userInPage[0],
+            'NewsSection' => $view->Edit($group)
+        );
+        return array(
+            "Content"  => $userPage->GetUserPage($params)
         );
     }
 }

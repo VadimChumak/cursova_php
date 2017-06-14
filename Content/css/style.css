@@ -760,7 +760,7 @@ ul.collection.card>li {
     z-index:100;
 }
 
-#addSong, #addVideo, #addPhoto{
+#addSong, #addVideo, #addPhoto, #addGroup{
     margin-top:5px;
     margin-bottom: 5px;
     margin-left:10%;
@@ -833,4 +833,24 @@ ul.collection.card>li {
 .modalCustomClose{
     position:relative;
     top:-50px;
+}
+
+.group_elements{
+    width:70% !important;
+    background-color:#f5f5f5;
+}
+
+#addGroup{
+    margin-left:15%;
+}
+
+.group_elements{
+    padding:0 50px;
+}
+
+.group_elements a{
+    font-size:22px !important;
+    position:absolute;
+    top:0px;
+    margin-left:20px;
 }
