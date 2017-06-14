@@ -115,7 +115,7 @@ $(window).on('load', function() {
         }
         else {
             card.find(".comment").slideUp(10, function() {
-                setTimeout(setReload, 0);
+                setTimeout(reloadMasonry, 0);
                 setTimeout(setMenuHeight, 1);
                 card.find(".comment").addClass("hidden");
             });
@@ -254,6 +254,7 @@ $(window).on('load', function() {
                 Materialize.toast('' + (this.status ? this.statusText : 'запит не вдався'), 1000);
             }
             else {
+                document.getElementById('eror').innerHTML = xhr.responseText;
                 var result = JSON.parse(xhr.responseText);
                 var post = new NewsModel(
                     result.id, 

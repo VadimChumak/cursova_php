@@ -7,7 +7,7 @@ class News_Model
         $id = Core::$Db->Insert("post", $arrayForSave);
         if(isset($item['images'])) {
             for($i = 0; $i < count($item['images']['name']); $i++) {
-                $photoId = Core::$Db->Insert("photo", array('title' => $item['images']['name'][$i]));
+                $photoId = Core::$Db->Insert("photo", array('title' => $item['images']['name'][$i], 'date' => date('Y-m-d H:i:s', time())));
                 Core::$Db->Insert("user_photo", array('user_id' => $arrayForSave['owner_id'], 'photo_id' => $photoId));
                 Core::$Db->Insert("post_element", array('post_id' => $id, 'element_id' => $photoId, 'element_type' => 'photo'));
                 move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $item['ownerId']. "/photo/" . $item['images']['name'][$i]);
@@ -17,7 +17,7 @@ class News_Model
         if(isset($item['audios'])) {
             $musicModel = new Music_model();
             for($i = 0; $i < count($item['audios']['name']); $i++) {
-                $audioId = $musicModel->AddMusic(array('title' => $item['audios']['name'][$i], 'url' => null));
+                $audioId = $musicModel->AddMusic(array('title' => $item['audios']['name'][$i], 'url' => null, 'date' => date('Y-m-d H:i:s', time())));
                 $musicModel->AddOwner($_SESSION['user']['id'], $audioId);
                 Core::$Db->Insert("post_element", array('post_id' => $id, 'element_id' => $audioId, 'element_type' => 'music'));
                 move_uploaded_file($item['audios']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/music/" . $item['audios']['name'][$i]);
@@ -27,7 +27,7 @@ class News_Model
         if(isset($item['videos'])) {
             $videoModel = new Video_model();
             for($i = 0; $i < count($item['videos']['name']); $i++) {
-                $videoId = $videoModel->AddVideo(array('title' => $item['videos']['name'][$i], 'url' => null));
+                $videoId = $videoModel->AddVideo(array('title' => $item['videos']['name'][$i], 'url' => null, 'date' => date('Y-m-d H:i:s', time())));
                 $videoModel->AddOwner($_SESSION['user']['id'], $videoId);
                 Core::$Db->Insert("post_element", array('post_id' => $id, 'element_id' => $videoId, 'element_type' => 'video'));
                 move_uploaded_file($item['videos']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/video/" . $item['videos']['name'][$i]);
