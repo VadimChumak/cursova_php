@@ -760,8 +760,22 @@ ul.collection.card>li {
     z-index:100;
 }
 
-#addSong{
+#addSong, #addVideo{
     margin-top:5px;
     margin-bottom: 5px;
     margin-left:10%;
+}
+
+.media_elements video{
+    width:100%;
+}
+
+.video_elements span{
+    margin:15px 0 !important;
+}
+
+.video_elements .deleteBtn{
+    background-color:#f5f5f5;
+    border:2px solid white;
+    opacity:1 !important;
 }

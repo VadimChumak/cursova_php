@@ -22,8 +22,7 @@ window.onload =function () {
             data: formData,
             dataType: 'json',
             success: function(data){
-                console.log(data);
-                setTimeout(location.reload(), 1000)
+                location.reload();
             }
         });
         ;

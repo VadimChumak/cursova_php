@@ -48,6 +48,7 @@ class Music_Controller
             $data =  $data = "__Add__";
         }
         echo(json_encode($data));
+        exit();
     }
 
     public function AddAction()

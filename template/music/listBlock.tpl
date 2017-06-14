@@ -1,4 +1,4 @@
-<div class="media_elements" id="element_<?php echo $value['id']?>">
+<div class="media_elements music_elements" id="element_<?php echo $value['id']?>">
     <span>  <?php echo $value['title'] ?>  </span></br>
     <audio controls >
         <source src="/<?php echo $value['url']?>.mp3" type="audio/mpeg">

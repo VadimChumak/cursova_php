@@ -5,7 +5,7 @@ class Video_Controller
     {
         $model = new Video_Model();
         $view = new Video_View();
-
+        $userPage = new User_View();
         $CurrentUser = $_SESSION['user'];
 
         $modelUser = new User_Model();
@@ -13,11 +13,16 @@ class Video_Controller
         if($user == null)
             header("Location:/");
 
-        $musicList = $model->GetVideoList($user[0]);
-
-        return array(
+        $videoList = $model->GetVideoList($user[0]);
+        $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
+        $params = array(
             "PageTitle" => "Video",
-            'Content' => $view->VideoList($musicList, $CurrentUser['id'], $user[0]['id'])
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $userInPage[0],
+            'NewsSection' => $view->VideoList($videoList, $CurrentUser['id'], $user[0]['id'])
+        );
+        return array(
+            "Content"  => $userPage->GetUserPage($params)
         );
     }
 
@@ -43,6 +48,7 @@ class Video_Controller
             $data =  $data = "Add";
         }
         echo(json_encode($data));
+        exit();
     }
 
     public function AddAction()
@@ -59,7 +65,7 @@ class Video_Controller
             if ($name != -1) {
                 $arr = array(
                     'title' => $_POST['title'],
-                    'url' => "media/music/" . pathinfo("media/video/" . $name, PATHINFO_FILENAME),
+                    'url' => "media/video/" . pathinfo("media/video/" . $name, PATHINFO_FILENAME),
                     'date' => date("Y-m-d H:i:s", time())
                 );
 
