@@ -1,10 +1,7 @@
 <div class="col l6 m12 s12 wall-item create-post-area" id="createPostBlock">
     <button class="btn waves-effect waves-light" id="createPost">
-    <i class="material-icons md-48">mode_edit</i>
-</button>
-
-
-
+        <i class="material-icons md-48">mode_edit</i>
+    </button>
 </div>
 <?php while (!is_null($item = array_shift($newsArray))): ?>
     <div class="col l6 m12 s12 wall-item">
@@ -27,13 +24,15 @@
             <?php if(!empty($item['images'])): ?>
                 <div class="card-image">
                     <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/" . array_shift($item['images'])['title'] ?>"/>
-                    <?php while (!is_null($photo = array_shift($item['images']))): ?>
-                        <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/". $photo['title']  ?>"/>
-                    <?php endwhile; ?>
+                    <div>
+                        <?php while (!is_null($photo = array_shift($item['images']))): ?>
+                            <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/". $photo['title']  ?>"/>
+                        <?php endwhile; ?>
+                    </div>
                 </div>
             <?php endif; ?>
             <?php if(!empty($item['videos'])): ?>
-                <div class="card-content">
+                <div class="card-content videos">
                     <?php while (!is_null($audio = array_shift($item['videos']))): ?>
                         <video controls>
                             <source src="<?php echo "/media/video/". $audio['title']  ?>" />
@@ -42,7 +41,7 @@
                 </div>
             <?php endif; ?>
             <?php if(!empty($item['audios'])): ?>
-                <div class="card-content">
+                <div class="card-content musics">
                     <?php while (!is_null($audio = array_shift($item['audios']))): ?>
                         <p><?php echo $audio['title'] ?></p>
                         <audio controls>
@@ -83,9 +82,7 @@
                 <time class="timeago" datetime="[date]"></time>
                 <a href="/user/id/[userID]">[userName]</a>
             </div>
-            <div class="card-content">
-                [text]
-            </div>
+            [text]
             [PostImage]
             [PostVideo]
             [PostAudio]
@@ -125,12 +122,12 @@
     </div>
 </script>
 <script type="text" id="postAUDIO">
-    <div class="card-content">
+    <div class="card-content musics">
         [musicList]
     </div>
 </script>
 <script type="text" id="postVIDEO">
-    <div class="card-content">
+    <div class="card-content videos">
         [videoList]
     </div>
 </script>

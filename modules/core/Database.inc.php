@@ -78,13 +78,21 @@ class Database
 
     public function Insert($tableName, $assocArray)
     {
-        $fieldsArray = array_keys($assocArray);
-        $valuesArray = array_values($assocArray);
-        $fieldsList = implode(',', $fieldsArray);
-        $valuesList = "'".implode("', '", $valuesArray)."'";
-        $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
-        $this->Pdo->exec($sql);
-        return $this->Pdo->lastInsertId($tableName);
+        try{
+            $this->Pdo->beginTransaction();
+            $fieldsArray = array_keys($assocArray);
+            $valuesArray = array_values($assocArray);
+            $fieldsList = implode(',', $fieldsArray);
+            $valuesList = "'".implode("', '", $valuesArray)."'";
+            $sql = "INSERT INTO {$tableName} ($fieldsList) VALUES ($valuesList)";
+            $this->Pdo->exec($sql);
+            $insertedId = $this->Pdo->lastInsertId($tableName);
+            $this->Pdo->commit();
+            return $insertedId;
+        }
+        catch(Exception $e) {
+            $this->Pdo->rollBack();
+        }
     }
 
     public function SelectNumberOfRecords($tableName, $fieldArray, $from, $to, $assocArray = null, $sortingCondotion = null)

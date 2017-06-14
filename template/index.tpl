@@ -23,5 +23,6 @@
 <script src="/Content/js/messanger.js"></script>
 <script src="/Content/js/timeagoLocalization.js"></script>
 <script src="/Content/js/mediaList.js"></script>
+<script src="/Content/js/news.js"></script>
 </body>
 </html>

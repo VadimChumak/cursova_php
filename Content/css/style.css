@@ -515,8 +515,50 @@ body .row{
     position: relative;
 }
 .row.wall .col .card .card-image{
-    padding: 10px !important;
+    padding: 5px !important;
     padding-top: 0px !important;
+}
+.row.wall .col .card .card-image>img{
+    width:100% !important;
+    height:100% !important;
+}
+.row.wall .col .card .card-image div{
+    display: flex ;
+    flex-wrap: wrap ;
+    flex-direction: row ;
+    justify-content: flex-start;
+}
+
+.row.wall .col .card .card-content.musics{
+    padding:5px !important;
+}
+.row.wall .col .card .card-content.musics audio{
+    width:100%;
+}
+
+.row.wall .col .card .card-content.musics p{
+    padding-left: 10px; 
+    font-size: 14px;
+}
+
+.row.wall .col .card .card-image div img{
+    margin-top:5px;
+    margin-right: 5px;
+    height:230px;
+    width: 32%;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+.row.wall .col .card .card-content.videos{
+    padding: 5px!important;
+}
+
+.row.wall .col .card .card-content video{
+    max-width: 100%;
+    min-width: 100%;
+    min-height: 276px;
 }
 
 .row.wall .col .card .card-info img{
