@@ -1,6 +1,6 @@
-<div id="element_<?php echo $value['id']?>">
+<div class="media_elements" id="element_<?php echo $value['id']?>">
     <span>  <?php echo $value['title'] ?>  </span></br>
-    <audio controls style="width:400px;">
+    <audio controls >
         <source src="/<?php echo $value['url']?>.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>

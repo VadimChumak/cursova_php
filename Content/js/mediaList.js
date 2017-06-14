@@ -23,9 +23,10 @@ window.onload =function () {
             dataType: 'json',
             success: function(data){
                 console.log(data);
+                setTimeout(location.reload(), 1000)
             }
         });
-        setTimeout(location.reload(), 1000);
+        ;
     });
 }
 
@@ -74,7 +75,7 @@ function Checker(event) {
 
 function AddToYou(btn) {
     console.log(1);
-    btn.value = "Done";
+    btn.value = "✔";
     btn.setAttribute("disabled","")
     console.log(btn);
 }

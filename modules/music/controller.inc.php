@@ -5,7 +5,7 @@ class Music_Controller
     {
         $model = new Music_Model();
         $view = new Music_View();
-
+        $userPage = new User_View();
         $CurrentUser = $_SESSION['user'];
 
         $modelUser = new User_Model();
@@ -14,10 +14,15 @@ class Music_Controller
             header("Location:/");
 
         $musicList = $model->GetMusicList($user[0]);
-
-        return array(
+        $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
+        $params = array(
             "PageTitle" => "Музыка",
-            'Content' => $view->MusicList($musicList, $CurrentUser['id'], $user[0]['id'])
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $userInPage[0],
+            'NewsSection' => $view->MusicList($musicList, $CurrentUser['id'], $user[0]['id'])
+        );
+        return array(
+            "Content"  => $userPage->GetUserPage($params)
         );
     }
 

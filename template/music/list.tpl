@@ -3,13 +3,14 @@ if($CurrentId == $PageId){
     include 'template/music/add.tpl';
 }
 ?>
-<div id="contentBlock">
+<div class="media_content audio_content" id="contentBlock">
     <?php
     foreach ($List as $value) {
         include 'template/music/listBlock.tpl';
     }
     ?>
 </div>
+
 
 
 <!-- Modal -->
