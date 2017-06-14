@@ -8,32 +8,31 @@ window.onload =function () {
     $('#my_form').on('submit', function(e){
         e.preventDefault();
 
-        if(  !($("#title").val() && $("#file").prop('files')[0])  ){
+        if(  !($("#file").prop('files')[0])  ){
             return -1;
         }
 
         var $that = $(this),
             formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму (*)
         $.ajax({
-            url: "/music/Add",
+            url: "/video/Add",
             type: "POST",
             contentType: false, // важно - убираем форматирование данных по умолчанию
             processData: false, // важно - убираем преобразование строк по умолчанию
             data: formData,
             dataType: 'json',
             success: function(data){
-                console.log(data);
-                setTimeout(location.reload(), 1000)
+                if (data == "Add")
+                {
+                    setTimeout(location.reload(), 1000);
+                }
             }
         });
-        ;
+        //
     });
 }
 
 
-function addListener() {
-
-}
 
 function Checker(event) {
     var id = event.target.id;
@@ -45,53 +44,30 @@ function Checker(event) {
         var block = document.getElementById('element_' + splitId[1]);
 
         $.ajax({
-            url: "/music/Delete",
+            url: "/video/Delete",
             type: "POST",
             dataType: 'text',
             data: ('num=' + splitId[1]),
             success: function(data){
-                var response = data.split('__')[1];
+                var response = data.toString() + '';
                 isDeleted(response, block);
             }
         });
     }
-
-    if( splitId[0]== 'add' && splitId.length == 2) {
-
-        $.ajax({
-            url: "/music/Copy",
-            type: "POST",
-            dataType: 'text',
-            data: ('id=' + splitId[1]),
-            success: function(data){
-                var response = data.split('__')[1];
-                if(response == 'Add') {
-                    AddToYou(event.target);
-                }
-            }
-        });
-    }
 }
 
-function AddToYou(btn) {
-    console.log(1);
-    btn.value = "✔";
-    btn.setAttribute("disabled","")
-    console.log(btn);
-}
 
 function isDeleted(response, block){
     console.log(response);
 
-    if(response == 'deleted') {
-        if (block.parentNode) {
-            // удаляем элемент из дерева
-            block.parentNode.removeChild(block);
-        }
-    }
-
     if(response == 'error') {
         $("#myModal").modal('show');
+        return 0;
     }
-    
+
+    if (block.parentNode) {
+        block.parentNode.removeChild(block);
+    }
+
 }
+

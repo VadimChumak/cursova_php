@@ -11,3 +11,16 @@ function AddToFriends() {
     var res = "user_id=" + encodeURIComponent(pageOwnerId);
     xhttp.send(res);
 }
+function Accept(btn) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange=function(){
+        if (xhttp.readyState==4 && xhttp.status==200) {
+            document.getElementById('eror').innerHTML = xhttp.responseText;
+        }
+    };
+    xhttp.open("POST","/friends/accept", true);
+    xhttp.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    var senderId = btn.id;
+    var res = "user_id=" + encodeURIComponent(senderId);
+    xhttp.send(res);
+}

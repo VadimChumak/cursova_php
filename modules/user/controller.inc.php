@@ -32,7 +32,7 @@ class User_Controller
             'UserInfo' => $user[0],
             'NewsSection' => $NewsView->GetNewsList($newsList),
             'AboutSection' => $userPage->GetUserInfo(array('item' => $user[0]))
-        );
+);
         return array(
             "Content"  => $userPage->GetUserPage($params)
         );

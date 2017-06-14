@@ -9,6 +9,9 @@
             <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>" class="circle message-img z-depth-3"/>
             <?php endif; ?>
             <a href="/user/id/<?php echo $item['user_id'] ?>"><span class="title"><?php echo $item['surname'].' '.$item['name'] ?></span></a>
+            <?php if($_SERVER['REQUEST_URI'] == "/friends/senders"): ?>
+                <button onclick="Accept(this)" id = "<?php echo $item['user_id'] ?>" class="waves-effect waves-light btn following accept_btn">Accept</button>
+            <?php endif; ?>
         </li>
         <?php endwhile; ?>
     </ul>

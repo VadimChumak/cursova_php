@@ -587,6 +587,33 @@ body .row{
     color:#32B38C;
 }
 
+#friendList .card .collection-item{
+    padding: 10px 10px 10px 110px !important;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#friendList .card .collection-item a span{
+    display: inline-block;
+    padding-top: 20px;
+    font-size: 20px !important;
+}
+#friendList .card {
+    background-color: transparent !important;
+}
+.accept_btn {
+    float: right;
+    margin-top: 13px;
+}
+
+ul.collection.card>li {
+    margin-bottom: 20px;
+}
+
+.collection-item .message-img{
+    margin: 0px !important;
+    width:65px !important;
+    height:65px !important;
+}
+
 .row.wall .col .card .card-info .timeago{
     float: right;
     clear: both;
@@ -685,4 +712,56 @@ body .row{
 .card .chip img {
     object-fit: cover;
     object-position: center;
+}
+
+
+
+
+
+
+
+
+
+.media_elements{
+    width:80% !important;
+    margin:auto;
+    position:relative;
+    padding:0 5px;
+    border-radius:5px;
+    margin-top:10px;
+}
+
+.media_elements audio{
+    width:100%;
+    padding-right:35px;
+}
+
+.media_elements .deleteBtn{
+    position:absolute;
+    top:20px;
+    height:34px;
+    width:34px;
+    right:5px;
+    display:none;
+    opacity:0.7;
+    border-radius:50%;
+}
+
+.media_elements:hover{
+    background-color:#f5f5f5;
+}
+
+.media_elements:hover .deleteBtn{
+    display:block;
+}
+
+.modal{
+    position:relative;
+    z-index:100;
+}
+
+#addSong{
+    margin-top:5px;
+    margin-bottom: 5px;
+    margin-left:10%;
 }

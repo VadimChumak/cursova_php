@@ -142,7 +142,7 @@
             </div>
             <div class="collection user-menu" id="user-menu">
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">1</span>News</a>
-                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">123</span>Friends</a>
+                <a href="/friends/list" class="collection-item waves-effect waves-light"><span class="badge"><?php echo $_SESSION['user']['friends_count'] ?></span>Friends</a>
                 <a href="/chat/messages" class="collection-item waves-effect waves-light"><span class="new badge">17</span>Messages</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">45</span>Groups</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">874</span>Photo</a>

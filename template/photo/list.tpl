@@ -1,12 +1,13 @@
+<!--<span class="spanLink" id="addAlbum">Add Album</span>-->
 <?php
 if($CurrentId == $PageId){
-    include 'template/video/add.tpl';
+    include 'template/photo/add.tpl';
 }
 ?>
 <div id="contentBlock">
     <?php
     foreach ($List as $value) {
-        include 'template/video/listBlock.tpl';
+        include 'template/photo/block.tpl';
     }
     ?>
 </div>
@@ -32,4 +33,4 @@ if($CurrentId == $PageId){
 
     </div>
 </div>
-<script src="/Content/js/videoList.js"></script>
+<script src="/Content/js/photoList.js"></script>
