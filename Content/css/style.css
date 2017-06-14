@@ -15,36 +15,36 @@ body{
 }
 
 #usersMessages .card .collection-item{
-     padding: 10px 10px 10px 110px !important;
-     background-color: rgba(255, 255, 255, 0.5);
- }
- #usersMessages .card .collection-item a span{
-     display: inline-block;
-     padding-top: 20px;
-     font-size: 20px !important;
- }
- #usersMessages .card {
-     background-color: transparent !important;
- }
- 
- #friendList .card .collection-item{
-     padding: 10px 10px 10px 110px !important;
-     background-color: rgba(255, 255, 255, 0.5);
- }
- #friendList .card .collection-item a span{
-     display: inline-block;
-     padding-top: 20px;
-     font-size: 20px !important;
- }
- #friendList .card {
-     background-color: transparent !important;
- }
- 
- .collection-item .message-img{
-     margin: 0px !important;
-     width:65px !important;
-     height:65px !important;
- }
+    padding: 10px 10px 10px 110px !important;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#usersMessages .card .collection-item a span{
+    display: inline-block;
+    padding-top: 20px;
+    font-size: 20px !important;
+}
+#usersMessages .card {
+    background-color: transparent !important;
+}
+
+#friendList .card .collection-item{
+    padding: 10px 10px 10px 110px !important;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+#friendList .card .collection-item a span{
+    display: inline-block;
+    padding-top: 20px;
+    font-size: 20px !important;
+}
+#friendList .card {
+    background-color: transparent !important;
+}
+
+.collection-item .message-img{
+    margin: 0px !important;
+    width:65px !important;
+    height:65px !important;
+}
 
 
 .message span{
@@ -93,19 +93,19 @@ body{
 }
 .row.wall .col .card .badge{
     float: none !important;
- }
+}
 
- .edit-user-data input[type=radio] {
-     display:none!important;
- }
+.edit-user-data input[type=radio] {
+    display:none!important;
+}
 
 #content #main-content .edit-user-data .row{
-     margin:15px 0px !important;
- }
+    margin:15px 0px !important;
+}
 
- #content #main-content .edit-user-data form{
-     padding:20px 0px !important;
- }
+#content #main-content .edit-user-data form{
+    padding:20px 0px !important;
+}
 
 .user-about-section h6{
     margin:10px 15px 10px 20px;
@@ -131,7 +131,7 @@ body{
 }
 
 .fixed{
-     position: fixed;
+    position: fixed;
 }
 
 .main-color-text{
@@ -140,45 +140,45 @@ body{
 
 @media only screen and (max-width: 600px){
     .left-border-green{
-    box-sizing: border-box !important;
-    border-left: none;
-}
+        box-sizing: border-box !important;
+        border-left: none;
+    }
 
-.right-border-green{
-     box-sizing: border-box !important;
-    border-right: none;
-}
+    .right-border-green{
+        box-sizing: border-box !important;
+        border-right: none;
+    }
 
-.both-border-green{
-     box-sizing: border-box !important;
-    border-left: none;
-    border-right: none;
-}
+    .both-border-green{
+        box-sizing: border-box !important;
+        border-left: none;
+        border-right: none;
+    }
 
-.bottom-border-gray{
-     box-sizing: border-box !important;
-    border-bottom: none;
-}
-.left-border-gray{
-     box-sizing: border-box !important;
-    border-left: none;
-}
-.top-border-gray{
-     box-sizing: border-box !important;
-    border-top: none;
-}
+    .bottom-border-gray{
+        box-sizing: border-box !important;
+        border-bottom: none;
+    }
+    .left-border-gray{
+        box-sizing: border-box !important;
+        border-left: none;
+    }
+    .top-border-gray{
+        box-sizing: border-box !important;
+        border-top: none;
+    }
 
-.right-border-gray{
-     box-sizing: border-box !important;
-    border-right: none;
-}
+    .right-border-gray{
+        box-sizing: border-box !important;
+        border-right: none;
+    }
 
-.both-border-gray{
-     box-sizing: border-box !important;
-    border-left: none;
-    border-right: none;
-}
-    
+    .both-border-gray{
+        box-sizing: border-box !important;
+        border-left: none;
+        border-right: none;
+    }
+
 }
 
 .left-border-green{
@@ -187,36 +187,36 @@ body{
 }
 
 .right-border-green{
-     box-sizing: border-box !important;
+    box-sizing: border-box !important;
     border-right: 1px solid #6cbfa3;
 }
 
 .both-border-green{
-     box-sizing: border-box !important;
+    box-sizing: border-box !important;
     border-left: 1px solid #6cbfa3;
     border-right: 1px solid #6cbfa3;
 }
 
 .bottom-border-gray{
-     box-sizing: border-box !important;
+    box-sizing: border-box !important;
     border-bottom: 1px solid #d9d9d9;
 }
 .left-border-gray{
-     box-sizing: border-box !important;
+    box-sizing: border-box !important;
     border-left: 1px solid #d9d9d9;
 }
 .top-border-gray{
-     box-sizing: border-box !important;
+    box-sizing: border-box !important;
     border-top: 1px solid #d9d9d9;
 }
 
 .right-border-gray{
-     box-sizing: border-box !important;
+    box-sizing: border-box !important;
     border-right: 1px solid #d9d9d9;
 }
 
 .both-border-gray{
-     box-sizing: border-box !important;
+    box-sizing: border-box !important;
     border-left: 1px solid #d9d9d9;
     border-right: 1px solid #d9d9d9;
 }
@@ -537,7 +537,7 @@ body .row{
 }
 
 .row.wall .col .card .card-content.musics p{
-    padding-left: 10px; 
+    padding-left: 10px;
     font-size: 14px;
 }
 
@@ -751,7 +751,7 @@ ul.collection.card>li {
     background-color:#f5f5f5;
 }
 
-.media_elements:hover .deleteBtn{
+.media_elements:not(.photo_media):hover .deleteBtn{
     display:block;
 }
 
@@ -760,7 +760,7 @@ ul.collection.card>li {
     z-index:100;
 }
 
-#addSong, #addVideo{
+#addSong, #addVideo, #addPhoto{
     margin-top:5px;
     margin-bottom: 5px;
     margin-left:10%;
@@ -778,4 +778,59 @@ ul.collection.card>li {
     background-color:#f5f5f5;
     border:2px solid white;
     opacity:1 !important;
+}
+
+.media_elements_list{
+    text-align:center;
+    width:33%;
+    display:inline-table;
+}
+
+.media_elements_list img{
+    max-width:260px;
+}
+
+.photo_media{
+    text-align:center;
+    background-color:#f5f5f5;
+}
+
+.media_elements_list{
+    position:relative;
+}
+
+.media_elements_list .deleteBtn{
+    top:0;
+}
+
+.media_elements_list:hover .deleteBtn{
+    display:block;
+}
+
+#myModalBigPic{
+    position:absolute;
+    top:0;
+    left:0;
+    max-width:80%;
+    max-height:100%;
+    overflow:hidden;
+}
+
+#myModalBigPic img{
+    max-height:90%;
+    max-width:90%;
+}
+
+#myModalBigPic .close, .modalCustomClose{
+    float:right;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background-color:#32b38c;
+    border:2px solid #f5f5f5;
+}
+
+.modalCustomClose{
+    position:relative;
+    top:-50px;
 }
