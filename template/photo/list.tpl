@@ -5,11 +5,13 @@ if($CurrentId == $PageId){
 }
 ?>
 <div id="contentBlock">
-    <?php
-    foreach ($List as $value) {
-        include 'template/photo/block.tpl';
-    }
-    ?>
+    <div class="media_elements photo_media" id="element_<?php echo $value['id']?>">
+        <?php
+        foreach ($List as $value) {
+            include 'template/photo/block.tpl';
+        }
+        ?>
+    </div>
 </div>
 
 
@@ -28,6 +30,25 @@ if($CurrentId == $PageId){
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<div id="myModalBigPic" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="modal-action modal-close waves-effect waves-green btn-flat close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <img id="img_Big" class="img_Big" src=""/>
             </div>
         </div>
 

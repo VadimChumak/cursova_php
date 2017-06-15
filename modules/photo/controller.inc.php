@@ -14,11 +14,18 @@ class Photo_Controller
         if($user == null)
             header("Location:/");
 
-        $videoList = $model->GetPhotoList($user[0]);
+        $photoList = $model->GetPhotoList($user[0]);
+        $userPage = new User_View();
+        $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
 
+        $params = array(
+            "PageTitle" => "Музыка",
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $userInPage[0],
+            'NewsSection' => $view->PhotoList($photoList, $CurrentUser['id'], $user[0]['id'])
+        );
         return array(
-            "PageTitle" => "Photo",
-            'Content' => $view->PhotoList($videoList, $CurrentUser['id'], $user[0]['id'])
+            "Content"  => $userPage->GetUserPage($params)
         );
     }
 
@@ -75,7 +82,8 @@ class Photo_Controller
 
         $data = "error";
 
-        if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST") {
+        if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST"
+        && isset($_POST['num'])) {
             $DeleteId = $_POST['num'];
             $model->DeleteOwner($user['id'], $DeleteId);
             $data = "deleted";

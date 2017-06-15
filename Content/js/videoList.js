@@ -2,8 +2,8 @@
  * Created by zzzzz on 10.06.2017.
  */
 window.onload =function () {
-    var musicBlockElement = document.getElementById("contentBlock");
-    musicBlockElement.addEventListener("click", Checker );
+    var videoBlockElement = document.getElementById("contentBlock");
+    videoBlockElement.addEventListener("click", Checker );
 
     $('#my_form').on('submit', function(e){
         e.preventDefault();
@@ -24,7 +24,7 @@ window.onload =function () {
             success: function(data){
                 if (data == "Add")
                 {
-                    setTimeout(location.reload(), 1000);
+                    location.reload();
                 }
             }
         });

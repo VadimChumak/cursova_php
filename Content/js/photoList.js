@@ -1,16 +1,17 @@
 /**
  * Created by zzzzz on 10.06.2017.
  */
-window.onload =function () {
-    var musicBlockElement = document.getElementById("contentBlock");
-    musicBlockElement.addEventListener("click", Checker );
-    
-    var AddAlbum = document.getElementById("addAlbum");
-    AddAlbum.addEventListener("click", AddAlb );
+
+    var photoBlockElement = document.getElementById("contentBlock");
+    photoBlockElement.addEventListener("click", Checker );
+
+    //var AddAlbum = document.getElementById("addAlbum");
+    //AddAlbum.addEventListener("click", AddAlb );
+
 
     $('#my_form').on('submit', function(e){
         e.preventDefault();
-
+        console.log(1);
         if(  !($("#file").prop('files')[0])  ){
             return -1;
         }
@@ -25,19 +26,13 @@ window.onload =function () {
             data: formData,
             dataType: 'json',
             success: function(data){
-                if (data == "Add")
-                {
-                    setTimeout(location.reload(), 1000);
+                if (data == "Add") {
+                    location.reload();
                 }
             }
         });
-        //
     });
-}
 
-function AddAlb() {
-    
-}
 
 function Checker(event) {
     var id = event.target.id;
@@ -59,6 +54,17 @@ function Checker(event) {
             }
         });
     }
+
+
+    if(event.target.classList.contains("img_AllListItem")){
+        console.log("modal");
+        document.getElementById("img_Big").setAttribute("src",event.target.getAttribute("src") );
+        //$("#myModalBigPic").modal('show');
+        $("#myModalBigPic").modal('open');
+        console.log(document.getElementById("img_Big"));
+        console.log(document.getElementById("myModalBigPic"));
+    }
+
 }
 
 
