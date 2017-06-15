@@ -134,7 +134,7 @@
                 <p class="user-name"><?=$UserInfo['name']?></p>
                 <p class="user-surname"><?=$UserInfo['surname']?><i class="material-icons right user-online">perm_identity</i></p>
                 <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
-                <button class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
+                <button onclick="AddToFriends()" class="waves-effect waves-light btn following"><i class="material-icons left">done</i>Following</button>
                 <button class="waves-effect waves-light btn chat" id="openMessage"><i class="material-icons left">chat</i>Chat</button>
                 <?php else: ?>
                 <button class="waves-effect waves-light btn"><i class="material-icons left">photo_camera</i>Change photo</button>
