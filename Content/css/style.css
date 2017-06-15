@@ -864,6 +864,7 @@ ul.collection.card>li {
     margin-top:5px;
     margin-bottom: 5px;
     margin-left:10%;
+    width:100%;
 }
 
 .newMessageCount {
@@ -877,7 +878,6 @@ ul.collection.card>li {
     text-align: center;
     line-height: 25px;
     border-radius: 50%;
-    width:100%;
 }
 
 .groupMenu span#title{
