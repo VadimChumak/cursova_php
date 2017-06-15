@@ -73,6 +73,9 @@ $(window).on("load", function() {
             selectedUser = $(this);
             selectedUser.toggleClass("selected-message");
         }
+        if($(this).find('.newMessageCount')[0] != undefined) {
+            $(this).find('.newMessageCount').remove();
+        }
         $("#textMessages").html("");
         recieverId = $(this).find("input[type='hidden']").val();
         var xhr = new XMLHttpRequest();

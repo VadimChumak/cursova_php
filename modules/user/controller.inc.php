@@ -2,6 +2,7 @@
 class User_Controller
 {
     public function IdAction($id) {
+        $chatModel = new Chat_Model();
         $userModel = new User_Model();
         $user = $userModel->GetUser($id);
         if(empty($user)) {
@@ -31,8 +32,9 @@ class User_Controller
             'CurrentUser' => $_SESSION['user'],
             'UserInfo' => $user[0],
             'NewsSection' => $NewsView->GetNewsList($newsList),
-            'AboutSection' => $userPage->GetUserInfo(array('item' => $user[0]))
-);
+            'AboutSection' => $userPage->GetUserInfo(array('item' => $user[0])),
+            'MessagesCount' => $chatModel-> GetNewMessagesCount($_SESSION['user']['id'])
+        );
         return array(
             "Content"  => $userPage->GetUserPage($params)
         );

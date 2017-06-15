@@ -9,6 +9,9 @@
                      <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>" class="circle message-img z-depth-3"/>
                  <?php endif; ?>
              <a href="/user/id/<?php echo $item['user_id'] ?>"><span class="title"><?php echo $item['surname'].' '.$item['name'] ?></span></a>
+             <?php if($item['newMessagesCount'] != 0): ?>
+             <span class="newMessageCount"><?php echo $item['newMessagesCount'] ?></span> 
+             <?php endif; ?>
         </li>
     <?php endwhile; ?>
   </ul>

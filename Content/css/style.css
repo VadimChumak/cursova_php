@@ -765,3 +765,16 @@ ul.collection.card>li {
     margin-bottom: 5px;
     margin-left:10%;
 }
+
+.newMessageCount {
+    display: inline-block;
+    position: relative;
+    top:-10px;
+    background-color: red;
+    color:white;
+    width:25px;
+    height:25px;
+    text-align: center;
+    line-height: 25px;
+    border-radius: 50%;
+}

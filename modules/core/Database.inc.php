@@ -194,6 +194,11 @@ class Database
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function UpdateMessages($recieverId, $senderId) {
+        $sql = "UPDATE mesages SET is_readed = '1' WHERE (reciever_id = {$recieverId} AND sender_id = {$senderId})";
+        $this->Pdo->exec($sql);
+    }
+
     public function SelectMessages($firstUser, $secondUser) {
         $sql = "SELECT * FROM mesages WHERE (sender_id = {$firstUser} AND reciever_id = {$secondUser}) OR (sender_id = {$secondUser} AND reciever_id = {$firstUser}) ORDER BY Date ASC";
         $st = $this->Pdo->query($sql);
