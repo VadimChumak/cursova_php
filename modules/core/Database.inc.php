@@ -188,6 +188,12 @@ class Database
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function NewMessages($recieverId, $date) {
+        $sql = "SELECT DISTINCT mesages.id, mesages.sender_id, mesages.reciever_id, mesages.Date, mesages.text, user_data.name from mesages INNER JOIN user_data ON user_data.user_id = mesages.sender_id WHERE mesages.reciever_id = {$recieverId} AND mesages.Date >= '{$date}' ORDER BY mesages.Date DESC";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function SelectMessages($firstUser, $secondUser) {
         $sql = "SELECT * FROM mesages WHERE (sender_id = {$firstUser} AND reciever_id = {$secondUser}) OR (sender_id = {$secondUser} AND reciever_id = {$firstUser}) ORDER BY Date ASC";
         $st = $this->Pdo->query($sql);

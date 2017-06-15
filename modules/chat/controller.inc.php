@@ -6,13 +6,14 @@ class Chat_Controller
         $limit = 360;
         $time = time();
         $user_id = $_POST['user_id'];
+        $date = $_POST['date'];
         set_time_limit($limit + 5);
         while((time() - $time) < $limit ) {
-            $message = Core::$Db->SelectJoin("mesages", array('mesages.id', 'mesages.sender_id', 'mesages.reciever_id', 'mesages.Date', 'mesages.text', 'user_data.name'), array('reciever_id' => $user_id, 'is_readed' => 0), array('Date'), 'DESC', null, array('user_data' => array('user_data.user_id' => 'mesages.sender_id')), null);
+            $message = Core::$Db->NewMessages($user_id, $date);
             if(!empty($message)) {
-                foreach($message as $item) {
-                    Core::$Db->UpdateById("mesages", array('is_readed' => "1"), 'id', $item['id']);
-                }
+                //foreach($message as $item) {
+                //    Core::$Db->UpdateById("mesages", array('is_readed' => "1"), 'id', $item['id']);
+                //}
                 $res = json_encode($message);
                 echo $res;
                 exit();

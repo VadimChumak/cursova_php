@@ -8,12 +8,27 @@ $(window).on("load", function() {
         xhr.open("POST", "/chat/set", true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         var userId = document.getElementById("currentUserId").value;
-        var res = "user_id=" + encodeURIComponent(userId);
+        var date = new Date();
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var seconds = date.getSeconds();
+        var currentDate = '' + year + '-';
+        if((month) < 10 ) {
+            currentDate += '0' + month;
+        }
+        else {
+            currentDate += month;
+        } 
+        currentDate += '-' + day + ' ' + hours + ':' + minutes + ':' + seconds;
+        var res = "user_id=" + encodeURIComponent(userId) + "&date=" + encodeURIComponent(currentDate);
         xhr.send(res);
         xhr.onreadystatechange = function() {
             if(this.readyState == 4) {
             if(this.status != 200) {
-                setTimeout(connection, 200);
+                setTimeout(connection, 1000);
             }
             else {
                 document.getElementById("eror").innerHTML = xhr.responseText;
@@ -43,7 +58,7 @@ $(window).on("load", function() {
                         }
                     }
                 });
-                setTimeout(connection, 200);
+                setTimeout(connection, 1000);
             }
             }
         }
