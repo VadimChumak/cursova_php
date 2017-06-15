@@ -59,7 +59,8 @@ function Checker(event) {
     if(event.target.classList.contains("img_AllListItem")){
         console.log("modal");
         document.getElementById("img_Big").setAttribute("src",event.target.getAttribute("src") );
-        $("#myModalBigPic").modal('show');
+        //$("#myModalBigPic").modal('show');
+        $("#myModalBigPic").modal('open');
         console.log(document.getElementById("img_Big"));
         console.log(document.getElementById("myModalBigPic"));
     }

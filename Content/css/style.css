@@ -755,11 +755,6 @@ ul.collection.card>li {
     display:block;
 }
 
-.modal{
-    position:relative;
-    z-index:100;
-}
-
 #addSong, #addVideo, #addPhoto, #addGroup{
     margin-top:5px;
     margin-bottom: 5px;
@@ -807,27 +802,22 @@ ul.collection.card>li {
     display:block;
 }
 
-#myModalBigPic{
-    position:absolute;
-    top:0;
-    left:0;
-    max-width:80%;
-    max-height:100%;
-    overflow:hidden;
-}
-
 #myModalBigPic img{
-    max-height:90%;
-    max-width:90%;
+    max-height:70%;
+    max-width:70%;
 }
 
 #myModalBigPic .close, .modalCustomClose{
     float:right;
-    width:30px;
-    height:30px;
+    width:37px !important;
+    height:37px !important;
+    max-width:37px !important;
+    padding: 0px;
+    text-align:center;
     border-radius:50%;
     background-color:#32b38c;
     border:2px solid #f5f5f5;
+    font-size:25px;
 }
 
 .modalCustomClose{
@@ -848,9 +838,46 @@ ul.collection.card>li {
     padding:0 50px;
 }
 
-.group_elements a{
+.group_elements .textLink{
     font-size:22px !important;
     position:absolute;
     top:0px;
     margin-left:20px;
+}
+
+.group_container{
+    width:70%;
+    margin:auto;
+}
+
+.groupMenu{
+    margin-top:10px;
+    max-width:250px;
+    float:right;
+}
+
+.groupMenu {
+    text-align:center;
+}
+
+.groupMenu input{
+    margin-top:5px;
+    width:100%;
+}
+
+.groupMenu span#title{
+    font-size:22px;
+    word-wrap:break-word;
+}
+
+.groupMenu img{
+    max-width: 250px;
+}
+
+.oldImg{
+    max-width:350px;
+}
+
+#myModalBigPic, .modal{
+    max-height:70% !important;
 }
