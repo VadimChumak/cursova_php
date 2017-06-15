@@ -128,24 +128,29 @@ class Groups_Controller
 
     }
 
-    public function LeaveOrJoinAction($arg){
-        $groupId = ($arg[0]);
-        if ($_SERVER['REQUEST_METHOD'] == "GET") {
-            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
-        }
-        $model = new Groups_Model();
+    public function LeaveOrJoinAction(){
 
-        $group = $model->GetGroup($groupId);
+        $data = "error";
         $user = $_SESSION['user'];
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && $user!= null && isset($_POST['id'])) {
 
-        if($model->isMember($group, $user)){
-            $model->DeleteByTwoCays($user, $group);
-        }
-        else{
-            $model->AddUserToGroup($user, $group);
-        }
+            $model = new Groups_Model();
 
-        header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
+            $groupId = $_POST['id'];
+
+            $group = $model->GetGroup($groupId);
+            if($model->isMember($group, $user)){
+                $model->DeleteByTwoCays($user, $group);
+                $data = 'leave';
+            }
+            else{
+                $model->AddUserToGroup($user, $group);
+                $data = 'join';
+            }
+        }
+        echo(json_encode($data));
+        exit();
+
     }
 
     public function EditAction($arg)
@@ -155,8 +160,7 @@ class Groups_Controller
         $model = new Groups_Model();
         $view = new Groups_View();
         $core = new Core();
-        //if group does not exist or
-        //add user does not exist validation !!!
+
         if( (!$model->isGroupExistById($groupId))   ) {
             header("Location:/");
         }
@@ -165,14 +169,10 @@ class Groups_Controller
         $user = $_SESSION['user'];
 
         if(!$model ->isGroupAdmin($group, $user)){
-            //need 404
-            //now back to group page
             header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
         }
 
-        //save new info
         if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            //add more validation
             if($model->isGroupAdmin($group, $user)) {
 
                 if(isset($_FILES['photo_url'])) {
@@ -220,4 +220,6 @@ class Groups_Controller
             "Content"  => $userPage->GetUserPage($params)
         );
     }
+
+    public function EditPageAction(){}
 }

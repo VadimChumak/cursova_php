@@ -9,7 +9,7 @@
             <div class="modal-header">
                 <h4 class="modal-title">Add photo</h4>
             </div>
-            <div class="modal-body">
+            <div class="modal-content">
                 <form id="my_form" enctype="multipart/form-data" method="post">
 
                     <div class="new-block">
