@@ -341,6 +341,11 @@ body .row{
     visibility: hidden;
     transition-property: all;
 }
+.delete-comment{
+    color:#ffaa8f !important;
+    visibility: hidden;
+    transition-property: all;
+}
 
 #left-menu .left-menu-user-info{
     min-height: 185px !important;
@@ -647,6 +652,9 @@ ul.collection.card>li {
     color: white;
 }
 
+.comment .comment-item:hover .delete-comment{
+    visibility: visible;
+}
 
 .comment .comment-item .chip {
     background-color: transparent !important;

@@ -31,20 +31,8 @@ class News_Controller
         $from = $_POST['from'];
         $to = $_POST['to'];
         $owner = $_POST['owner'];
-        $newsList=Core::$Db->SelectPosts($owner, 'user', $from);
-        for($i = 0; $i <count($newsList); $i++) {
-            if(empty(Core::$Db->SelectJoin('bookmarks', '*', array('item_id' => $newsList[$i]['id'], 'user_id' => $_SESSION['user']['id']), null,  null, null, null, null))) {
-                $newsList[$i]['isLiked'] = false;
-            }
-            else {
-                $newsList[$i]['isLiked'] = true;
-            }
-            $newsList[$i]['comment_count'] = Core::$Db->SelectJoin('comment', 'COUNT(item_id) as count', array('item_id' => $newsList[$i]['id']))[0]['count'];
-            $newsList[$i]['images'] = Core::$Db->SelectJoin("post_element", "photo.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'photo'), null, null, null, array('photo' => array('photo.id' => 'post_element.element_id')));
-            $newsList[$i]['audios'] = Core::$Db->SelectJoin("post_element", "music.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'music'), null, null, null, array('music' => array('music.id' => 'post_element.element_id')));
-            $newsList[$i]['videos'] = Core::$Db->SelectJoin("post_element", "video.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'video'), null, null, null, array('video' => array('video.id' => 'post_element.element_id')));
-
-        }
+        $model = new News_Model();
+        $newsList = $model->NewsList($from, $owner, 'user');
         $res = json_encode($newsList);
         echo $res;
         exit(); 
@@ -52,31 +40,28 @@ class News_Controller
 
     public function DeleteAction() {
         $postId = $_POST['postId'];
-        Core::$Db->DeleteById("post", "id", $postId);
+        $newsModel = new News_Model();
+        $newsModel->DeleteNews($postId);
+        exit();
     }
 
     public function LikeAction() {
         $postId = $_POST['postId'];
         $action = $_POST['action'];
+        $model = new News_Model();
+        $model->ToggleLike($postId, $action);
         $likeCount = 0;
-        if($action == "set") {
-            Core::$Db->Insert('bookmarks', array('user_id' => $_SESSION['user']['id'], 'item_id' => $postId));
-            $likeCount = Core::$Db->SelectJoin('bookmarks', array('COUNT(item_id) as count'), array('item_id' => $postId), null,  null, null, null, null);
-        }
-        else {
-            Core::$Db->DeleteByTwoCays("bookmarks", 'item_id', $postId, 'user_id', $_SESSION['user']['id']);
-            $likeCount = Core::$Db->SelectJoin('bookmarks', array('COUNT(item_id) as count'), array('item_id' => $postId), null,  null, null, null, null);
-        }
+        $likeCount = $model->LikeCount($postId);
         echo($likeCount[0]['count']);
         exit();
     }
 
     public function AddcommentAction() {
-        date_default_timezone_set("Europe/Riga");
+        
         $postId = $_POST['postId'];
         $text = $_POST['text'];
-        $arrayForSave = array('item_id' => $postId, 'item_type' => 'post', 'user_id' => $_SESSION['user']['id'], 'text' => $text, 'date' => date('Y-m-d H:i:s', time()));
-        Core::$Db->Insert("comment", $arrayForSave);
+        $model = new News_Model();
+        $arrayForSave = $model->AddComment($postId, $text);
         $user = Core::$Db->SelectJoin("user_data", 'image, name, surname', array("user_id" => $_SESSION['user']['id']));
         $arrayForSave['image'] = $user[0]['image'];
         $arrayForSave['name'] = $user[0]['name'];
@@ -87,8 +72,15 @@ class News_Controller
 
     public function GetcommentAction() {
         $postId = $_POST['postId'];
-        $comments = Core::$Db->SelectJoin("comment", array('user_data.image', 'user_data.name', 'user_data.user_id', 'user_data.surname', 'comment.text', 'comment.date'), array('item_id' => $postId), array('date'), null, null, array('user_data' => array('user_data.user_id' => 'comment.user_id')), null);
+        $model = new News_Model();
+        $comments = $model->CommentList($postId);
         echo json_encode($comments);
         exit();
     }
-}
+
+    public function DeletecommentAction() {
+        $commentId = $_POST['commentId'];
+        Core::$Db->DeleteById('comment', 'id', $commentId);
+        exit();
+    }
+ }

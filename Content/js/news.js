@@ -10,6 +10,37 @@ $(window).on('load', function() {
         $('#modal_createPost').modal('open');
     });
 
+    $('.comment-list').on('click', '.delete-comment', function() {
+        var commentId = $(this).parent().find('input[type=hidden]').val();
+        var commentImg = $(this).parent().parent().parent().parent().find(".coment").parent().find("span");
+        var block = $(this).parent();
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/news/deletecomment', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        var res = "commentId=" + encodeURIComponent(commentId);
+        xhr.send(res);
+        xhr.onreadystatechange = function() {
+            if(this.readyState !=4) return;
+            if(this.status != 200) {
+                Materialize.toast('' + (this.status ? this.statusText : 'запит не вдався'), 1000);
+                return;
+            }
+            else {
+                $(block).fadeOut(200, function(){
+                    $(block).remove();
+                    setTimeout(reloadMasonry, 100);
+                    setTimeout(setMenuHeight, 101);
+                });
+                var count = $(commentImg).html();
+                count--;
+                $(commentImg).html(count.toString());
+                Materialize.toast('Коментар видалено', 1000);
+                setTimeout(reloadMasonry, 100);
+                setTimeout(setMenuHeight, 101);
+            }
+        }
+    });
+
     $(".wall").on("click", ".comment-btn", function(event) {
         var id = $(this).parent().parent().parent().parent().find("input[type=hidden]").val();
         var text = $(this).parent().find("input").val();
@@ -32,12 +63,14 @@ $(window).on('load', function() {
                 $(commentImg).html(count.toString());
                 var result = JSON.parse(xhr.responseText);
                 var comment = new CommentModel(
+                    result.id,
                     result.user_id,
                     result.name,
                     result.surname,
                     result.image,
                     result.date,
-                    result.text
+                    result.text,
+                    true
                 );
                 var block = comment.getCommentBlock();
                 var blockObject = $(block);
@@ -90,12 +123,14 @@ $(window).on('load', function() {
                 else {
                     result.forEach(function(item, i, arr) {
                         var comment = new CommentModel(
+                            item.id,
                             item.user_id,
                             item.name,
                             item.surname,
                             item.image,
                             item.date,
-                            item.text
+                            item.text,
+                            item.is_owner
                         );
                         var block = comment.getCommentBlock();
                         var blockObject = $(block);
@@ -224,7 +259,8 @@ $(window).on('load', function() {
                                 item.publishing_date,
                                 images,
                                 videos,
-                                audios
+                                audios,
+                                item.is_owner
                             );
                             var block = post.getNewsBlock();
                             var blockObject = $(block);
@@ -270,7 +306,8 @@ $(window).on('load', function() {
                     result.publishing_date,
                     result.images,
                     result.videos,
-                    result.audios
+                    result.audios,
+                    true
                 );
                 var block = post.getNewsBlock();
                 var blockObject = $(block);
@@ -298,16 +335,19 @@ $(window).on('load', function() {
     }
 
 
-    function CommentModel(userId, name, surname, userImage, date, text) {
+    function CommentModel(id, userId, name, surname, userImage, date, text, is_owner) {
         this.userId = userId;
         this.userImage = userImage;
         this.date = date;
         this.text = text;
         this.name = name;
         this.surname = surname;
+        this.id = id;
+        this.is_owner = is_owner;
     }
     CommentModel.prototype.getCommentBlock = function() {
         var blockHtml = document.getElementById('sendComment').innerHTML;
+        blockHtml = blockHtml.replace('[commentId]', this.id);
         blockHtml = blockHtml.replace('[userID]', this.userId);
         blockHtml = blockHtml.replace('[userID]', this.userId);
         if(this.userImage.split('_')[0] == 'default') {
@@ -316,13 +356,19 @@ $(window).on('load', function() {
         else {
             blockHtml = blockHtml.replace("[userImage]", "/media/users/" + this.userId + "/photo/" + this.userImage);
         }
+        if(this.is_owner) {
+            blockHtml = blockHtml.replace('[delete]', document.getElementById('deleteComment').innerHTML);
+        }
+        else {
+            blockHtml = blockHtml.replace('[delete]', '');
+        }
         blockHtml = blockHtml.replace('[userName]', this.surname + ' ' + this.name);
         blockHtml = blockHtml.replace('[date]', this.date);
         blockHtml = blockHtml.replace('[text]', this.text);
         return blockHtml;
     }
 
-    function NewsModel(id = null, pageOwner = null, authorId = null, authorImage = null, authorName = null, authorSurname = null, isLiked = null, commentCount = null, likeCount = null, text = null, date = null, images = null, videos = null, audios = null) {
+    function NewsModel(id = null, pageOwner = null, authorId = null, authorImage = null, authorName = null, authorSurname = null, isLiked = null, commentCount = null, likeCount = null, text = null, date = null, images = null, videos = null, audios = null, is_owner = null) {
         this.id = id;
         this.text = text;
         this.date = date;
@@ -337,6 +383,7 @@ $(window).on('load', function() {
         this.likeCount = likeCount;
         this.pageOwner = pageOwner;
         this.isLiked = isLiked;
+        this.is_owner = is_owner;
     }
     NewsModel.prototype.getNewsBlock = function() {
         var blockHtml = document.getElementById("newsBlock").innerHTML;
@@ -381,7 +428,7 @@ $(window).on('load', function() {
                 postAudios = postAudios.replace("[musicList]", audioList);
             }
         }
-        if(isOwner || this.authorId == document.getElementById('currentUserId').value) {
+        if(this.is_owner == true) {
             deleteSection = document.getElementById('postDelete').innerHTML;
         }
         blockHtml = blockHtml.replace('[id]', this.id);

@@ -113,13 +113,18 @@
 </script>
 <script type="text" id="sendComment">
     <div class="comment-item">
+        <input type="hidden" value="[commentId]" />
         <div class="chip">
             <img src="[userImage]" />
             <a href="/user/id/[userID]">[userName]</a>
             <time class="timeago" datetime="[date]"></time>
         </div>
+        [delete]
     <p>[text]<p>
     </div>
+</script>
+<script type="text" id="deleteComment">
+    <a class="dropdown-button delete-comment" href="#!"><i class="material-icons right">delete</i></a></li>
 </script>
 <script type="text" id="postAUDIO">
     <div class="card-content musics">
