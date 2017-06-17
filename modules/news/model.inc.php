@@ -86,16 +86,24 @@ class News_Model
         return $likeCount;
     }
 
-    public function AddComment($postId, $text) {
+    public function AddComment($postId, $text, $replyId) {
         date_default_timezone_set("Europe/Riga");
         $arrayForSave = array('item_id' => $postId, 'item_type' => 'post', 'user_id' => $_SESSION['user']['id'], 'text' => $text, 'date' => date('Y-m-d H:i:s', time()));
+        if(!is_null($replyId)) {
+            $arrayForSave['reply_id'] = $replyId;
+        }
         $commentId = Core::$Db->Insert("comment", $arrayForSave);
+        if(!is_null($replyId)) {
+            $reply_info = $this->CommentInfo($arrayForSave['reply_id']);
+            $arrayForSave['reply_name'] = $reply_info['name'];
+            $arrayForSave['reply_surname'] = $reply_info['surname'];
+        }
         $arrayForSave['id'] = $commentId;
         return $arrayForSave;
     }
 
     public function CommentList($postId) {
-        $comments = Core::$Db->SelectJoin("comment", array('user_data.image', 'user_data.name', 'user_data.user_id', 'user_data.surname', 'comment.text', 'comment.date', 'comment.id'), array('item_id' => $postId), array('date'), null, null, array('user_data' => array('user_data.user_id' => 'comment.user_id')), null);
+        $comments = Core::$Db->SelectJoin("comment", array('user_data.image', 'user_data.name', 'user_data.user_id', 'user_data.surname', 'comment.text', 'comment.date', 'comment.id', 'comment.reply_id'), array('item_id' => $postId), array('date'), null, null, array('user_data' => array('user_data.user_id' => 'comment.user_id')), null);
         for($i = 0; $i < count($comments); $i++) {
             if($_SESSION['user']['id'] == $comments[$i]['user_id']) {
                 $comments[$i]['is_owner'] = true;
@@ -103,7 +111,17 @@ class News_Model
             else {
                 $comments[$i]['is_owner'] = true;
             }
+            if(!is_null($comments[$i]['reply_id'])) {
+                $reply_info = $this->CommentInfo($comments[$i]['id']);
+                $comments[$i]['reply_name'] = $reply_info['name'];
+                $comments[$i]['reply_surname'] = $reply_info['surname'];
+            }
         }
         return $comments;
+    }
+
+    public function CommentInfo($commentId) {
+        $info = Core::$Db->SelectJoin('comment', 'user_data.surname, user_data.name', array('id' => $commentId), null, null, null, array('user_data' => array('user_data.user_id' => 'comment.user_id')))[0];
+        return $info;
     }
 }

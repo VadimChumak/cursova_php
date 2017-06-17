@@ -66,7 +66,8 @@
                 <div class="comment-list">
                 </div>
                 <div class="comment-field">
-                    <input id="commentField" type="text">
+                    <span></span>
+                    <input id="commentField" type="text" class="comment-text">
                     <button class="btn comment-btn"><i class="material-icons">add_circle</i></button>
                 </div>
             </div>
@@ -95,7 +96,8 @@
                 <div class="comment-list">
                 </div>
                 <div class="comment-field">
-                    <input id="commentField" type="text">
+                    <span></span>
+                    <input id="commentField" type="text" class="comment-text">
                     <button class="btn comment-btn"><i class="material-icons">add_circle</i></button>
                 </div>
             </div>
@@ -116,10 +118,11 @@
         <input type="hidden" value="[commentId]" />
         <div class="chip">
             <img src="[userImage]" />
-            <a href="/user/id/[userID]">[userName]</a>
-            <time class="timeago" datetime="[date]"></time>
+            <a href="/user/id/[userID]">[userName]</a>[reply_comment]
+            <time class="timeago" datetime="[date]"></time><br>
         </div>
         [delete]
+        <button class="reply-comment">reply</button>
     <p>[text]<p>
     </div>
 </script>

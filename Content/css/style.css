@@ -329,6 +329,10 @@ body .row{
     background-color: #f7f6f1;
 }
 
+.selected-comment{
+    background-color: #d9d9d9 !important;
+}
+
 .user-page-img{
     min-height: 180px !important;
     max-height: 180px !important;
@@ -907,5 +911,4 @@ ul.collection.card>li {
 
 .modal{
     z-index:10000;
->>>>>>> ea9910622407ecf3a4813f16816b3ef6d03ff996
-}
+    }

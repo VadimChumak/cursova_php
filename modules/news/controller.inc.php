@@ -60,8 +60,12 @@ class News_Controller
         
         $postId = $_POST['postId'];
         $text = $_POST['text'];
+        $replyId = null;
+        if(isset($_POST['reply_id'])) {
+            $replyId = $_POST['reply_id'];
+        }
         $model = new News_Model();
-        $arrayForSave = $model->AddComment($postId, $text);
+        $arrayForSave = $model->AddComment($postId, $text, $replyId);
         $user = Core::$Db->SelectJoin("user_data", 'image, name, surname', array("user_id" => $_SESSION['user']['id']));
         $arrayForSave['image'] = $user[0]['image'];
         $arrayForSave['name'] = $user[0]['name'];

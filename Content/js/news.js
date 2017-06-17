@@ -1,7 +1,9 @@
 $(window).on('load', function() {
+    var replyCommentId = null;
     var newsLoadPosition = 0;
     var newsEmpty = false;
     var isOwner = false;
+    var selectedComment = null;
     if(document.getElementById('isOwner') != undefined) {
         isOwner = true;
     }
@@ -10,7 +12,7 @@ $(window).on('load', function() {
         $('#modal_createPost').modal('open');
     });
 
-    $('.comment-list').on('click', '.delete-comment', function() {
+    $('.wall').on('click', '.delete-comment', function() {
         var commentId = $(this).parent().find('input[type=hidden]').val();
         var commentImg = $(this).parent().parent().parent().parent().find(".coment").parent().find("span");
         var block = $(this).parent();
@@ -41,15 +43,32 @@ $(window).on('load', function() {
         }
     });
 
+    $('.wall').on('click', '.reply-comment', function() {
+        var commentBlock = $(this).parent().parent().parent();
+        var commentId = $(this).parent().find('input[type=hidden]').val();
+        replyCommentId = commentId;
+        var userName = $(this).parent().find('.chip').find('a')[0].outerHTML;
+        $(commentBlock).find('.comment-field span').html('<input type="hidden" value="' + commentId + '" class="reply-id" />' + userName + ' :' + ' <button class="close-reply">close</button>');
+    });
+
+    $('.wall').on('click', '.close-reply', function() {
+        var commentBlock = $(this).parent().parent().parent().parent();
+        $(commentBlock).find('.comment-field span').html('');
+    });
+
     $(".wall").on("click", ".comment-btn", function(event) {
+        var replyId = $(this).parent().find('input[class="reply-id"]').val();
         var id = $(this).parent().parent().parent().parent().find("input[type=hidden]").val();
-        var text = $(this).parent().find("input").val();
+        var text = $(this).parent().find("input[class='comment-text']").val();
         var commentImg = $(this).parent().parent().parent().find(".coment").parent().find("span");
         var commentList = $(this).parent().parent().find(".comment-list");
         var xhr = new XMLHttpRequest();
         xhr.open("POST", "/news/addcomment", true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
         var res = "postId=" + encodeURIComponent(id) + "&text=" + encodeURIComponent(text);
+        if(replyId != undefined) {
+            res += "&reply_id=" + encodeURIComponent(replyId);
+        }
         xhr.send(res);
         xhr.onreadystatechange = function() {
             if(this.readyState !=4) return;
@@ -70,7 +89,10 @@ $(window).on('load', function() {
                     result.image,
                     result.date,
                     result.text,
-                    true
+                    true,
+                    result.reply_id,
+                    result.reply_surname,
+                    result.reply_name
                 );
                 var block = comment.getCommentBlock();
                 var blockObject = $(block);
@@ -83,6 +105,7 @@ $(window).on('load', function() {
     });
 
     $(".wall").on("click", ".delete-news", function() {
+        newsLoadPosition--;
         var newsId = $(this).parent().parent().find("input[type=hidden]").val();
         var block = $(this).parent().parent().parent();
         $(block).fadeOut(200, function(){
@@ -130,7 +153,10 @@ $(window).on('load', function() {
                             item.image,
                             item.date,
                             item.text,
-                            item.is_owner
+                            item.is_owner,
+                            item.reply_id,
+                            item.reply_surname,
+                            item.reply_name
                         );
                         var block = comment.getCommentBlock();
                         var blockObject = $(block);
@@ -155,6 +181,18 @@ $(window).on('load', function() {
                 card.find(".comment").addClass("hidden");
             });
         }
+    });
+
+    $(".wall").on("click", ".scroll-reply", function() {
+        if(selectedComment != null) {
+            selectedComment.toggleClass('selected-comment');
+        }
+        var replyId = $(this).parent().parent().find('input[class="reply-id"]').val();
+        var comment =  $(this).parent().parent().parent().find('input[value="'+replyId + '"]').parent();
+        selectedComment = comment;
+        var commentBlock = $(comment).parent();
+        commentBlock[0].scrollTop = comment[0].offsetTop;
+        comment.toggleClass('selected-comment');
     });
 
     $(".wall").on("click", ".like-heart", function() {
@@ -335,7 +373,7 @@ $(window).on('load', function() {
     }
 
 
-    function CommentModel(id, userId, name, surname, userImage, date, text, is_owner) {
+    function CommentModel(id, userId, name, surname, userImage, date, text, is_owner, reply_id, reply_surname = null, reply_name = null) {
         this.userId = userId;
         this.userImage = userImage;
         this.date = date;
@@ -344,6 +382,9 @@ $(window).on('load', function() {
         this.surname = surname;
         this.id = id;
         this.is_owner = is_owner;
+        this.reply_id = reply_id;
+        this.reply_name = reply_name;
+        this.reply_surname = reply_surname;
     }
     CommentModel.prototype.getCommentBlock = function() {
         var blockHtml = document.getElementById('sendComment').innerHTML;
@@ -361,6 +402,12 @@ $(window).on('load', function() {
         }
         else {
             blockHtml = blockHtml.replace('[delete]', '');
+        }
+        if(this.reply_id != null) {
+            blockHtml = blockHtml.replace('[reply_comment]', ' > ' + '<input type="hidden" class="reply-id" value="' + this.reply_id + '" /><span class="scroll-reply">' + this.reply_surname + ' ' + this.reply_name + '</span>');
+        }
+        else {
+            blockHtml = blockHtml.replace('[reply_comment]', '');
         }
         blockHtml = blockHtml.replace('[userName]', this.surname + ' ' + this.name);
         blockHtml = blockHtml.replace('[date]', this.date);
