@@ -1,7 +1,5 @@
 AddDefaultCharset utf-8
-
 RewriteEngine on
-RewriteCond %{REQUEST_URI} \.(css|jpg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|mp3|mp4)$|test\.php$
+RewriteCond %{REQUEST_URI} \.(css|jpg|gif|png|zip|rar|doc|xls|js|tif|tiff|docx|xlsx|ico|mp3|mp4|txt)$|test\.php$
 RewriteRule ^(.*)$ $1 [L,QSA]
-#RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule (.*) index.php?url=$1 [QSA]

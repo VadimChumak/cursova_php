@@ -780,7 +780,7 @@ ul.collection.card>li {
     display:block;
 }
 
-#addSong, #addVideo, #addPhoto, #addGroup{
+#addSong, #addVideo, #addPhoto, #addGroup, #addFile{
     margin-top:5px;
     margin-bottom: 5px;
     margin-left:10%;
