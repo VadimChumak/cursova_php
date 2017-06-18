@@ -329,8 +329,17 @@ body .row{
     background-color: #f7f6f1;
 }
 
+.reply-comment{
+    background-color: transparent !important;
+    border:none !important;
+    box-shadow: none !important;
+    color:dodgerblue !important;
+    padding: 0px !important;
+    font-size: 10px !important;
+}
+
 .selected-comment{
-    background-color: #d9d9d9 !important;
+    background-color: rgba(0, 255, 255, 0.2) !important;
 }
 
 .user-page-img{

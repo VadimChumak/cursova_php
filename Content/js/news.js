@@ -57,50 +57,55 @@ $(window).on('load', function() {
     });
 
     $(".wall").on("click", ".comment-btn", function(event) {
-        var replyId = $(this).parent().find('input[class="reply-id"]').val();
-        var id = $(this).parent().parent().parent().parent().find("input[type=hidden]").val();
         var text = $(this).parent().find("input[class='comment-text']").val();
-        var commentImg = $(this).parent().parent().parent().find(".coment").parent().find("span");
-        var commentList = $(this).parent().parent().find(".comment-list");
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/news/addcomment", true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        var res = "postId=" + encodeURIComponent(id) + "&text=" + encodeURIComponent(text);
-        if(replyId != undefined) {
-            res += "&reply_id=" + encodeURIComponent(replyId);
+        if(text.trim().length > 0) {
+            var replyId = $(this).parent().find('input[class="reply-id"]').val();
+            var id = $(this).parent().parent().parent().parent().find("input[type=hidden]").val();
+            var commentImg = $(this).parent().parent().parent().find(".coment").parent().find("span");
+            var commentList = $(this).parent().parent().find(".comment-list");
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/news/addcomment", true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            var res = "postId=" + encodeURIComponent(id) + "&text=" + encodeURIComponent(text);
+            if(replyId != undefined) {
+                res += "&reply_id=" + encodeURIComponent(replyId);
+            }
+            xhr.send(res);
+            xhr.onreadystatechange = function() {
+                if(this.readyState !=4) return;
+                if(this.status != 200) {
+                    Materialize.toast('' + (this.status ? this.statusText : 'запит не вдався'), 1000);
+                    return;
+                }
+                else {
+                    var count = $(commentImg).html();
+                    count++;
+                    $(commentImg).html(count.toString());
+                    var result = JSON.parse(xhr.responseText);
+                    var comment = new CommentModel(
+                        result.id,
+                        result.user_id,
+                        result.name,
+                        result.surname,
+                        result.image,
+                        result.date,
+                        result.text,
+                        true,
+                        result.reply_id,
+                        result.reply_surname,
+                        result.reply_name
+                    );
+                    var block = comment.getCommentBlock();
+                    var blockObject = $(block);
+                    $(commentList).append(blockObject);
+                    $("time.timeago").timeago();
+                    setTimeout(reloadMasonry, 100);
+                    setTimeout(setMenuHeight, 101);
+                }
+            }
         }
-        xhr.send(res);
-        xhr.onreadystatechange = function() {
-            if(this.readyState !=4) return;
-            if(this.status != 200) {
-                Materialize.toast('' + (this.status ? this.statusText : 'запит не вдався'), 1000);
-                return;
-            }
-            else {
-                var count = $(commentImg).html();
-                count++;
-                $(commentImg).html(count.toString());
-                var result = JSON.parse(xhr.responseText);
-                var comment = new CommentModel(
-                    result.id,
-                    result.user_id,
-                    result.name,
-                    result.surname,
-                    result.image,
-                    result.date,
-                    result.text,
-                    true,
-                    result.reply_id,
-                    result.reply_surname,
-                    result.reply_name
-                );
-                var block = comment.getCommentBlock();
-                var blockObject = $(block);
-                $(commentList).append(blockObject);
-                $("time.timeago").timeago();
-                setTimeout(reloadMasonry, 100);
-                setTimeout(setMenuHeight, 101);
-            }
+        else {
+            Materialize.toast('Поле не може бути пустим!', 1000);
         }
     });
 
@@ -318,43 +323,49 @@ $(window).on('load', function() {
 
     $('#sendPost').on('click', function(event) {
         event.preventDefault();
-        var formData = new FormData(document.forms.formPost);
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/news/save', true);
-        xhr.send(formData);
-        xhr.onreadystatechange = function() {
-            if(this.readyState != 4) return;
-            if(this.status != 200) {
-                Materialize.toast('' + (this.status ? this.statusText : 'запит не вдався'), 1000);
-            }
-            else {
-                document.getElementById('eror').innerHTML = xhr.responseText;
-                var result = JSON.parse(xhr.responseText);
-                var post = new NewsModel(
-                    result.id, 
-                    result.page_owner_id, 
-                    result.user_id, 
-                    result.image, 
-                    result.name, 
-                    result.surname, 
-                    false,
-                    0,
-                    0,
-                    result.post_text,
-                    result.publishing_date,
-                    result.images,
-                    result.videos,
-                    result.audios,
-                    true
-                );
-                var block = post.getNewsBlock();
-                var blockObject = $(block);
-                $(block).insertAfter($("#createPostBlock"));
-                $('time.timeago').timeago();
-                $('.wall').masonry('prepended', blockObject).masonry('layout');
-                newsLoadPosition++;
-                setTimeout(reloadMasonry, 210);
-                setTimeout(setMenuHeight, 211);
+        var form = document.forms.formPost;
+        if(form.elements['newsText'].value.trim().length == 0 && form.elements['news_images_text'].value.trim().length == 0 && form.elements['news_videos_text'].value.trim().length == 0 && form.elements['news_audios_text'].value.trim().length == 0) {
+            Materialize.toast('Хоча б одне з полів мусить бути заповнене!', 4000);
+        }
+        else {
+            var formData = new FormData(document.forms.formPost);
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', '/news/save', true);
+            xhr.send(formData);
+            xhr.onreadystatechange = function() {
+                if(this.readyState != 4) return;
+                if(this.status != 200) {
+                    Materialize.toast('' + (this.status ? this.statusText : 'запит не вдався'), 1000);
+                }
+                else {
+                    document.getElementById('eror').innerHTML = xhr.responseText;
+                    var result = JSON.parse(xhr.responseText);
+                    var post = new NewsModel(
+                        result.id, 
+                        result.page_owner_id, 
+                        result.user_id, 
+                        result.image, 
+                        result.name, 
+                        result.surname, 
+                        false,
+                        0,
+                        0,
+                        result.post_text,
+                        result.publishing_date,
+                        result.images,
+                        result.videos,
+                        result.audios,
+                        true
+                    );
+                    var block = post.getNewsBlock();
+                    var blockObject = $(block);
+                    $(block).insertAfter($("#createPostBlock"));
+                    $('time.timeago').timeago();
+                    $('.wall').masonry('prepended', blockObject).masonry('layout');
+                    newsLoadPosition++;
+                    setTimeout(reloadMasonry, 210);
+                    setTimeout(setMenuHeight, 211);
+                }
             }
         }
     });

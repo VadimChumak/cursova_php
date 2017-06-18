@@ -31,35 +31,43 @@ $(window).on("load", function() {
     $("#messagesSection #sendMessages").on("click", function(event) {
         event.preventDefault();
         var text = $("#messagesSection textarea[name='text']").val();
-        var reciever_id = recieverId;
-        var res = "recieverId=" + encodeURIComponent(reciever_id) + "&text=" + encodeURIComponent(text) ;
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/chat/save", true);
-        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-        xhr.send(res);
-        xhr.onload = function() {
-        }
-        xhr.onreadystatechange = function() {
-            if(this.readyState !=4) return;
-            if(this.status != 200) {
-                alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
-                return;
+        if(selectedUser != null) {
+            if(text.trim().length > 0) {
+                var reciever_id = recieverId;
+                var res = "recieverId=" + encodeURIComponent(reciever_id) + "&text=" + encodeURIComponent(text) ;
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "/chat/save", true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.send(res);
+                xhr.onreadystatechange = function() {
+                    if(this.readyState !=4) return;
+                    if(this.status != 200) {
+                        alert( 'ошибка: ' + (this.status ? this.statusText : 'запрос не удался') );
+                        return;
+                    }
+                    else {
+                        var item = JSON.parse(xhr.responseText);
+                        var tmp = $("#messageItem").html();
+                        tmp = tmp.replace("[text]", item.text);
+                        if(item.sender_id == currentUserId) {
+                            tmp = tmp.replace("[sender]", "my");
+                        }
+                        else {
+                            tmp = tmp.replace("[sender]", "user");
+                        }
+                        tmp = tmp.replace("[date]", item.Date);
+                        $("#textMessages").append($(tmp));
+                        var block = document.getElementById("textMessages");
+                        block.scrollTop = block.scrollHeight;
+                    }
+                }
             }
             else {
-                var item = JSON.parse(xhr.responseText);
-                var tmp = $("#messageItem").html();
-                tmp = tmp.replace("[text]", item.text);
-                if(item.sender_id == currentUserId) {
-                    tmp = tmp.replace("[sender]", "my");
-                }
-                else {
-                    tmp = tmp.replace("[sender]", "user");
-                }
-                tmp = tmp.replace("[date]", item.Date);
-                $("#textMessages").append($(tmp));
-                var block = document.getElementById("textMessages");
-                block.scrollTop = block.scrollHeight;
+                Materialize.toast('Поле не може бути пустим!', 1000);
             }
+        }
+        else {
+            Materialize.toast('Оберіть користувача!', 1000);
         }
     });
 
