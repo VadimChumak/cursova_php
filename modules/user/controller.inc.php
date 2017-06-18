@@ -24,7 +24,8 @@ class User_Controller
             'MessagesCount' => $chatModel-> GetNewMessagesCount($_SESSION['user']['id'])
         );
         return array(
-            "Content"  => $userPage->GetUserPage($params)
+            "Content"  => $userPage->GetUserPage($params),
+            'Script' => $NewsView->Scripts()
         );
     }
 }

@@ -6,4 +6,9 @@ class Chat_View
         $messagesTPL->SetParams($messagesList);
         return $messagesTPL->GetHTML();
     }
+
+    public function Scripts() {
+        $scriptTPL = new Template('template/chat/script.tpl');
+        return $scriptTPL->GetHTML();
+    }
 }

@@ -20,11 +20,9 @@
 <script src="/Content/js/masonry.js"></script>
 <script src="/Content/js/mainPage.js"></script>
 <script src="/Content/js/timeago.js"></script>
-<script src="/Content/js/chat.js"></script>
-<script src="/Content/js/messanger.js"></script>
 <script src="/Content/js/timeagoLocalization.js"></script>
 <script src="/Content/js/mediaList.js"></script>
-<script src="/Content/js/news.js"></script>
 <script src="/Content/js/materialize.js"></script>
+<?php if(isset($Script)) echo $Script ?>
 </body>
 </html>

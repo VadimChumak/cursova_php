@@ -13,34 +13,6 @@
 <?php endif; ?>
 <!------->
 
-  
-
-
-
-<div id="modal_createMessage" class="modal modal-fixed-footer">
-    <div class="modal-content">
-      <div class="row">
-        <form class="col l12 m12 s12" name="formMessage">
-            <div class="row">
-                <div class="input-field l12 m12 s12">
-                    <input type="hidden" name="reciever_id" value="<?php echo $UserInfo['user_id'] ?>" />
-                    <i class="material-icons prefix">mode_edit</i>
-                    <textarea id="icon_prefix2" class="materialize-textarea" name="text"></textarea>
-                    <label for="icon_prefix2">Що у вас нового</label>
-                </div>
-            </div>
-        </form>
-      </div>
-    </div>
-    <div class="modal-footer">
-      <button class="modal-action modal-close waves-effect waves-green btn-flat main-color" id="sendMessage">Agree</button>
-    </div>
-  </div>
-
-
-
-
-
 <div id="main">
     <header>
         <nav class="main-color row nav-wrapper">

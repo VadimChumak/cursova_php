@@ -1,0 +1,1 @@
+<script src="/Content/js/news.js"></script>
