@@ -13,7 +13,8 @@ class User_Controller
         $model = new News_Model();
         $newsList['newsArray'] = $model->NewsList(0, $user[0]['user_id'], 'user');
         $newsList['CurrentUser'] = $_SESSION['user'];
-        $newsList['UserInfo'] = $user[0];
+        $newsList['OwnerId'] = $user[0]['user_id'];
+        $newsList['PageType'] = 'user';
         $NewsView = new News_View();
         $userPage = new User_View();
         $params = array(

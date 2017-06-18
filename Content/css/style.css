@@ -323,6 +323,10 @@ body .row{
     cursor: pointer;
 }
 
+.close-reply{
+    color: red;
+}
+
 #right-menu{
     padding: 0 !important;
     height:100%;

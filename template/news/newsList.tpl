@@ -4,15 +4,15 @@
         <form class="col l12 m12 s12" name="formPost" enctype="multipart/form-data">
             <div class="row">
                 <div class="input-field l12 m12 s12">
-                    <input type="hidden" name="pageType" value="user" />
-                    <input type="hidden" name="ownerId" value="<?php echo $UserInfo['user_id'] ?>" />
+                    <input type="hidden" name="pageType" value="<?php echo $PageType ?>" />
+                    <input type="hidden" name="ownerId" value="<?php echo $OwnerId ?>" />
                     <i class="material-icons prefix">mode_edit</i>
                     <textarea id="icon_prefix2" class="materialize-textarea" name="newsText"></textarea>
                     <label for="icon_prefix2">Що у вас нового</label>
                 </div>
                 <div class="file-field input-field l12 m12 s12">
                     <div class="btn">
-                        <span>File</span>
+                        <span><span><i class="material-icons">image</i></span></span>
                         <input type="file" name="news_images[]" accept="image/*" multiple />
                     </div>
                     <div class="file-path-wrapper">
@@ -21,7 +21,7 @@
                 </div>
                 <div class="file-field input-field l12 m12 s12">
                     <div class="btn">
-                        <span>File</span>
+                        <span><i class="material-icons">queue_music</i></span>
                         <input type="file" name="news_audios[]" accept="audio/*" multiple />
                     </div>
                     <div class="file-path-wrapper">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="file-field input-field l12 m12 s12">
                     <div class="btn">
-                        <span>File</span>
+                        <span><i class="material-icons">video_call</i></span>
                         <input type="file" name="news_videos[]" accept="video/*" multiple />
                     </div>
                     <div class="file-path-wrapper">
@@ -105,7 +105,7 @@
                     <span class="badge"><i class="material-icons like-heart">favorite</i><span><?php echo $item['count'] ?></span></span>
                 <?php endif; ?>
                  <span class="badge"><i class="material-icons coment">comment</i><span><?php echo $item['comment_count'] ?></span></span>
-                <?php if(($UserInfo['user_id'] == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
+                <?php if(($OwnerId == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
                       <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
                 <?php endif; ?>
             </div>
