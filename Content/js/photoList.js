@@ -13,6 +13,12 @@
         e.preventDefault();
         console.log(1);
         if(  !($("#file").prop('files')[0])  ){
+            ValidateMessage('Please select all field');
+            return -1;
+        }
+
+        if(!validateForm()) {
+            ValidateMessage('Bad file extension');
             return -1;
         }
 
@@ -33,6 +39,21 @@
         });
     });
 
+function ValidateMessage(msg) {
+    $("#myModal .modal-content .modal-body p").text(msg);
+    $("#myModal").modal('open');
+}
+
+function validateForm()
+{
+    var ext = $('#file').val().split('.').pop().toLowerCase();
+
+    if($.inArray(ext, ['png','jpg']) != -1) {
+        return true;
+    }
+
+    return false;
+}
 
 function Checker(event) {
     var id = event.target.id;
@@ -61,8 +82,6 @@ function Checker(event) {
         document.getElementById("img_Big").setAttribute("src",event.target.getAttribute("src") );
         //$("#myModalBigPic").modal('show');
         $("#myModalBigPic").modal('open');
-        console.log(document.getElementById("img_Big"));
-        console.log(document.getElementById("myModalBigPic"));
     }
 
 }

@@ -8,7 +8,18 @@ window.onload =function () {
     $('#my_form').on('submit', function(e){
         e.preventDefault();
 
-        if(  !($("#file").prop('files')[0])  ){
+        if(  ($("#title").val() == '' || !$("#file").prop('files')[0])  ){
+            ValidateMessage('Please select all field');
+            return -1;
+        }
+
+        if(!validateForm()) {
+            ValidateMessage('Bad file extension');
+            return -1;
+        }
+
+        if(!sizeValidation()){
+            ValidateMessage('Too big file, max 50mb');
             return -1;
         }
 
@@ -22,8 +33,7 @@ window.onload =function () {
             data: formData,
             dataType: 'json',
             success: function(data){
-                if (data == "Add")
-                {
+                if (data == "Add") {
                     location.reload();
                 }
             }
@@ -32,6 +42,32 @@ window.onload =function () {
     });
 }
 
+function ValidateMessage(msg) {
+    $("#myModal .modal-content .modal-body p").text(msg);
+    $("#myModal").modal('open');
+}
+
+function sizeValidation() {
+    var size = document.getElementById('file').files[0].size;
+
+    if(size < 50 * 1024 * 1024) {//50mb
+        return true;
+    }
+    console.log(size);
+
+    return false;
+}
+
+function validateForm()
+{
+    var ext = $('#file').val().split('.').pop().toLowerCase();
+
+    if($.inArray(ext, ['mp4']) != -1) {
+        return true;
+    }
+
+    return false;
+}
 
 
 function Checker(event) {

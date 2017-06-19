@@ -55,4 +55,21 @@ class File_Controller
         echo(json_encode($data));
         exit();
     }
+
+
+    public function DeleteAction(){
+        $user = $_SESSION['user'];
+        $model = new File_Model();
+
+        $data = "error";
+
+        if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST") {
+            $DeleteId = $_POST['num'];
+            $model->DeleteOwner($user['id'], $DeleteId);
+            $data = "deleted";
+        }
+
+        echo(json_encode($data));
+        exit();
+    }
 }

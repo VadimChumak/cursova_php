@@ -8,7 +8,13 @@ window.onload =function () {
     $('#my_form').on('submit', function(e){
         e.preventDefault();
 
-        if(  !($("#title").val() || $("#file").prop('files')[0])  ){
+        if(  ($("#title").val() == '' || !$("#file").prop('files')[0])  ){
+            ValidateMessage('Please select all field');
+            return -1;
+        }
+        
+        if(!validateForm()) {
+            ValidateMessage('Bad file extension');
             return -1;
         }
 
@@ -27,6 +33,22 @@ window.onload =function () {
         });
         ;
     });
+}
+
+function ValidateMessage(msg) {
+    $("#myModal .modal-content .modal-body p").text(msg);
+    $("#myModal").modal('open');
+}
+
+function validateForm()
+{
+    var ext = $('#file').val().split('.').pop().toLowerCase();
+    
+    if($.inArray(ext, ['mp3']) != -1) {
+       return true;
+    }
+    
+    return false;
 }
 
 

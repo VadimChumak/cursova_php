@@ -888,7 +888,6 @@ ul.collection.card>li {
 .groupMenu input{
     margin-top:5px;
     margin-bottom: 5px;
-    margin-left:10%;
     width:100%;
 }
 
@@ -923,5 +922,15 @@ ul.collection.card>li {
 }
 
 .modal{
-    z-index:10000;
-    }
+    z-index:1000;
+}
+
+.file_elements{
+    font-size:20px;
+}
+
+.d_btn{
+    top:0 !important;
+    width:30px !important;
+    height:30px !important;
+}
