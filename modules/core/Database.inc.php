@@ -34,6 +34,11 @@ class Database
         $sql = "UPDATE {$tableName} SET {$setList} WHERE {$indexField} = '{$indexValue}' AND {$indexField2} = '{$indexValue2}'";
         $this->Pdo->exec($sql);
     }
+    public function DeleteFriends($tableName, $indexField, $indexValue, $indexFieldT, $indexValueT)
+    {
+        $sql = "DELETE FROM {$tableName} WHERE (({$indexField} = '$indexValue') AND ({$indexFieldT} = '$indexValueT')) OR (({$indexField} = '$indexValueT') AND ({$indexFieldT} = '$indexValue'))";
+        $this->Pdo->exec($sql);
+    }
     public function SelectSearch($tableName, $fieldArray, $assocArray = null)
     {
         $whereString = '';
