@@ -238,13 +238,16 @@ $(window).on('load', function() {
     {
         if  (($(window).scrollTop() == $(document).height() - $(window).height()) && newsEmpty == false) 
         {
+            var pageType = location.pathname.split('/')[1];
+            if(pageType == 'groups')
+                pageType = 'group';
             var newsEnd = 99;
             newsLoadPosition += 10;
             var pageOwnerId = document.getElementById('page_owner_id').value;
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/news/get', true);
             xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-            var res = "from=" + encodeURIComponent(newsLoadPosition) + "&to=" + encodeURIComponent(newsEnd) + "&owner=" + encodeURIComponent(pageOwnerId);
+            var res = "from=" + encodeURIComponent(newsLoadPosition) + "&to=" + encodeURIComponent(newsEnd) + "&owner=" + encodeURIComponent(pageOwnerId) + "&pageType=" + encodeURIComponent(pageType);
             xhr.send(res);
             xhr.onreadystatechange = function() {
             if(this.readyState != 4) return;
@@ -252,6 +255,7 @@ $(window).on('load', function() {
                     Materialize.toast('' + (this.status ? this.statusText : 'запит не вдався'), 1000);
                 }
                 else {
+                    document.getElementById('eror').innerHTML = xhr.responseText;
                     var result = JSON.parse(xhr.responseText);
                     if(result.length == 0) {
                         newsEmpty = true;
@@ -303,8 +307,12 @@ $(window).on('load', function() {
                                 images,
                                 videos,
                                 audios,
-                                item.is_owner
+                                item.is_owner,
+                                item.page_type,
+                                item.title
                             );
+                            if(post.pageType == 'group')
+                                post.authorId = item.group_id;
                             var block = post.getNewsBlock();
                             var blockObject = $(block);
                             $(".wall").append(blockObject).masonry("appended", blockObject);
@@ -343,7 +351,7 @@ $(window).on('load', function() {
                     var post = new NewsModel(
                         result.id, 
                         result.page_owner_id, 
-                        result.user_id, 
+                        result.owner_id, 
                         result.image, 
                         result.name, 
                         result.surname, 
@@ -355,7 +363,9 @@ $(window).on('load', function() {
                         result.images,
                         result.videos,
                         result.audios,
-                        true
+                        true,
+                        result.page_type,
+                        result.groupTitle
                     );
                     var block = post.getNewsBlock();
                     var blockObject = $(block);
@@ -425,8 +435,9 @@ $(window).on('load', function() {
         blockHtml = blockHtml.replace('[text]', this.text);
         return blockHtml;
     }
+    
 
-    function NewsModel(id = null, pageOwner = null, authorId = null, authorImage = null, authorName = null, authorSurname = null, isLiked = null, commentCount = null, likeCount = null, text = null, date = null, images = null, videos = null, audios = null, is_owner = null) {
+    function NewsModel(id = null, pageOwner = null, authorId = null, authorImage = null, authorName = null, authorSurname = null, isLiked = null, commentCount = null, likeCount = null, text = null, date = null, images = null, videos = null, audios = null, is_owner = null, pageType = null, groupTitle = null) {
         this.id = id;
         this.text = text;
         this.date = date;
@@ -442,6 +453,8 @@ $(window).on('load', function() {
         this.pageOwner = pageOwner;
         this.isLiked = isLiked;
         this.is_owner = is_owner;
+        this.pageType = pageType;
+        this.groupTitle = groupTitle;
     }
     NewsModel.prototype.getNewsBlock = function() {
         var blockHtml = document.getElementById("newsBlock").innerHTML;
@@ -452,11 +465,21 @@ $(window).on('load', function() {
         if(this.images != undefined) {
             if(this.images != null && this.images.name.length > 0) {
                 postImages = document.getElementById("postIMG").innerHTML;
-                postImages = postImages.replace('[MainImage]', '<img src="/media/users/' + this.pageOwner + '/photo/' + this.images.name[0] + '">');
+                if(this.pageType == 'user') {
+                    postImages = postImages.replace('[MainImage]', '<img src="/media/users/' + this.pageOwner + '/photo/' + this.images.name[0] + '">');
+                }
+                else {
+                    postImages = postImages.replace('[MainImage]', '<img src="/media/groups/' + this.pageOwner + '/photo/' + this.images.name[0] + '">');
+                }
                 if(this.images.name.length > 1) {
                     var otherImages = "<div>";
                     for(var i = 1; i < this.images.name.length; i++) {
-                        otherImages += "<img src='/media/users/" + this.pageOwner + "/photo/" + this.images.name[i] + "'>";
+                        if(this.pageType == 'user') {
+                            otherImages += "<img src='/media/users/" + this.pageOwner + "/photo/" + this.images.name[i] + "'>";
+                        }
+                        else {
+                            otherImages += "<img src='/media/groups/" + this.pageOwner + "/photo/" + this.images.name[i] + "'>";
+                        }
                     }
                     otherImages += "</div>"
                     postImages = postImages.replace('[OtherImage]', otherImages);
@@ -499,16 +522,37 @@ $(window).on('load', function() {
         blockHtml = blockHtml.replace('[date]', this.date);
         blockHtml = blockHtml.replace('[userID]', this.authorId);
         blockHtml = blockHtml.replace('[userID]', this.authorId);
+        if(this.pageType == 'user') {
+            blockHtml = blockHtml.replace('[ownerUrl]', location.origin + '/user/id/' + this.authorId);
+        }
+        else {
+            blockHtml = blockHtml.replace('[ownerUrl]', location.origin + '/groups/group/' + this.authorId);
+        }
         blockHtml = blockHtml.replace('[PostImage]', postImages);
         blockHtml = blockHtml.replace('[PostVideo]', postVideos);
         blockHtml = blockHtml.replace('[PostAudio]', postAudios);
-        if(this.authorImage.split('_')[0] == 'default') {
-            blockHtml = blockHtml.replace('[userImage]', '/media/users/' + this.authorImage);
+        if(this.pageType == 'user') {
+            if(this.authorImage.split('_')[0] == 'default') {
+                blockHtml = blockHtml.replace('[userImage]', '/media/users/' + this.authorImage);
+            }
+            else {
+                blockHtml = blockHtml.replace("[userImage]", "/media/users/" + this.authorId + "/photo/" + this.authorImage);
+            }
         }
         else {
-            blockHtml = blockHtml.replace("[userImage]", "/media/users/" + this.authorId + "/photo/" + this.authorImage);
+            if(this.authorImage != null) {
+                blockHtml = blockHtml.replace("[userImage]", "/media/groups/" + this.authorId + "/photo/" + this.authorImage);
+            }
+            else {
+                blockHtml = blockHtml.replace("[userImage]", "");
+            }
         }
-        blockHtml = blockHtml.replace('[userName]', this.authorSurname + ' ' + this.authorName);
+        if(this.pageType == 'user') {
+            blockHtml = blockHtml.replace('[userName]', this.authorSurname + ' ' + this.authorName);
+        }
+        else {
+            blockHtml = blockHtml.replace('[userName]', this.groupTitle);
+        }
         blockHtml = blockHtml.replace('[delete]', deleteSection);
         if(this.isLiked) {
             blockHtml = blockHtml.replace('[isLiked]', 'favorite');

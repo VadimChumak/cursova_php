@@ -29,10 +29,10 @@ class News_Controller
     }
     public function GetAction() {
         $from = $_POST['from'];
-        $to = $_POST['to'];
+        $pageType = $_POST['pageType'];
         $owner = $_POST['owner'];
         $model = new News_Model();
-        $newsList = $model->NewsList($from, $owner, 'user');
+        $newsList = $model->NewsList($from, $owner, $pageType);
         $res = json_encode($newsList);
         echo $res;
         exit(); 

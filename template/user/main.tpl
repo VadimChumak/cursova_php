@@ -54,7 +54,7 @@
                 <?php else: ?>
                     <img  src="<?php echo "/media/users/".$UserInfo['user_id'].'/photo/'.$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
                 <?php endif; ?>
-                <input type="hidden" value="<?php echo $UserInfo['user_id'] ?>" id="page_owner_id"/>
+                <input type="hidden" value="<?php echo $PageOwnerId ?>" id="page_owner_id"/>
             </div>
             <div class="left-menu-user-info">
                 <p class="user-name"><?=$UserInfo['name']?></p>

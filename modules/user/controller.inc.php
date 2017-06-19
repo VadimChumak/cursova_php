@@ -22,7 +22,8 @@ class User_Controller
             'UserInfo' => $user[0],
             'NewsSection' => $NewsView->GetNewsList($newsList),
             'AboutSection' => $userPage->GetUserInfo(array('item' => $user[0])),
-            'MessagesCount' => $chatModel-> GetNewMessagesCount($_SESSION['user']['id'])
+            'MessagesCount' => $chatModel-> GetNewMessagesCount($_SESSION['user']['id']),
+            'PageOwnerId' => $id[0]
         );
         return array(
             "Content"  => $userPage->GetUserPage($params),

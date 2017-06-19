@@ -46,23 +46,45 @@
     </div>
   </div>
 
-<div class="col l6 m12 s12 wall-item create-post-area" id="createPostBlock">
-    <button class="btn waves-effect waves-light" id="createPost">
-        <i class="material-icons md-48">mode_edit</i>
-    </button>
-</div>
+<?php if($PageType == 'group'): ?>
+    <?php if($IsAdmin): ?>
+        <div class="col l6 m12 s12 wall-item create-post-area" id="createPostBlock">
+            <button class="btn waves-effect waves-light" id="createPost">
+                <i class="material-icons md-48">mode_edit</i>
+            </button>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="col l6 m12 s12 wall-item create-post-area" id="createPostBlock">
+        <button class="btn waves-effect waves-light" id="createPost">
+            <i class="material-icons md-48">mode_edit</i>
+        </button>
+    </div>
+<?php endif; ?>
 <?php while (!is_null($item = array_shift($newsArray))): ?>
     <div class="col l6 m12 s12 wall-item">
         <div class="card">
             <input type="hidden" value="<?php echo $item['id'] ?>" />
             <div class="card-info">
-                <?php if(explode('_', $item['image'])[0] == 'default'): ?>
-                    <img src="<?php echo "/media/users/".$item['image'] ?>"/>
+                <?php if($PageType == 'user'): ?>
+                    <?php if(explode('_', $item['image'])[0] == 'default'): ?>
+                        <img src="<?php echo "/media/users/".$item['image'] ?>"/>
+                    <?php else: ?>
+                        <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>"/>
+                    <?php endif; ?>
                 <?php else: ?>
-                    <img src="<?php echo "/media/users/". $item['user_id'] . "/photo/" .$item['image'] ?>"/>
+                    <?php if(!is_null($item['photo_url'])): ?>
+                        <img src="<?php echo "/media/groups/". $item['group_id'] . "/photo/" .$item['photo_url'] ?>"/>
+                    <?php else: ?>
+                        <img src=""/>
+                    <?php endif; ?>
                 <?php endif; ?>
                 <time class="timeago" datetime="<?php echo $item['publishing_date'] ?>"></time>
-                <a href="<?php echo '/user/id/'.$item['user_id'] ?>"><?php echo $item['surname']." ".$item['name'] ?></a>
+                <?php if($PageType == 'user'): ?>
+                    <a href="<?php echo '/user/id/'.$item['user_id'] ?>"><?php echo $item['surname']." ".$item['name'] ?></a>
+                <?php else: ?>
+                    <a href="<?php echo '/groups/group/'.$item['group_id'] ?>"><?php echo $item['title'] ?></a>
+                <?php endif; ?>
             </div>
                 <?php if(strlen($item['post_text']) > 0): ?>
                     <div class="card-content">
@@ -71,12 +93,21 @@
                 <?php endif; ?>
             <?php if(!empty($item['images'])): ?>
                 <div class="card-image">
-                    <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/" . array_shift($item['images'])['title'] ?>"/>
-                    <div>
-                        <?php while (!is_null($photo = array_shift($item['images']))): ?>
-                            <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/". $photo['title']  ?>"/>
-                        <?php endwhile; ?>
-                    </div>
+                    <?php if($PageType == 'group'): ?>
+                        <img src="<?php echo "/media/groups/". $item['page_owner_id'] . "/photo/" . array_shift($item['images'])['title'] ?>"/>
+                        <div>
+                            <?php while (!is_null($photo = array_shift($item['images']))): ?>
+                                <img src="<?php echo "/media/groups/". $item['page_owner_id'] . "/photo/". $photo['title']  ?>"/>
+                            <?php endwhile; ?>
+                        </div>
+                    <?php else: ?>
+                        <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/" . array_shift($item['images'])['title'] ?>"/>
+                        <div>
+                            <?php while (!is_null($photo = array_shift($item['images']))): ?>
+                                <img src="<?php echo "/media/users/". $item['page_owner_id'] . "/photo/". $photo['title']  ?>"/>
+                            <?php endwhile; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             <?php endif; ?>
             <?php if(!empty($item['videos'])): ?>
@@ -105,8 +136,14 @@
                     <span class="badge"><i class="material-icons like-heart">favorite</i><span><?php echo $item['count'] ?></span></span>
                 <?php endif; ?>
                  <span class="badge"><i class="material-icons coment">comment</i><span><?php echo $item['comment_count'] ?></span></span>
-                <?php if(($OwnerId == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
-                      <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                <?php if($PageType == 'user'): ?>
+                    <?php if(($OwnerId == $CurrentUser['id']) || $CurrentUser['id'] == $item['user_id']): ?>
+                        <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php if($IsAdmin): ?>
+                        <a class="dropdown-button delete-news" href="#!" ><i class="material-icons right">delete</i></a></li>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
             <div class="divider"></div>
@@ -120,7 +157,7 @@
                 </div>
             </div>
             </div>
-    </div>
+</div>
 <?php endwhile; ?>
 <script type="text" id="newsBlock">
     <div class="col l6 m6 s12 wall-item">
@@ -129,7 +166,7 @@
             <div class="card-info">
                 <img src="[userImage]"/>
                 <time class="timeago" datetime="[date]"></time>
-                <a href="/user/id/[userID]">[userName]</a>
+                <a href="[ownerUrl]">[userName]</a>
             </div>
             [text]
             [PostImage]

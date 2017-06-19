@@ -6,13 +6,12 @@ class Groups_Controller
 
         $id = $arg;
         $userModel = new Registration_Model();
-
-
+        var_dump($arg);
         $modelUser = new User_Model();
-        $user = $modelUser->GetUserAuth($arg[0]);
+        $user = $modelUser->GetUserAuth($arg);
 
         if($user == null)
-            header("Location:".$_SERVER["DOCUMENT_ROOT"]);
+           header("Location:".$_SERVER["DOCUMENT_ROOT"]);
 
         $model = new Groups_Model();
         $view = new Groups_View();
@@ -104,7 +103,6 @@ class Groups_Controller
 
         //404
         if(!$model->isGroupExistById($groupId)){
-            //call 404 page
             echo 'not exist';
         }
 
@@ -116,14 +114,25 @@ class Groups_Controller
         $userPage = new User_View();
         $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
 
+        $modelN = new News_Model();
+        $newsList['newsArray'] = $modelN->NewsList(0, $groupId, 'group');
+        $newsList['CurrentUser'] = $_SESSION['user'];
+        $newsList['OwnerId'] = $groupId;
+        $newsList['PageType'] = 'group';
+        $newsList['IsAdmin'] = $model->isGroupAdmin($group, $_SESSION['user']);
+        $NewsView = new News_View();
+
         $params = array(
-            "PageTitle" => $group['title'],
+            "PageTitle" => $group[0]['title'],
             'CurrentUser' => $_SESSION['user'],
             'UserInfo' => $userInPage[0],
-            'NewsSection' => $view->Group($group, $isMember, $isAdmin)
+            'AboutSection' => $view->Group($group, $isMember, $isAdmin),
+            'NewsSection' =>  $NewsView->GetNewsList($newsList),
+            'PageOwnerId' => $groupId
         );
         return array(
-            "Content"  => $userPage->GetUserPage($params)
+            "Content"  => $userPage->GetUserPage($params),
+            'Script' => $NewsView->Scripts()
         );
 
     }

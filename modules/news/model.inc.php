@@ -10,7 +10,12 @@ class News_Model
                 $photoId = Core::$Db->Insert("photo", array('title' => $item['images']['name'][$i], 'date' => date('Y-m-d H:i:s', time())));
                 Core::$Db->Insert("user_photo", array('user_id' => $arrayForSave['owner_id'], 'photo_id' => $photoId));
                 Core::$Db->Insert("post_element", array('post_id' => $id, 'element_id' => $photoId, 'element_type' => 'photo'));
-                move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $item['ownerId']. "/photo/" . $item['images']['name'][$i]);
+                if($arrayForSave['page_type'] == 'user') {
+                    move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $item['ownerId']. "/photo/" . $item['images']['name'][$i]);
+                }
+                else {
+                    move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/groups/" . $item['ownerId']. "/photo/" . $item['images']['name'][$i]);
+                }
                 $arrayForSave['images']['name'][$i] = $item['images']['name'][$i];
             }
         }
@@ -34,11 +39,19 @@ class News_Model
                 $arrayForSave['videos']['name'][$i] = $item['videos']['name'][$i];
             }
         }
-        $userInfo = Core::$Db->Select('user_data', array('user_id', 'name', 'surname', 'image'), array('user_id' => $_SESSION['user']['id']));
-        $arrayForSave['user_id'] = $userInfo[0]['user_id'];
-        $arrayForSave['name'] = $userInfo[0]['name'];
-        $arrayForSave['surname'] = $userInfo[0]['surname'];
-        $arrayForSave['image'] = $userInfo[0]['image'];
+        if($arrayForSave['page_type'] == 'user') {
+            $userInfo = Core::$Db->Select('user_data', array('user_id', 'name', 'surname', 'image'), array('user_id' => $_SESSION['user']['id']));
+            $arrayForSave['user_id'] = $userInfo[0]['user_id'];
+            $arrayForSave['name'] = $userInfo[0]['name'];
+            $arrayForSave['surname'] = $userInfo[0]['surname'];
+            $arrayForSave['image'] = $userInfo[0]['image'];
+        }
+        else {
+            $groupInfo = Core::$Db->SelectJoin('groups', 'groups.id, groups.title, groups.photo_url', array('groups.id' => $arrayForSave['page_owner_id'], 'group_admin.user_id' => $_SESSION['user']['id']), null, null, null, array('group_admin' => array('group_admin.group_id' => 'groups.id')));
+            $arrayForSave['groupTitle'] = $groupInfo[0]['title'];
+            $arrayForSave['image'] = $groupInfo[0]['photo_url'];
+            $arrayForSave['owner_id'] = $groupInfo[0]['id'];
+        }
         $arrayForSave['id'] = $id;
         return $arrayForSave;
     }
@@ -56,12 +69,23 @@ class News_Model
             else {
                 $newsList[$i]['isLiked'] = true;
             }
-            if($owner == $_SESSION['user']['id']) {
-                $newsList[$i]['is_owner'] = true;
+            if($type == 'user') {
+                if($owner == $_SESSION['user']['id']) {
+                    $newsList[$i]['is_owner'] = true;
+                }
+                else {
+                    $newsList[$i]['is_owner'] = false;
+                }
             }
             else {
-                $newsList[$i]['is_owner'] = false;
+                $model = new Groups_Model();
+                if($model->isGroupAdmin($model->GetGroup($owner), $_SESSION['user']))
+                    $newsList[$i]['is_owner'] = true;
+                else {
+                    $newsList[$i]['is_owner'] = false;
+                }
             }
+            $newsList[$i]['page_type'] = $type;
             $newsList[$i]['comment_count'] = Core::$Db->SelectJoin('comment', 'COUNT(item_id) as count', array('item_id' => $newsList[$i]['id']))[0]['count'];
             $newsList[$i]['images'] = Core::$Db->SelectJoin("post_element", "photo.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'photo'), null, null, null, array('photo' => array('photo.id' => 'post_element.element_id')));
             $newsList[$i]['audios'] = Core::$Db->SelectJoin("post_element", "music.title", array('post_element.post_id' => $newsList[$i]['id'], 'post_element.element_type' => 'music'), null, null, null, array('music' => array('music.id' => 'post_element.element_id')));
