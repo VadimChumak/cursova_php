@@ -78,6 +78,7 @@ $(window).on('load', function() {
                     return;
                 }
                 else {
+                    document.getElementById('eror').innerHTML = xhr.responseText;
                     var count = $(commentImg).html();
                     count++;
                     $(commentImg).html(count.toString());

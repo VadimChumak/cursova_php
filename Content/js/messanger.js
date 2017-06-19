@@ -46,6 +46,7 @@ $(window).on("load", function() {
                         return;
                     }
                     else {
+                        document.getElementById("eror").innerHTML = xhr.responseText;
                         var item = JSON.parse(xhr.responseText);
                         var tmp = $("#messageItem").html();
                         tmp = tmp.replace("[text]", item.text);

@@ -53,6 +53,10 @@ class News_Model
             $arrayForSave['owner_id'] = $groupInfo[0]['id'];
         }
         $arrayForSave['id'] = $id;
+        if($arrayForSave['owner_id'] != $arrayForSave['page_owner_id']) {
+            $notificationModel = new Notification_Model();
+            $notificationModel->Save($arrayForSave['page_owner_id'], 'news', $id);
+        }
         return $arrayForSave;
     }
 
@@ -98,7 +102,12 @@ class News_Model
     public function ToggleLike($postId, $action) {
         if($action == "set") {
             Core::$Db->Insert('bookmarks', array('user_id' => $_SESSION['user']['id'], 'item_id' => $postId));
-                    }
+            $post = Core::$Db->SelectJoin('post', '*', array('id' => $postId))[0];
+            if($post['owner_id'] != $_SESSION['user']['id']) {
+                $notificationModel = new Notification_Model();
+                $notificationModel->Save($post['owner_id'], 'like', $postId);
+            }
+        }
         else {
             Core::$Db->DeleteByTwoCays("bookmarks", 'item_id', $postId, 'user_id', $_SESSION['user']['id']);
         }
@@ -116,13 +125,27 @@ class News_Model
         if(!is_null($replyId)) {
             $arrayForSave['reply_id'] = $replyId;
         }
+        $replyUserId = null;
         $commentId = Core::$Db->Insert("comment", $arrayForSave);
         if(!is_null($replyId)) {
             $reply_info = $this->CommentInfo($arrayForSave['reply_id']);
             $arrayForSave['reply_name'] = $reply_info['name'];
             $arrayForSave['reply_surname'] = $reply_info['surname'];
+            $replyUserId = $reply_info['user_id'];
         }
         $arrayForSave['id'] = $commentId;
+        $post = Core::$Db->SelectJoin('post', '*', array('id' => $postId))[0];
+        if($post['owner_id'] != $_SESSION['user']['id']) {
+            $notificationModel = new Notification_Model();
+            if(!is_null($replyId)) {
+                if($replyUserId != $_SESSION['user']['id']) {
+                    $notificationModel->Save($post['owner_id'], 'reply', $commentId);
+                }
+            }
+            else {
+                $notificationModel->Save($post['owner_id'], 'comment', $commentId);
+            }
+        }
         return $arrayForSave;
     }
 
@@ -145,7 +168,7 @@ class News_Model
     }
 
     public function CommentInfo($commentId) {
-        $info = Core::$Db->SelectJoin('comment', 'user_data.surname, user_data.name', array('id' => $commentId), null, null, null, array('user_data' => array('user_data.user_id' => 'comment.user_id')))[0];
+        $info = Core::$Db->SelectJoin('comment', 'user_data.surname, user_data.name, user_data.user_id', array('id' => $commentId), null, null, null, array('user_data' => array('user_data.user_id' => 'comment.user_id')))[0];
         return $info;
     }
 }

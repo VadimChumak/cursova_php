@@ -209,4 +209,10 @@ class Database
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function NewNotification($userId, $date) {
+        $sql = "SELECT notification.type, user_data.user_id, user_data.name, user_data.surname FROM notification INNER JOIN user_data ON user_data.user_id = notification.user_action WHERE notification.user_id = {$userId} AND notification.date >= '{$date}' ORDER BY notification.date DESC";
+        $st = $this->Pdo->query($sql);
+        return $st->fetchAll(PDO::FETCH_ASSOC);
+    }
 }
