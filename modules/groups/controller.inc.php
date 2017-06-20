@@ -6,12 +6,13 @@ class Groups_Controller
 
         $id = $arg;
         $userModel = new Registration_Model();
-        var_dump($arg);
+
+
         $modelUser = new User_Model();
-        $user = $modelUser->GetUserAuth($arg);
+        $user = $modelUser->GetUserAuth($arg[0]);
 
         if($user == null)
-           header("Location:".$_SERVER["DOCUMENT_ROOT"]);
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]);
 
         $model = new Groups_Model();
         $view = new Groups_View();
@@ -36,55 +37,47 @@ class Groups_Controller
     public function AddGroupAction()
     {
         $model = new Groups_Model();
-        $view = new Groups_View();
         $user = $_SESSION['user'];
         $core = new Core();
-
-        if ($_SERVER['REQUEST_METHOD'] != "POST" ) {
-            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
-        }
-
-        if(isset($_POST['title'])) {
-            $arr = array(
-                'title' => $_POST['title'],
-                'photo_url' => "/media/system/photo/base.jpg"
-            );
-            $model->AddGroup($user, $arr);
-            $groupId = $model->IdLastCreatedGroupByUser($user);
-            $group = $model->GetGroup($groupId);
-
-            $core->CreateDir('media/groups/', $groupId);
-            $core->CreateDir('media/groups/'.$groupId."/",'photo');
-        }
-        else{
-            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
-        }
-        //add more validation
-        if (isset($_FILES['photo_url'])) {
-            if($_FILES['photo_url']['type'] != 'png' &&  $_FILES['photo_url']['type'] != 'jpg') {
-                header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
-            }
-
-            //load new to the server
-            $name = $core->saveToDir("media/groups/" . $groupId . "/photo/",
-                $_FILES['photo_url']);
-
-            if ($name != -1) {
-
+        $data = "error";
+        if ($_SERVER['REQUEST_METHOD'] == "POST" ) {
+            if (isset($_POST['title'])) {
                 $arr = array(
                     'title' => $_POST['title'],
-                    'photo_url' => "/media/groups/".$groupId."/photo/" . $name
+                    'photo_url' => "/media/system/photo/base.jpg"
                 );
-                $model->Edit($arr,$group);
+                $groupId = $model->AddGroup($user, $arr);
+                $group = $model->GetGroup($groupId);
+                $model->AddUserToGroup($user, $group);
+                $core->CreateDir('media/groups/', $groupId);
+                $core->CreateDir('media/groups/' . $groupId . "/", 'photo');
+                $data = "created";
+            } else {
+                header("Location:" . $_SERVER["DOCUMENT_ROOT"] . "/groups/list/" . $user[0]['id']);
             }
-        } else {
-            $arr = array(
-                'title' => $_POST['title']
-            );
-            $model->Edit($arr,$group);
-        }
+            //add more validation
+            if (isset($_FILES['photo_url'])) {
+                //load new to the server
+                $name = $core->saveToDir("media/groups/" . $groupId . "/photo/",
+                    $_FILES['photo_url']);
 
-        header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/list/".$user[0]['id']);
+                if ($name != -1) {
+
+                    $arr = array(
+                        'title' => $_POST['title'],
+                        'photo_url' => "/media/groups/" . $groupId . "/photo/" . $name
+                    );
+                    $model->Edit($arr, $group);
+                }
+            } else {
+                $arr = array(
+                    'title' => $_POST['title']
+                );
+                $model->Edit($arr, $group);
+            }
+        }
+        echo(json_encode($data));
+        exit();
     }
 
     public static function GroupAction($arg)
@@ -95,14 +88,11 @@ class Groups_Controller
 
         $user = $_SESSION['user'];
         $model->IdLastCreatedGroupByUser($user);
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-           //print_r($_POST);
-        }
-
         $groupId = ($arg[0]);
 
         //404
         if(!$model->isGroupExistById($groupId)){
+            //call 404 page
             echo 'not exist';
         }
 
@@ -114,25 +104,14 @@ class Groups_Controller
         $userPage = new User_View();
         $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
 
-        $modelN = new News_Model();
-        $newsList['newsArray'] = $modelN->NewsList(0, $groupId, 'group');
-        $newsList['CurrentUser'] = $_SESSION['user'];
-        $newsList['OwnerId'] = $groupId;
-        $newsList['PageType'] = 'group';
-        $newsList['IsAdmin'] = $model->isGroupAdmin($group, $_SESSION['user']);
-        $NewsView = new News_View();
-
         $params = array(
-            "PageTitle" => $group[0]['title'],
+            "PageTitle" => $group['title'],
             'CurrentUser' => $_SESSION['user'],
             'UserInfo' => $userInPage[0],
-            'AboutSection' => $view->Group($group, $isMember, $isAdmin),
-            'NewsSection' =>  $NewsView->GetNewsList($newsList),
-            'PageOwnerId' => $groupId
+            'NewsSection' => $view->Group($group, $isMember, $isAdmin)
         );
         return array(
-            "Content"  => $userPage->GetUserPage($params),
-            'Script' => $NewsView->Scripts()
+            "Content"  => $userPage->GetUserPage($params)
         );
 
     }
@@ -171,7 +150,7 @@ class Groups_Controller
         $core = new Core();
 
         if( (!$model->isGroupExistById($groupId))   ) {
-            header("Location:/");
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]);
         }
 
         $group = $model->GetGroup($groupId);
@@ -181,42 +160,9 @@ class Groups_Controller
             header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
         }
 
-        if ($_SERVER['REQUEST_METHOD'] == "POST") {
-            if($model->isGroupAdmin($group, $user)) {
-
-                if(isset($_FILES['photo_url'])) {
-
-                    //load new to the server
-                    $name = $core->saveToDir("media/groups/".$groupId."/photo/",
-                        $_FILES['photo_url']);
-
-                    if($name != -1) {
-                        //delete old img
-                        $ms = explode("/", $group[0]['photo_url']);
-                        $core->deleteFile("media/groups/".$groupId."/photo/",
-                            $ms[count($ms)-1]);
-
-
-                        //check '/media' is correct in linux
-                        $arr = array(
-                            'title' => $_POST['title'],
-                            'photo_url' => "/media/groups/".$groupId."/photo/".$name
-                        );
-                        $model->Edit($arr,$group);
-                    }
-                }
-                else{
-                    $arr = array(
-                        'title' => $_POST['title']
-                    );
-                    $model->Edit($arr,$group);
-                }
-            }
-            header("Location:".$_SERVER["DOCUMENT_ROOT"]."/groups/group/".$groupId);
-        }
-
         $modelUser = new User_Model();
         $userPage = new User_View();
+
         $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
 
         $params = array(
@@ -230,5 +176,58 @@ class Groups_Controller
         );
     }
 
-    public function EditPageAction(){}
+    public function EditGroupAction(){
+        $model = new Groups_Model();
+        $core = new Core();
+
+        $groupId = $_POST['group_id'];
+
+        if( (!$model->isGroupExistById($groupId))   ) {
+            header("Location:".$_SERVER["DOCUMENT_ROOT"]);
+        }
+
+        $group = $model->GetGroup($groupId);
+        $user = $_SESSION['user'];
+        $data = "error";
+        if(!$model ->isGroupAdmin($group, $user)){
+            $data = "notAdmin";
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == "POST" && $model ->isGroupAdmin($group, $user)) {
+            if($model->isGroupAdmin($group, $user)) {
+
+                if(isset($_FILES['photo_url'])) {
+
+                    //load new to the server
+                    $name = $core->saveToDir("media/groups/".$groupId."/photo/",
+                        $_FILES['photo_url']);
+
+                    if($name != -1) {
+                        $ms = explode("/", $group[0]['photo_url']);
+                        $core->deleteFile("media/groups/".$groupId."/photo/",
+                            $ms[count($ms)-1]);
+
+
+                        $arr = array(
+                            'title' => $_POST['title'],
+                            'photo_url' => "/media/groups/".$groupId."/photo/".$name
+                        );
+                        $model->Edit($arr,$group);
+                        $data = "edited";
+                    }
+                }
+                else{
+                    $arr = array(
+                        'title' => $_POST['title']
+                    );
+                    $model->Edit($arr,$group);
+                    $data = "edited";
+                }
+            }
+            echo(json_encode($data));
+            exit();
+        }
+    }
+
+
 }
