@@ -17,8 +17,8 @@
                         <input name='title' type="text" value=""/></br>
 
                         <span>Файл: </span></br>
-                        <input id="file" accept=".mp4" style="margin:10px;" name='video_file' type="file"/></br>
-                        <input type="submit" value="Добавить" id="add">
+                        <input class="btn btn-default" id="file" accept=".mp4" style="margin:10px;" name='video_file' type="file"/></br>
+                        <input class="btn btn-default" type="submit" value="Добавить" id="add">
                     </div>
 
                 </form>

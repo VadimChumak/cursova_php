@@ -12,7 +12,13 @@
     $('#my_form').on('submit', function(e){
         e.preventDefault();
         console.log(1);
-        if(  !($("#file").prop('files')[0]) || !$("#title").val() ){
+        if(  ($("#title").val() == '' || !$("#file").prop('files')[0])  ){
+            ValidateMessage('Please select all field');
+            return -1;
+        }
+
+        if(!validateForm()) {
+            ValidateMessage('Bad file extension');
             return -1;
         }
 
@@ -32,6 +38,22 @@
             }
         });
     });
+
+function ValidateMessage(msg) {
+    $("#myModal .modal-content .modal-body p").text(msg);
+    $("#myModal").modal('open');
+}
+
+function validateForm()
+{
+    var ext = $('#file').val().split('.').pop().toLowerCase();
+
+    if($.inArray(ext, ['txt','doc','docx','pdf']) != -1) {
+        return true;
+    }
+
+    return false;
+}
 
 
 function Checker(event) {

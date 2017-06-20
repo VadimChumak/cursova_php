@@ -39,6 +39,16 @@ class Friends_Controller
             exit();
         }
     }
+    public function RemoveAction() {
+        $model = new Friends_Model();
+        if ($_SERVER['REQUEST_METHOD'] == "POST")
+        {
+            $user = $_POST['user_id'];
+            $model->Remove($_SESSION['user'], $user);
+            $_SESSION['user']['friends_count'] = $_SESSION['user']['friends_count'] - 1;
+            exit();
+        }
+    }
     public function ListAction()
     {
         $view = new Friends_View();

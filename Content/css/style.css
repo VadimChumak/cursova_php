@@ -888,7 +888,6 @@ ul.collection.card>li {
 .groupMenu input{
     margin-top:5px;
     margin-bottom: 5px;
-    margin-left:10%;
     width:100%;
 }
 
@@ -953,6 +952,7 @@ progress::-webkit-progress-value {
   box-shadow: inset 0 -2px 4px rgba(0,0,0,0.4), 0 2px 5px 0px rgba(0,0,0,0.3); 
 } 
 .modal{
+<<<<<<< HEAD
     z-index:10000;
     }
 
@@ -982,3 +982,17 @@ progress::-webkit-progress-value {
          border:3px solid white;
          border-radius: 50%;
      }
+=======
+    z-index:1000;
+}
+
+.file_elements{
+    font-size:20px;
+}
+
+.d_btn{
+    top:0 !important;
+    width:30px !important;
+    height:30px !important;
+}
+>>>>>>> d8e28066ca52e69dc7240cef978dc4f1f1cb2e6e

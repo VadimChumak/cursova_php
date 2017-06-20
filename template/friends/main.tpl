@@ -11,6 +11,8 @@
             <a href="/user/id/<?php echo $item['user_id'] ?>"><span class="title"><?php echo $item['surname'].' '.$item['name'] ?></span></a>
             <?php if($_SERVER['REQUEST_URI'] == "/friends/senders"): ?>
                 <button onclick="Accept(this)" id = "<?php echo $item['user_id'] ?>" class="waves-effect waves-light btn following accept_btn">Accept</button>
+            <?php elseif($_SERVER['REQUEST_URI'] == "/friends/list") : ?>
+            <button onclick="Remove(this)" id = "<?php echo $item['user_id'] ?>" class="waves-effect waves-light btn following accept_btn">Remove</button>
             <?php endif; ?>
         </li>
         <?php endwhile; ?>

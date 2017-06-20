@@ -1,0 +1,1 @@
+<input my_id="<?php echo $value['id']?>" id="deleteBtn_<?php echo $value['id']?>" class="deleteBtn d_btn" type="submit" value="X"/>
