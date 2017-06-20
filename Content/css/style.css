@@ -955,3 +955,30 @@ progress::-webkit-progress-value {
 .modal{
     z-index:10000;
     }
+
+    ul.notification p{
+        font-size: 18px;
+        display: block;
+        text-align: left;
+        padding-left: 20px; 
+    }
+
+     ul.notification span{
+         font-family: 'Port Lligat Slab', serif;
+         padding-left: 20px;
+         font-size: 20px !important;
+     }
+     ul.notification .timeago{
+         float: right;
+         margin-bottom:10px;
+     }
+     ul.notification .notificarion-type {
+         box-sizing: border-box;
+         height:35px;
+         width:35px;
+         position: relative;
+         left:-15px;
+         top:-10px;
+         border:3px solid white;
+         border-radius: 50%;
+     }

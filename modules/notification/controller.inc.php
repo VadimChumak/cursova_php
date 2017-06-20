@@ -2,7 +2,23 @@
 class Notification_Controller{
     public function ListAction() {
         $userId = $_SESSION['user']['id'];
-
+        $model = new Notification_Model();
+        $view = new Notification_View();
+        $chatModel = new Chat_Model();
+        $userModel = new User_Model();
+        $user = $userModel->GetUser((array($_SESSION['user']['id'])));
+        $userPage = new User_View();
+        $notificationList['notificationArray'] = $model->GetList($userId);
+        $params = array(
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $user[0],
+            'NewsSection' => $view->NotificationList($notificationList),
+            'MessagesCount' => $chatModel->GetNewMessagesCount($_SESSION['user']['id']),
+            'PageOwnerId' => $_SESSION['user']['id']
+        );
+        return array(
+            "Content"  => $userPage->GetUserPage($params),
+        );
     }
 
     public function CheckAction() {
