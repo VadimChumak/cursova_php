@@ -67,12 +67,16 @@
                 <?php endif; ?>
             </div>
             <div class="collection user-menu" id="user-menu">
-                <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">1</span>News</a>
+                <?php if($NotificationsCount['count'] == 0): ?>
+                    <a href="/notification/list" class="collection-item waves-effect waves-light">News</a>
+                <?php else: ?>
+                    <a href="/notification/list" class="collection-item waves-effect waves-light"><span class="new badge"><?php echo $NotificationsCount['count'] ?></span>News</a>
+                <?php endif; ?>
                 <a href="/friends/list" class="collection-item waves-effect waves-light"><span class="badge"><?php echo $_SESSION['user']['friends_count'] ?></span>Friends</a>
                 <?php if($MessagesCount[0]['count'] == 0): ?>
-                <a href="/chat/messages" class="collection-item waves-effect waves-light">Messages</a>
+                    <a href="/chat/messages" class="collection-item waves-effect waves-light">Messages</a>
                 <?php else: ?>
-                <a href="/chat/messages" class="collection-item waves-effect waves-light"><span class="new badge"><?php echo $MessagesCount[0]['count'] ?></span>Messages</a>
+                    <a href="/chat/messages" class="collection-item waves-effect waves-light"><span class="new badge"><?php echo $MessagesCount[0]['count'] ?></span>Messages</a>
                 <?php endif; ?>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">45</span>Groups</a>
                 <a href="#!" class="collection-item waves-effect waves-light"><span class="badge">874</span>Photo</a>

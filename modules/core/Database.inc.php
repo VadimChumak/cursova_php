@@ -215,4 +215,9 @@ class Database
         $st = $this->Pdo->query($sql);
         return $st->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function UpdateNotification($userId) {
+        $sql = "UPDATE notification SET is_checked = '1' WHERE (user_id = {$userId})";
+        $this->Pdo->exec($sql);
+    }
 }

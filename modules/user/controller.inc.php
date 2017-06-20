@@ -4,6 +4,7 @@ class User_Controller
     public function IdAction($id) {
         $chatModel = new Chat_Model();
         $userModel = new User_Model();
+        $notifiModel = new Notification_Model();
         $user = $userModel->GetUser($id);
         if(empty($user)) {
             return array(
@@ -23,6 +24,7 @@ class User_Controller
             'NewsSection' => $NewsView->GetNewsList($newsList),
             'AboutSection' => $userPage->GetUserInfo(array('item' => $user[0])),
             'MessagesCount' => $chatModel-> GetNewMessagesCount($_SESSION['user']['id']),
+            'NotificationsCount' => $notifiModel->GetNewNotificationCount($_SESSION['user']['id']),
             'PageOwnerId' => $id[0]
         );
         return array(

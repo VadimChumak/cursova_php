@@ -8,13 +8,15 @@ class Notification_Controller{
         $userModel = new User_Model();
         $user = $userModel->GetUser((array($_SESSION['user']['id'])));
         $userPage = new User_View();
+        $model->SetChecked($_SESSION['user']['id']);
         $notificationList['notificationArray'] = $model->GetList($userId);
         $params = array(
             'CurrentUser' => $_SESSION['user'],
             'UserInfo' => $user[0],
             'NewsSection' => $view->NotificationList($notificationList),
             'MessagesCount' => $chatModel->GetNewMessagesCount($_SESSION['user']['id']),
-            'PageOwnerId' => $_SESSION['user']['id']
+            'PageOwnerId' => $_SESSION['user']['id'],
+            'NotificationsCount' => array('count' => 0)
         );
         return array(
             "Content"  => $userPage->GetUserPage($params),
