@@ -42,7 +42,8 @@
       </div>
     </div>
     <div class="modal-footer">
-      <button class="modal-action modal-close waves-effect waves-green btn-flat main-color" id="sendPost">Agree</button>
+        <progress id="progress" value="0"></progress>
+        <button class="modal-action waves-effect waves-green btn-flat main-color" id="sendPost">Agree</button>
     </div>
   </div>
 

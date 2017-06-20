@@ -337,10 +337,26 @@ $(window).on('load', function() {
             Materialize.toast('Хоча б одне з полів мусить бути заповнене!', 4000);
         }
         else {
+            var progressBar = document.getElementById("progress");
             var formData = new FormData(document.forms.formPost);
             var xhr = new XMLHttpRequest();
             xhr.open('POST', '/news/save', true);
+            xhr.upload.onprogress = function(e) {
+                    progressBar.max = e.total;
+                    progressBar.value = e.loaded;
+            };
+            xhr.onprogress = function(e) {
+                    progressBar.max = e.total;
+                    progressBar.value = e.loaded;
+            };
             xhr.send(formData);
+            xhr.onloadstart = function(e) {
+                progressBar.value = 0;
+            };
+            xhr.onloadend = function(e) {
+                progressBar.value = e.loaded;
+                $('#modal_createPost').modal('close');
+            };
             xhr.onreadystatechange = function() {
                 if(this.readyState != 4) return;
                 if(this.status != 200) {
