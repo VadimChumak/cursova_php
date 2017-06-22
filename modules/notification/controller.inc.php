@@ -19,7 +19,7 @@ class Notification_Controller{
             'NotificationsCount' => array('count' => 0)
         );
         return array(
-            "Content"  => $userPage->GetUserPage($params),
+            "Content"  => $userPage->GetUserPage($params)
         );
     }
 
@@ -45,7 +45,7 @@ class Notification_Controller{
         }
         else {
             return array(
-            "Content"  => "Page not found!";
+            "Content"  => "Page not found!"
             );
         }
     }

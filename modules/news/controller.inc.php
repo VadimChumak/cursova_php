@@ -40,7 +40,7 @@ class News_Controller
         }
         else {
             return array(
-            "Content"  => "Page not found!";
+            "Content"  => "Page not found!"
             );
         }
     }
@@ -54,7 +54,7 @@ class News_Controller
         }
         else {
             return array(
-            "Content"  => "Page not found!";
+            "Content"  => "Page not found!"
             );
         }
     }
@@ -72,7 +72,7 @@ class News_Controller
         }
         else {
             return array(
-            "Content"  => "Page not found!";
+            "Content"  => "Page not found!"
             );
         }
     }
@@ -96,7 +96,7 @@ class News_Controller
             }
         else {
             return array(
-            "Content"  => "Page not found!";
+            "Content"  => "Page not found!"
             );
         }
     }
@@ -111,7 +111,7 @@ class News_Controller
         }
         else {
             return array(
-            "Content"  => "Page not found!";
+            "Content"  => "Page not found!"
             );
         }
     }
@@ -124,7 +124,7 @@ class News_Controller
         }
         else {
             return array(
-            "Content"  => "Page not found!";
+            "Content"  => "Page not found!"
             );
         }
     }
