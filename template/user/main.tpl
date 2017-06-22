@@ -8,6 +8,9 @@
     <li><a href="/registration/logout">Вихід</a></li>
     <input type="hidden" value="<?php echo $CurrentUser['id'] ?>" id="currentUserId"/>
 </ul>
+    <form action="" method="post" class="invisible" enctype="multipart/form-data" id="av">
+        <input type="file" id="getAvatar" name="avatar">
+    </form>
 <?php if($UserInfo['user_id'] == $CurrentUser['id']): ?>
     <input type="hidden" id="isOwner" />
 <?php endif; ?>
@@ -50,9 +53,9 @@
         <div class="col l2 m3 hide-on-small-and-down z-depth-4" id="left-menu">
             <div class="user-page-img">
                 <?php if(explode('_', $UserInfo['image'])[0] == 'default'): ?>
-                    <img  src="<?php echo "/media/users/".$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
+                    <img id="avatar"  src="<?php echo "/media/users/".$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
                 <?php else: ?>
-                    <img  src="<?php echo "/media/users/".$UserInfo['user_id'].'/photo/'.$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
+                    <img id="avatar"  src="<?php echo "/media/users/".$UserInfo['user_id'].'/photo/'.$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
                 <?php endif; ?>
                 <input type="hidden" value="<?php echo $PageOwnerId ?>" id="page_owner_id"/>
             </div>
@@ -65,7 +68,7 @@
                     <?php endif; ?>
                     <button class="waves-effect waves-light btn chat" id="openMessage"><i class="material-icons left">chat</i>Chat</button>
                 <?php else: ?>
-                    <button class="waves-effect waves-light btn"><i class="material-icons left">photo_camera</i>Change photo</button>
+                    <button onclick="photoChange()" class="waves-effect waves-light btn"><i class="material-icons left">photo_camera</i>Change photo</button>
                 <?php endif; ?>
             </div>
             <div class="collection user-menu" id="user-menu">

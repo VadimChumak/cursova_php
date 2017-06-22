@@ -7,16 +7,16 @@ class News_Model
         $id = Core::$Db->Insert("post", $arrayForSave);
         if(isset($item['images'])) {
             for($i = 0; $i < count($item['images']['name']); $i++) {
-                $photoId = Core::$Db->Insert("photo", array('title' => $item['images']['name'][$i], 'date' => date('Y-m-d H:i:s', time())));
+                $photoId = Core::$Db->Insert("photo", array('title' => strtolower($item['images']['name'][$i]), 'date' => date('Y-m-d H:i:s', time())));
                 Core::$Db->Insert("user_photo", array('user_id' => $arrayForSave['owner_id'], 'photo_id' => $photoId));
                 Core::$Db->Insert("post_element", array('post_id' => $id, 'element_id' => $photoId, 'element_type' => 'photo'));
                 if($arrayForSave['page_type'] == 'user') {
-                    move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $item['ownerId']. "/photo/" . $item['images']['name'][$i]);
+                    move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $item['ownerId']. "/photo/" . strtolower($item['images']['name'][$i]));
                 }
                 else {
-                    move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/groups/" . $item['ownerId']. "/photo/" . $item['images']['name'][$i]);
+                    move_uploaded_file($item['images']['tmp_name'][$i], $_SERVER['DOCUMENT_ROOT'] . "/media/groups/" . $item['ownerId']. "/photo/" . strtolower($item['images']['name'][$i]));
                 }
-                $arrayForSave['images']['name'][$i] = $item['images']['name'][$i];
+                $arrayForSave['images']['name'][$i] = strtolower($item['images']['name'][$i]);
             }
         }
         if(isset($item['audios'])) {

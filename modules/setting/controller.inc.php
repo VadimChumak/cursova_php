@@ -36,6 +36,15 @@ class Setting_Controller
         return array(
           'Content' => $view->Edit()
         );
-
+    }
+    public function ChangePhotoAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == "POST") {
+            $model = new Setting_Model();
+            $photo = $_FILES['avatar'];
+            $res = $model->SaveAvatar($photo);
+            echo $res;
+            exit();
+        }
     }
 }

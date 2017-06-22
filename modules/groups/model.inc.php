@@ -22,8 +22,9 @@ class Groups_Model
     }
 
     public  function AddGroup($userCreator, $group){
-        Core::$Db->Insert("groups", array('title' => $group['title'], 'owner_id' => $userCreator['id'],
+        $id = Core::$Db->Insert("groups", array('title' => $group['title'], 'owner_id' => $userCreator['id'],
             'photo_url' =>  $group['photo_url'] ));
+        return $id;
     }
 
     public function isGroupExistById($id)

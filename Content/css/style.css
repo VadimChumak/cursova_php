@@ -992,3 +992,7 @@ progress::-webkit-progress-value {
     width:30px !important;
     height:30px !important;
 }
+
+.invisible {
+    display: none;
+}
