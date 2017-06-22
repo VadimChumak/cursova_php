@@ -100,15 +100,25 @@ class Groups_Controller
         $isMember = $model->isMember($group, $user);
         $isAdmin = $model->isGroupAdmin($group, $user);
 
+        $modelN = new News_Model();
+        $newsList['newsArray'] = $modelN->NewsList(0, $groupId, 'group');
+         $newsList['CurrentUser'] = $_SESSION['user'];
+         $newsList['OwnerId'] = $groupId;
+         $newsList['PageType'] = 'group';
+         $newsList['IsAdmin'] = $model->isGroupAdmin($group, $_SESSION['user']);
+         $NewsView = new News_View();
+
         $modelUser = new User_Model();
         $userPage = new User_View();
         $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
 
         $params = array(
-            "PageTitle" => $group['title'],
+            "PageTitle" => $group[0]['title'],
             'CurrentUser' => $_SESSION['user'],
             'UserInfo' => $userInPage[0],
-            'NewsSection' => $view->Group($group, $isMember, $isAdmin)
+            'AboutSection' => $view->Group($group, $isMember, $isAdmin),
+            'NewsSection' =>  $NewsView->GetNewsList($newsList),
+            'PageOwnerId' => $groupId
         );
         return array(
             "Content"  => $userPage->GetUserPage($params)
