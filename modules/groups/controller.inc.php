@@ -100,6 +100,9 @@ class Groups_Controller
         $isMember = $model->isMember($group, $user);
         $isAdmin = $model->isGroupAdmin($group, $user);
 
+        $modelNotifi = new Notification_Model();
+        $chatModel = new Chat_Model();
+
         $modelN = new News_Model();
         $newsList['newsArray'] = $modelN->NewsList(0, $groupId, 'group');
          $newsList['CurrentUser'] = $_SESSION['user'];
@@ -118,7 +121,9 @@ class Groups_Controller
             'UserInfo' => $userInPage[0],
             'AboutSection' => $view->Group($group, $isMember, $isAdmin),
             'NewsSection' =>  $NewsView->GetNewsList($newsList),
-            'PageOwnerId' => $groupId
+            'PageOwnerId' => $groupId,
+            'MessagesCount' => $chatModel->GetNewMessagesCount($_SESSION['user']['id']),
+            'NotificationsCount' => $modelNotifi->GetNewNotificationCount($_SESSION['user']['id']),
         );
         return array(
             "Content"  => $userPage->GetUserPage($params)
