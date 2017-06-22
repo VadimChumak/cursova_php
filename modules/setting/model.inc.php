@@ -27,4 +27,13 @@ class Setting_Model
     {
         return Core::$Db->Select('user_data', '*', array('user_id' => $id));
     }
+    public function SaveAvatar($photo) {
+        if ($photo['error']== UPLOAD_ERR_OK)
+        {
+            $name = strtolower($photo['name']);
+            move_uploaded_file($photo['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/media/users/" . $_SESSION['user']['id']. "/photo/" . $name);
+            Core::$Db->UpdateById('user_data', array('image' => $name), 'user_id', $_SESSION['user']['id']);
+            return $name;
+        }
+    }
 }
