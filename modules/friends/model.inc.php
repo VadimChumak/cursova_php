@@ -1,6 +1,7 @@
 <?php
 class Friends_Model
 {
+    
     public function AddToFriends($user1, $user2)
     {
         Core::$Db->Insert('friend', array('user_id' => $user1['id'], 'friend_id' => $user2, 'is_accepted1' => 1, 'is_accepted2' => 0));
@@ -25,9 +26,11 @@ class Friends_Model
         $list = Core::$Db->SelectJoin('friend', 'user_data.user_id, user_data.name, user_data.surname, user_data.image', array('friend.friend_id' => $_SESSION['user']['id'], 'friend.is_accepted2' => 0), null, null, null, array('user_data' => array('user_data.user_id' => 'friend.user_id')));
         return $list;
     }
-    public function FriendList()
+    public function FriendList($user_id)
     {
-        $list = Core::$Db->SelectJoin('friend', 'user_data.user_id, user_data.name, user_data.surname, user_data.image', array('friend.friend_id' => $_SESSION['user']['id'], 'friend.is_accepted2' => 1), null, null, null, array('user_data' => array('user_data.user_id' => 'friend.user_id')));
+        $list1 = Core::$Db->SelectJoin('friend', 'user_data.user_id, user_data.name, user_data.surname, user_data.image', array('friend.friend_id' => $user_id, 'friend.is_accepted2' => 1, 'friend.is_accepted1' => 1), null, null, null, array('user_data' => array('user_data.user_id' => 'friend.user_id')));
+        $list2 = Core::$Db->SelectJoin('friend', 'user_data.user_id, user_data.name, user_data.surname, user_data.image', array('friend.user_id' => $user_id, 'friend.is_accepted2' => 1, 'friend.is_accepted1' => 1), null, null, null, array('user_data' => array('user_data.user_id' => 'friend.friend_id')));
+        $list = array_merge($list1, $list2);
         return $list;
     }
 }

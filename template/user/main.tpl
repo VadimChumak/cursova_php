@@ -57,7 +57,9 @@
                 <?php else: ?>
                     <img id="avatar"  src="<?php echo "/media/users/".$UserInfo['user_id'].'/photo/'.$UserInfo['image'] ?>" class="responsive-img left-menu-user-img" alt="">
                 <?php endif; ?>
-                <input type="hidden" value="<?php echo $PageOwnerId ?>" id="page_owner_id"/>
+                <?php if (isset($PageOwnerId)) :?>
+                    <input type="hidden" value="<?php echo $PageOwnerId ?>" id="page_owner_id"/>
+                <?php endif; ?>
             </div>
             <div class="left-menu-user-info">
                 <p class="user-name"><?=$UserInfo['name']?></p>
@@ -92,11 +94,12 @@
         <div class="col l10 m9 s12" id="main-content">
             <div class="row quick-acces">
                 <header>
+                    <?php $_SESSION['last_visited_user_id'] = $UserInfo['user_id']; ?>
                     <?php if($UserInfo['user_id'] != $CurrentUser['id']): ?>
                     <nav class="user-nav nav-extended">
                         <div class="nav-wrapper">
                             <ul class="user-nav-box">
-                                <li><a href="sass.html"><i class="material-icons left">contacts</i>Friends</a></li>
+                                <li><a href="/friends/frlist"><i class="material-icons left">contacts</i>Friends</a></li>
                                 <li><a href="badges.html"><i class="material-icons left">supervisor_account</i>Groups</a></li>
                                 <li><a href="badges.html"><i class="material-icons left">perm_media</i>Photos</a></li>
                                 <li><a href="badges.html"><i class="material-icons left">library_music</i>Musics</a></li>
@@ -104,10 +107,9 @@
                         </div>
                         <?php endif; ?>
                         <div class="nav-content user-dop-panel">
-                            <ul class="tabs tabs-transparent user-nav-box">
-                                <li class="tab"><a href="#test1">All</a></li>
-                                <li class="tab"><a class="active" href="#test2">Online</a></li>
-                                <li class="tab"><a href="#test4">Request</a></li>
+                            <ul class="custom_tabs tabs-transparent user-nav-box">
+                                <li class="tab"><a href="/friends/list">Your Friends</a></li>
+                                <li class="tab"><a href="/friends/senders">Request</a></li>
                             </ul>
                         </div>
                     </nav>
