@@ -2,7 +2,7 @@ function AddToFriends(btn) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange=function(){
         if (xhttp.readyState==4 && xhttp.status==200) {
-            alert('Request has sended');
+            Materialize.toast("Request has sended", 1000);
             btn.style.display = 'none';
 
         }
@@ -17,7 +17,7 @@ function Accept(btn) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange=function(){
         if (xhttp.readyState==4 && xhttp.status==200) {
-            alert("accepted");
+            Materialize.toast("Accepted", 1000);
         }
     };
     xhttp.open("POST","/friends/accept", true);
@@ -31,7 +31,7 @@ function Remove(btn) {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange=function(){
         if (xhttp.readyState==4 && xhttp.status==200) {
-            alert("Removed");
+            Materialize.toast("Removed", 1000);
         }
     };
     xhttp.open("POST","/friends/remove", true);

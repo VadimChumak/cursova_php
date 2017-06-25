@@ -3,23 +3,23 @@
       <div class="row">
       <h3 class="center-align">Registration</h3>
         <div class="input-field col s6">
-          <input id="first_name" type="text" name="name" class="validate">
+          <input id="first_name" type="text" name="name" class="validate" required>
           <label for="first_name">First Name</label>
         </div>
         <div class="input-field col s6">
-          <input id="last_name" name="surname" type="text" class="validate">
+          <input id="last_name" name="surname" type="text" class="validate" required>
           <label for="last_name">Last Name</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="email" type="email" name="email" class="validate">
+          <input id="email" type="email" name="email" class="validate" required>
           <label for="email">Email</label>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s12">
-          <input id="password" type="password" name="password" class="validate">
+          <input id="password" type="password" name="password" class="validate" required>
           <label for="password">Password</label>
         </div>
       </div>

@@ -20,6 +20,5 @@ function Send(formData) {
         }
     };
     xhttp.open("POST","/setting/changephoto", true);
-    //xhttp.setRequestHeader('Content-Type', 'multipart/form-data');
     xhttp.send(formData);
 }

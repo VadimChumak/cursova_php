@@ -18,7 +18,7 @@
             </li>
             <?php endwhile; ?>
         <?php else :?>
-            <h3>You haven`t any information!</h3>
+            <h3>You haven`t any items!</h3>
         <?php endif; ?>
     </ul>
 </div>
