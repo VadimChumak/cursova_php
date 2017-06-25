@@ -52,8 +52,7 @@ class Chat_Controller
             'NotificationsCount' => $model->GetNewNotificationCount($_SESSION['user']['id'])
         );
         return array(
-            "Content"  => $userPage->GetUserPage($params),
-            'Script' => $chatView->Scripts()
+            "Content"  => $userPage->GetUserPage($params)
         );
     }
 

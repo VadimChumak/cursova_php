@@ -1,5 +1,3 @@
-
-
 <div class="col l4 m4" id="usersMessages">
 <ul class="collection card">
     <?php while (!is_null($item = array_shift($messagesArray))): ?>

@@ -26,6 +26,7 @@
 <script src="/Content/js/materialize.js"></script>
 <script src="/Content/js/notification.js"></script>
 <script src="/Content/js/chat.js"></script>
+<script src="/Content/js/messanger.js"></script>
 <?php if(isset($Script)) echo $Script ?>
 </body>
 </html>
