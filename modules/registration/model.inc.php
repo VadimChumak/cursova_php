@@ -37,7 +37,7 @@ class Registration_Model
                 'image' => $user_photo[0]
             ));
             $model = new Friends_Model();
-            $res = $model->FriendList();
+            $res = $model->FriendList($_SESSION['user']['id']);
             $_SESSION['user']['friends_count'] = count($res);
             return true;    
         }
