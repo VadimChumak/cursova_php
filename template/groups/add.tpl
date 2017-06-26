@@ -14,11 +14,11 @@
 
                     <div class="newGroup-block">
                         <span>Название: </span>
-                        <input name='title' type="text" value=""/></br>
+                        <input id="title" name='title' type="text" value=""/></br>
 
                         <span>Фотография: </span></br>
                         <img style="max-width:200px;" src="<?php echo $Group[0]['photo_url'] ?>" id="current-group-photo"/></br>
-                        <input id="file" style="margin:10px;" accept="image/jpeg,image/png" name='photo_url' type="file"/></br>
+                        <input class="btn btn-default" id="file" style="margin:10px;" accept="image/jpeg,image/png" name='photo_url' type="file"/></br>
 
                         <input class="btn btn-default" type="submit" value="Create">
                     </div>

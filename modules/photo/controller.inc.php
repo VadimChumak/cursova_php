@@ -57,7 +57,7 @@ class Photo_Controller
         $model = new Photo_Model();
 
         $data = "Bad_Argument";
-        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST" && isset($_FILES['photo_file'])) {
 
             $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"] . "/media/photo/", $_FILES['photo_file']);
 
@@ -82,7 +82,7 @@ class Photo_Controller
 
         $data = "error";
 
-        if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST"
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST"
         && isset($_POST['num'])) {
             $DeleteId = $_POST['num'];
             $model->DeleteOwner($user['id'], $DeleteId);

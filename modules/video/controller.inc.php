@@ -26,45 +26,22 @@ class Video_Controller
         );
     }
 
-    public function CopyAction(){
-        $model = new Video_Model();
-
-        $user = $_SESSION['user'];
-        $data = "Bad_Argument";
-        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['id'])) {
-            $videoId = $_POST['id'];
-
-            $CurrentVideo = $model->GetVideoById($videoId);
-
-            $arr = array(
-                'title' => $CurrentVideo['title'],
-                'url' => $CurrentVideo['url'],
-                'date' => date("Y-m-d H:i:s")
-            );
-
-            $videoId = $model->AddVideo($arr);
-
-            $model->AddOwner($user['id'], $videoId);
-            $data =  $data = "Add";
-        }
-        echo(json_encode($data));
-        exit();
-    }
-
     public function AddAction()
-    {   date_default_timezone_set("Europe/Riga");
+    {
+        date_default_timezone_set("Europe/Riga");
         $user = $_SESSION['user'];
         $core = new Core();
         $model = new Video_Model();
 
         $data = "Bad_Argument";
-        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
+        $title = $_POST['title'];
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST" && $title!='' && isset($_FILES['video_file'])) {
 
             $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"] . "/media/video/", $_FILES['video_file']);
 
             if ($name != -1) {
                 $arr = array(
-                    'title' => $_POST['title'],
+                    'title' => $title,
                     'url' => "media/video/" . pathinfo("media/video/" . $name, PATHINFO_FILENAME),
                     'date' => date("Y-m-d H:i:s", time())
                 );
@@ -84,7 +61,7 @@ class Video_Controller
 
         $data = "error";
 
-        if ($user != null || $_SERVER['REQUEST_METHOD'] == "POST") {
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
             $DeleteId = $_POST['num'];
             $model->DeleteOwner($user['id'], $DeleteId);
             $data = "deleted";

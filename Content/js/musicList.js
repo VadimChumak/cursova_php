@@ -1,6 +1,3 @@
-/**
- * Created by zzzzz on 10.06.2017.
- */
 window.onload =function () {
     var musicBlockElement = document.getElementById("contentBlock");
     musicBlockElement.addEventListener("click", Checker );

@@ -11,13 +11,13 @@ class Music_Controller
         $modelUser = new User_Model();
         $user = $modelUser->GetUserAuth($arg[0]);
         if($user == null)
-            header("Location:/");
+            header("Location:" . $_SERVER["DOCUMENT_ROOT"]);
 
         $musicList = $model->GetMusicList($user[0]);
         $userInPage = $modelUser->GetUser((array($_SESSION['user']['id'])));
         $params = array(
             "PageTitle" => "Музыка",
-            'CurrentUser' => $_SESSION['user'],
+            'CurrentUser' => $CurrentUser,
             'UserInfo' => $userInPage[0],
             'NewsSection' => $view->MusicList($musicList, $CurrentUser['id'], $user[0]['id'])
         );
@@ -41,9 +41,7 @@ class Music_Controller
                 'url' => $CurrentSong['url'],
                 'date' => date("Y-m-d H:i:s")
             );
-
             $musicId = $model->AddMusic($arr);
-
             $model->AddOwner($user['id'], $musicId);
             $data =  $data = "__Add__";
         }
@@ -52,23 +50,21 @@ class Music_Controller
     }
 
     public function AddAction()
-    {   date_default_timezone_set("Europe/Riga");
+    {
+        date_default_timezone_set("Europe/Riga");
         $user = $_SESSION['user'];
         $core = new Core();
         $model = new Music_Model();
-
         $data = "__Bad_Argument__";
-        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
-
+        $title = $_POST['title'];
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST" && $title!='' && isset($_FILES['song_file'])) {
             $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"] . "/media/music/", $_FILES['song_file']);
-
             if ($name != -1) {
                 $arr = array(
-                    'title' => $_POST['title'],
+                    'title' =>$title,
                     'url' => "media/music/" . pathinfo("media/music/" . $name, PATHINFO_FILENAME),
                     'date' => date("Y-m-d H:i:s", time())
                 );
-
                 $musicId = $model->AddMusic($arr);
                 $model->AddOwner($user['id'], $musicId);
                 $data = "__Add__";

@@ -17,7 +17,7 @@
                         <input class="media_title audio_title" id="title" name='title' type="text" value=""/></br>
 
                         <span>Файл: </span></br>
-                        <input id="file" accept=".mp3" style="margin:10px;" name='song_file' type="file"/></br>
+                        <input class="btn btn-default" id="file" accept=".mp3" style="margin:10px;" name='song_file' type="file"/></br>
                         <input class="btn btn-default" type="submit" value="Добавить" id="add">
                     </div>
 

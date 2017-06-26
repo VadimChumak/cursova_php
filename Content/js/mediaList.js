@@ -1,6 +1,3 @@
-/**
- * Created by zzzzz on 10.06.2017.
- */
 window.onload =function () {
     var musicBlockElement = document.getElementById("contentBlock");
     musicBlockElement.addEventListener("click", Checker );
@@ -14,7 +11,7 @@ window.onload =function () {
         }
         
         if(!validateForm()) {
-            ValidateMessage('Bad file extension');
+            ValidateMessage('Bad file extension. Please select audio file .mp3.');
             return -1;
         }
 

@@ -1,10 +1,14 @@
 $('#my_form').on('submit', function(e){
     e.preventDefault();
-    console.log(1);
+
     if( $("#title").val() == ''){
         ValidateMessage('Please select title field');
         return -1;
     }
+
+    var $that = $(this),
+        formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму (*)
+    formData.append('group_id', GetId());
 
     if($("#file").prop('files')[0]){
         if (!validateForm()) {
@@ -12,10 +16,10 @@ $('#my_form').on('submit', function(e){
             return -1;
         }
     }
+    else{
+        formData.delete('photo_url');
+    }
 
-    var $that = $(this),
-        formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму (*)
-        formData.append('group_id', GetId());
     $.ajax({
         url: "/groups/EditGroup",
         type: "POST",
@@ -24,6 +28,7 @@ $('#my_form').on('submit', function(e){
         data: formData,
         dataType: 'json',
         success: function(data){
+            console.log(data);
             if (data == "edited") {
                 //console.log(data);
                 location.reload();

@@ -75,7 +75,7 @@
                     <?php endif; ?>
                 <?php else: ?>
                     <?php if(!is_null($item['photo_url'])): ?>
-                        <img src="<?php echo "/media/groups/". $item['group_id'] . "/photo/" .$item['photo_url'] ?>"/>
+                        <img src="<?php echo $item['photo_url'] ?>"/>
                     <?php else: ?>
                         <img src=""/>
                     <?php endif; ?>

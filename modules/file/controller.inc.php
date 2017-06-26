@@ -36,13 +36,14 @@ class File_Controller
         $model = new File_Model();
 
         $data = "BadArgument";
-        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST") {
+        $title = $_POST['title'];
+        if ($user != null && $_SERVER['REQUEST_METHOD'] == "POST" && $title!='' && isset($_FILES['file_file'])) {
 
             $name = $core->saveToDir($_SERVER["DOCUMENT_ROOT"] . "/media/file/", $_FILES['file_file']);
 
             if ($name != -1) {
                 $arr = array(
-                    'title' => $_POST['title'],
+                    'title' => $title,
                     'url' => "media/file/" .  $name,
                     'date' => date("Y-m-d H:i:s", time())
                 );

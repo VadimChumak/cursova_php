@@ -6,11 +6,17 @@ $('#my_form').on('submit', function(e){
         return -1;
     }
 
+    var $that = $(this),
+        formData = new FormData($that.get(0)); // создаем новый экземпляр объекта и передаем ему нашу форму (*)
+
     if($("#file").prop('files')[0]){
         if (!validateForm()) {
             ValidateMessage('Bad file extension');
             return -1;
         }
+    }
+    else{
+        formData.delete('photo_url');
     }
 
     var $that = $(this),
@@ -25,7 +31,6 @@ $('#my_form').on('submit', function(e){
         success: function(data){
             console.log(data);
             if (data == "created") {
-
                 //console.log(data);
                 location.reload();
             }
