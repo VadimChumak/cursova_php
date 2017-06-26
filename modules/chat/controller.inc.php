@@ -39,6 +39,7 @@ class Chat_Controller
         $chatView = new Chat_View();
         $userModel = new User_Model();
         $chatModel = new Chat_Model();
+        $model = new Notification_Model();
         $user = $userModel->GetUser((array($_SESSION['user']['id'])));
         $result = $chatModel->UsersList();
         $userPage = new User_View();
@@ -46,11 +47,12 @@ class Chat_Controller
             'CurrentUser' => $_SESSION['user'],
             'UserInfo' => $user[0],
             'NewsSection' => $chatView->MessagesList($result),
-            'MessagesCount' => $chatModel->GetNewMessagesCount($_SESSION['user']['id'])
+            'MessagesCount' => $chatModel->GetNewMessagesCount($_SESSION['user']['id']),
+            'PageOwnerId' => $_SESSION['user']['id'],
+            'NotificationsCount' => $model->GetNewNotificationCount($_SESSION['user']['id'])
         );
         return array(
-            "Content"  => $userPage->GetUserPage($params),
-            'Script' => $chatView->Scripts()
+            "Content"  => $userPage->GetUserPage($params)
         );
     }
 

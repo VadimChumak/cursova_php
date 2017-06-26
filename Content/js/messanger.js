@@ -7,7 +7,7 @@ $(window).on("load", function() {
         $('#modal_createMessage').modal('open');
     });
 
-    $("#sendMessage").on("click", function() {
+    $("#modal_createMessage #sendMessage").on("click", function() {
         var text = $("#modal_createMessage textarea[name='text']").val();
         var reciever_id = $("#modal_createMessage input[name='reciever_id']").val();
         var res = "recieverId=" + encodeURIComponent(reciever_id) + "&text=" + encodeURIComponent(text) ;

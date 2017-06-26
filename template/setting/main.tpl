@@ -26,19 +26,6 @@
         </div>
       </div>
       <div class="row">
-        <div class="input-field col offset-l2 l8 m12">
-          <input id="country" type="text" name="country" value="<?=$UserInfo['country']?>">
-          <label for="country">Country</label>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-field col offset-l2 l8 m12">
-          <input id="city" type="text" name="city" value="<?=$UserInfo['city']?>">
-          <label for="city">City</label>
-        </div>
-      </div>
-
-      <div class="row">
         <div class="input-field col offset-l2 l8 m12" id="floating-panel">
             <h5>Location: </h5>
             <input id="address" type="text" value="<?=$UserInfo['city']?>">
@@ -46,6 +33,18 @@
             <div id="map"></div>
         </div>
       </div>
+    <div class="row">
+        <div class="input-field col offset-l2 l8 m12">
+            <input readonly id="country" type="text" name="country" value="<?=$UserInfo['country']?>">
+            <label for="country">Country</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col offset-l2 l8 m12">
+            <input readonly id="city" type="text" name="city" value="<?=$UserInfo['city']?>">
+            <label for="city">City</label>
+        </div>
+    </div>
       <div class="row">
         <div class="input-field col offset-l2 l8 m12">
           <input type="submit" class="btn" value="Save">

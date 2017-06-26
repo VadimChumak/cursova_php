@@ -117,7 +117,7 @@ class Groups_Controller
             'NewsSection' =>  $NewsView->GetNewsList($newsList),
             'PageOwnerId' => $groupId,
             'MessagesCount' => $chatModel->GetNewMessagesCount($_SESSION['user']['id']),
-            'NotificationsCount' => $modelNotifi->GetNewNotificationCount($_SESSION['user']['id']),
+            'NotificationsCount' => $modelNotifi->GetNewNotificationCount($_SESSION['user']['id'])
         );
         return array(
             "Content"  => $userPage->GetUserPage($params),

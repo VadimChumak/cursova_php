@@ -54,8 +54,25 @@ class Friends_Controller
         $view = new Friends_View();
         $userModel = new User_Model();
         $model = new Friends_Model();
-        $res['userArray'] = $model->FriendList();
+        $res['userArray'] = $model->FriendList($_SESSION['user']['id']);
         $user = $userModel->GetUser((array($_SESSION['user']['id'])));
+        $userPage = new User_View();
+        $params = array(
+            'CurrentUser' => $_SESSION['user'],
+            'UserInfo' => $user[0],
+            'NewsSection' => $view->Accept($res)
+        );
+        return array(
+            "Content"  => $userPage->GetUserPage($params)
+        );
+    }
+    public function FrListAction()
+    {
+        $view = new Friends_View();
+        $userModel = new User_Model();
+        $model = new Friends_Model();
+        $res['userArray'] = $model->FriendList($_SESSION['last_visited_user_id']);
+        $user = $userModel->GetUser((array($_SESSION['last_visited_user_id'])));
         $userPage = new User_View();
         $params = array(
             'CurrentUser' => $_SESSION['user'],
