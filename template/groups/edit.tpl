@@ -3,7 +3,7 @@
         <form id="my_form" enctype="multipart/form-data" method="post" >
 
             <span>Name: </span>
-            <input name='title' type="text" value="<?php echo $Group[0]['title'] ?>"/></br>
+            <input id="title" name='title' type="text" value="<?php echo $Group[0]['title'] ?>"/></br>
 
             <span>Photo: </span></br>
             <img class="oldImg" src="<?php echo $Group[0]['photo_url'] ?>" id="current-group-photo"/></br>
@@ -16,6 +16,7 @@
         </form>
     </dvi>
 </div>
+
 
 
 <div class="modal fade errorModal" id="myModal" role="dialog">

@@ -30,7 +30,6 @@ $('#my_form').on('submit', function(e){
         success: function(data){
             console.log(data);
             if (data == "edited") {
-                //console.log(data);
                 location.reload();
             }
         }
